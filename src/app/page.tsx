@@ -1,65 +1,148 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
-  return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+import { useState, useEffect } from "react";
+import { ChevronLeft } from "lucide-react";
+import { ImageWithFallback } from "@/components/ImageWithFallback";
+
+export default function Homepage() {
+    const [currentSlide, setCurrentSlide] = useState(0);
+    const [currentNews, setCurrentNews] = useState(0);
+
+    const slides = [
+        {
+            image: "/carrusel1.jpg",
+            subtitle: "Sabemos que",
+            title: "Solo hay cultura si se pone en valor",
+        },
+        {
+            image: "/carrusel2.jpg",
+            subtitle: "Preservamos",
+            title: "La memoria viva del carnaval uruguayo",
+        },
+        {
+            image: "/carrusel3.jpg",
+            subtitle: "Celebramos",
+            title: "La tradición y el arte carnavalesco",
+        },
+    ];
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setCurrentSlide((prev) => (prev + 1) % slides.length);
+        }, 5000);
+        return () => clearInterval(timer);
+    }, [slides.length]);
+
+    const newsCards = [
+        {
+            color: "#F5A623",
+            title: "Nueva colección: Murgas Históricas",
+            image: "https://images.unsplash.com/photo-1697791173189-d56b15df4f33?w=800&q=80",
+        },
+        {
+            color: "#F8E71C",
+            title: "Exposición de fotografías 1920-1980",
+            image: "https://images.unsplash.com/photo-1637862666931-be59da5dd8ca?w=800&q=80",
+        },
+        {
+            color: "#417505",
+            title: "Archivo sonoro digitalizado",
+            image: "https://images.unsplash.com/photo-1764762164486-b6d565f706ff?w=800&q=80",
+        },
+        {
+            color: "#FF69B4",
+            title: "Entrevistas a directores históricos",
+            image: "https://images.unsplash.com/photo-1618613403887-ed08ea9f8f6e?w=800&q=80",
+        },
+    ];
+
+    return (
+        <div className="bg-white">
+            {/* Simple Hero Carousel */}
+            <section className="relative h-[70vh] md:h-screen mt-16 overflow-hidden">
+                <div
+                    className="flex h-full transition-transform duration-700 ease-in-out"
+                    style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+                >
+                    {slides.map((slide, index) => (
+                        <div
+                            key={index}
+                            className="min-w-full h-full relative"
+                        >
+                            <img
+                                src={slide.image}
+                                alt={slide.title}
+                                className="absolute inset-0 w-full h-full object-cover"
+                                onError={(e) => {
+                                    console.error(`Error loading image: ${slide.image}`);
+                                    e.currentTarget.style.display = 'none';
+                                }}
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent"></div>
+
+                            <div className="absolute inset-0 flex flex-col items-center justify-center text-white px-6">
+                                <p className="text-base md:text-lg mb-4 tracking-wide drop-shadow-lg">{slide.subtitle}</p>
+                                <h1 className="text-4xl md:text-5xl lg:text-7xl max-w-4xl text-center leading-tight font-serif drop-shadow-lg">
+                                    {slide.title}
+                                </h1>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                {/* Carousel Indicators */}
+                <div className="absolute bottom-8 left-0 right-0 flex justify-center gap-3">
+                    {slides.map((_, index) => (
+                        <button
+                            key={index}
+                            onClick={() => setCurrentSlide(index)}
+                            className={`h-3 rounded-full transition-all ${index === currentSlide ? "bg-white w-8" : "bg-white bg-opacity-50 w-3"
+                                }`}
+                        />
+                    ))}
+                </div>
+            </section>
+
+            {/* Novedades Section */}
+            <section className="max-w-7xl mx-auto px-6 py-16">
+                <div className="flex items-center justify-between mb-8">
+                    <h2 className="text-3xl font-serif">Novedades:</h2>
+                    <button
+                        onClick={() => setCurrentNews((prev) => (prev > 0 ? prev - 1 : newsCards.length - 4))}
+                        className="p-2 border border-black hover:bg-black hover:text-white transition-colors"
+                    >
+                        <ChevronLeft size={24} />
+                    </button>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {newsCards.slice(currentNews, currentNews + 4).map((card, index) => (
+                        <div
+                            key={index}
+                            className="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
+                        >
+                            <div className="h-48 bg-gray-100 relative">
+                                <ImageWithFallback
+                                    src={card.image}
+                                    alt={card.title}
+                                    fill
+                                />
+                            </div>
+                            <div
+                                className="p-6 h-32 flex flex-col justify-between"
+                                style={{ backgroundColor: card.color }}
+                            >
+                                <h3 className="text-white font-semibold text-lg leading-tight">
+                                    {card.title}
+                                </h3>
+                                <a href="#" className="text-white underline hover:no-underline transition-all">
+                                    Más info
+                                </a>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </section>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
-  );
+    );
 }
