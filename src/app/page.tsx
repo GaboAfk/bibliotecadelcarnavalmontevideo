@@ -3,6 +3,9 @@
 import { useState, useEffect } from "react";
 import { ChevronLeft } from "lucide-react";
 import { ImageWithFallback } from "@/components/ImageWithFallback";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Autoplay } from 'swiper/modules';
+import 'swiper/css';
 
 export default function Homepage() {
     const [currentSlide, setCurrentSlide] = useState(0);
@@ -54,7 +57,47 @@ export default function Homepage() {
             title: "Entrevistas a directores históricos",
             image: "https://images.unsplash.com/photo-1618613403887-ed08ea9f8f6e?w=800&q=80",
         },
+        {
+            color: "#8B5CF6",
+            title: "Nuevos archivos digitales",
+            image: "https://images.unsplash.com/photo-1553729459-efe14ef6085c?w=800&q=80",
+        },
+        {
+            color: "#EC4899",
+            title: "Exposición fotográfica histórica",
+            image: "https://images.unsplash.com/photo-1589992344321-1234567890ab?w=800&q=80",
+        },
     ];
+
+    const nextNews = () => {
+        setIsFlipping(true);
+        setTimeout(() => {
+            setCurrentNews((prev) => {
+                const next = (prev + 1) % newsCards.length;
+                // Show minimum 4 cards, allow rotation
+                if (newsCards.length - next < 4) {
+                    return newsCards.length - 4;
+                }
+                return next;
+            });
+            setIsFlipping(false);
+        }, 300);
+    };
+
+    const prevNews = () => {
+        setIsFlipping(true);
+        setTimeout(() => {
+            setCurrentNews((prev) => {
+                const prevPos = (prev - 1 + newsCards.length) % newsCards.length;
+                // Show minimum 4 cards, allow rotation
+                if (newsCards.length - prevPos < 4) {
+                    return newsCards.length - 4;
+                }
+                return prevPos;
+            });
+            setIsFlipping(false);
+        }, 300);
+    };
 
     return (
         <div className="bg-white">
@@ -107,41 +150,57 @@ export default function Homepage() {
             <section className="max-w-7xl mx-auto px-6 py-16">
                 <div className="flex items-center justify-between mb-8">
                     <h2 className="text-3xl font-serif">Novedades:</h2>
-                    <button
-                        onClick={() => setCurrentNews((prev) => (prev > 0 ? prev - 1 : newsCards.length - 4))}
-                        className="p-2 border border-black hover:bg-black hover:text-white transition-colors"
-                    >
-                        <ChevronLeft size={24} />
-                    </button>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {newsCards.slice(currentNews, currentNews + 4).map((card, index) => (
-                        <div
-                            key={index}
-                            className="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
-                        >
-                            <div className="h-48 bg-gray-100 relative">
-                                <ImageWithFallback
-                                    src={card.image}
-                                    alt={card.title}
-                                    fill
-                                />
+                <Swiper
+                    modules={[Navigation, Autoplay]}
+                    spaceBetween={16}
+                    slidesPerView={4}
+                    loop={true}
+                    autoplay={{
+                        delay: 3000,
+                        disableOnInteraction: false,
+                        pauseOnMouseEnter: false
+                    }}
+                    navigation={{
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev',
+                    }}
+                    className="mySwiper"
+                >
+                    {newsCards.map((card: any, index: number) => (
+                        <SwiperSlide key={index}>
+                            <div className="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all">
+                                <div className="h-48 bg-gray-100 relative">
+                                    <ImageWithFallback
+                                        src={card.image}
+                                        alt={card.title}
+                                        fill
+                                    />
+                                </div>
+                                <div
+                                    className="p-6 h-32 flex flex-col justify-between"
+                                    style={{ backgroundColor: card.color }}
+                                >
+                                    <h3 className="text-white font-semibold text-lg leading-tight">
+                                        {card.title}
+                                    </h3>
+                                    <a href="#" className="text-white underline hover:no-underline transition-all">
+                                        Más info
+                                    </a>
+                                </div>
                             </div>
-                            <div
-                                className="p-6 h-32 flex flex-col justify-between"
-                                style={{ backgroundColor: card.color }}
-                            >
-                                <h3 className="text-white font-semibold text-lg leading-tight">
-                                    {card.title}
-                                </h3>
-                                <a href="#" className="text-white underline hover:no-underline transition-all">
-                                    Más info
-                                </a>
-                            </div>
-                        </div>
+                        </SwiperSlide>
                     ))}
-                </div>
+                </Swiper>
+
+                {/* Custom Navigation Buttons */}
+                <button className="swiper-button-prev absolute left-4 top-1/2 -translate-y-1/2 z-10 p-3 bg-white rounded-full shadow-lg border border-black hover:bg-black hover:text-white transition-all">
+                    <ChevronLeft size={24} />
+                </button>
+                <button className="swiper-button-next absolute right-4 top-1/2 -translate-y-1/2 z-10 p-3 bg-white rounded-full shadow-lg border border-black hover:bg-black hover:text-white transition-all">
+                    <ChevronLeft size={24} className="rotate-180" />
+                </button>
             </section>
         </div>
     );

@@ -40,6 +40,9 @@ export function Header() {
 
                     {/* Desktop Navigation */}
                     <nav className="hidden md:flex items-center gap-0.5">
+                        <button className="text-black hover:opacity-60 transition-opacity">
+                            <Search size={20} />
+                        </button>
                         <Link href="/" className={navLinkClass("/")}>
                             Inicio
                         </Link>
@@ -100,9 +103,7 @@ export function Header() {
                         <Link href="/carnaval-2026" className={navLinkClass("/carnaval-2026")}>
                             Carnaval 2026
                         </Link>
-                        <button className="text-black hover:opacity-60 transition-opacity">
-                            <Search size={20} />
-                        </button>
+
                     </nav>
 
                     {/* Mobile menu button */}
