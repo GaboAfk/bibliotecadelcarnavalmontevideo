@@ -56,3 +56,77 @@ html {
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
+
+/* Custom Swiper Navigation Styles */
+.swiper-button-prev,
+.swiper-button-next {
+    z-index: 50;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 12px;
+    background-color: white;
+    border-radius: 50%;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    border: 1px solid black;
+    transition: all 0.3s ease;
+}
+
+.swiper-button-prev:hover,
+.swiper-button-next:hover {
+    background-color: black;
+    color: white;
+}
+
+.swiper-button-prev {
+    left: 16px;
+}
+
+.swiper-button-next {
+    right: 16px;
+}
+
+.swiper-button-prev::after,
+.swiper-button-next::after {
+    font-size: 24px;
+    font-family: swiper-icons;
+    color: black;
+}
+
+.swiper-button-prev:hover::after,
+.swiper-button-next:hover::after {
+    color: white;
+}
+
+.mySwiper {
+    --swiper-navigation-size: 24px;
+    --swiper-navigation-color: #000;
+}
+
+/* Hero Swiper Pagination Styles */
+.swiper-pagination {
+    position: absolute;
+    bottom: 2rem;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    z-index: 10;
+}
+
+.swiper-pagination-bullet {
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.swiper-pagination-bullet-active {
+    background-color: white;
+    width: 32px;
+    height: 12px;
+    border-radius: 6px;
+}

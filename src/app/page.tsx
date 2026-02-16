@@ -1,15 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { ImageWithFallback } from "@/components/ImageWithFallback";
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Autoplay } from 'swiper/modules';
+import { Navigation, Autoplay, Pagination } from 'swiper/modules';
 import 'swiper/css';
+import 'swiper/css/navigation';
 
 export default function Homepage() {
     const [currentSlide, setCurrentSlide] = useState(0);
-    const [currentNews, setCurrentNews] = useState(0);
 
     const slides = [
         {
@@ -69,138 +69,143 @@ export default function Homepage() {
         },
     ];
 
-    const nextNews = () => {
-        setIsFlipping(true);
-        setTimeout(() => {
-            setCurrentNews((prev) => {
-                const next = (prev + 1) % newsCards.length;
-                // Show minimum 4 cards, allow rotation
-                if (newsCards.length - next < 4) {
-                    return newsCards.length - 4;
-                }
-                return next;
-            });
-            setIsFlipping(false);
-        }, 300);
-    };
-
-    const prevNews = () => {
-        setIsFlipping(true);
-        setTimeout(() => {
-            setCurrentNews((prev) => {
-                const prevPos = (prev - 1 + newsCards.length) % newsCards.length;
-                // Show minimum 4 cards, allow rotation
-                if (newsCards.length - prevPos < 4) {
-                    return newsCards.length - 4;
-                }
-                return prevPos;
-            });
-            setIsFlipping(false);
-        }, 300);
-    };
-
     return (
         <div className="bg-white">
             {/* Simple Hero Carousel */}
             <section className="relative h-[70vh] md:h-screen mt-16 overflow-hidden">
-                <div
-                    className="flex h-full transition-transform duration-700 ease-in-out"
-                    style={{ transform: `translateX(-${currentSlide * 100}%)` }}
-                >
-                    {slides.map((slide, index) => (
-                        <div
-                            key={index}
-                            className="min-w-full h-full relative"
-                        >
-                            <img
-                                src={slide.image}
-                                alt={slide.title}
-                                className="absolute inset-0 w-full h-full object-cover"
-                                onError={(e) => {
-                                    console.error(`Error loading image: ${slide.image}`);
-                                    e.currentTarget.style.display = 'none';
-                                }}
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent"></div>
-
-                            <div className="absolute inset-0 flex flex-col items-center justify-center text-white px-6">
-                                <p className="text-base md:text-lg mb-4 tracking-wide drop-shadow-lg">{slide.subtitle}</p>
-                                <h1 className="text-4xl md:text-5xl lg:text-7xl max-w-4xl text-center leading-tight font-serif drop-shadow-lg">
-                                    {slide.title}
-                                </h1>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-
-                {/* Carousel Indicators */}
-                <div className="absolute bottom-8 left-0 right-0 flex justify-center gap-3">
-                    {slides.map((_, index) => (
-                        <button
-                            key={index}
-                            onClick={() => setCurrentSlide(index)}
-                            className={`h-3 rounded-full transition-all ${index === currentSlide ? "bg-white w-8" : "bg-white bg-opacity-50 w-3"
-                                }`}
-                        />
-                    ))}
-                </div>
-            </section>
-
-            {/* Novedades Section */}
-            <section className="max-w-7xl mx-auto px-6 py-16">
-                <div className="flex items-center justify-between mb-8">
-                    <h2 className="text-3xl font-serif">Novedades:</h2>
-                </div>
-
                 <Swiper
-                    modules={[Navigation, Autoplay]}
-                    spaceBetween={16}
-                    slidesPerView={4}
+                    modules={[Autoplay, Pagination]}
+                    spaceBetween={0}
+                    slidesPerView={1}
                     loop={true}
                     autoplay={{
-                        delay: 3000,
+                        delay: 5000,
                         disableOnInteraction: false,
                         pauseOnMouseEnter: false
                     }}
-                    navigation={{
-                        nextEl: '.swiper-button-next',
-                        prevEl: '.swiper-button-prev',
+                    pagination={{
+                        clickable: true,
+                        el: '.swiper-pagination',
+                        type: 'bullets',
+                        bulletClass: 'swiper-pagination-bullet',
+                        bulletActiveClass: 'swiper-pagination-bullet-active',
                     }}
-                    className="mySwiper"
+                    className="h-full"
                 >
-                    {newsCards.map((card: any, index: number) => (
+                    {slides.map((slide, index) => (
                         <SwiperSlide key={index}>
-                            <div className="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all">
-                                <div className="h-48 bg-gray-100 relative">
-                                    <ImageWithFallback
-                                        src={card.image}
-                                        alt={card.title}
-                                        fill
-                                    />
-                                </div>
-                                <div
-                                    className="p-6 h-32 flex flex-col justify-between"
-                                    style={{ backgroundColor: card.color }}
-                                >
-                                    <h3 className="text-white font-semibold text-lg leading-tight">
-                                        {card.title}
-                                    </h3>
-                                    <a href="#" className="text-white underline hover:no-underline transition-all">
-                                        Más info
-                                    </a>
+                            <div className="min-w-full h-full relative">
+                                <img
+                                    src={slide.image}
+                                    alt={slide.title}
+                                    className="absolute inset-0 w-full h-full object-cover"
+                                    onError={(e) => {
+                                        console.error(`Error loading image: ${slide.image}`);
+                                        e.currentTarget.style.display = 'none';
+                                    }}
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent"></div>
+
+                                <div className="absolute inset-0 flex flex-col items-center justify-center text-white px-6">
+                                    <p className="text-base md:text-lg mb-4 tracking-wide drop-shadow-lg">{slide.subtitle}</p>
+                                    <h1 className="text-4xl md:text-5xl lg:text-7xl max-w-4xl text-center leading-tight font-serif drop-shadow-lg">
+                                        {slide.title}
+                                    </h1>
                                 </div>
                             </div>
                         </SwiperSlide>
                     ))}
                 </Swiper>
 
-                {/* Custom Navigation Buttons */}
-                <button className="swiper-button-prev absolute left-4 top-1/2 -translate-y-1/2 z-10 p-3 bg-white rounded-full shadow-lg border border-black hover:bg-black hover:text-white transition-all">
-                    <ChevronLeft size={24} />
-                </button>
-                <button className="swiper-button-next absolute right-4 top-1/2 -translate-y-1/2 z-10 p-3 bg-white rounded-full shadow-lg border border-black hover:bg-black hover:text-white transition-all">
-                    <ChevronLeft size={24} className="rotate-180" />
-                </button>
+                {/* Carousel Indicators */}
+                <div className="swiper-pagination absolute bottom-8 left-0 right-0"></div>
+            </section>
+
+            {/* Novedades Section */}
+            <section className="w-full px-6 py-16 relative">
+                <div className="flex max-w-7xl mx-auto items-center justify-between mb-8">
+                    <h2 className="text-3xl font-serif">Novedades:</h2>
+                </div>
+                <div className="relative max-w-7xl mx-auto">
+                    <Swiper
+                        modules={[Navigation, Autoplay]}
+                        spaceBetween={16}
+                        loop={true}
+                        autoplay={{
+                            delay: 3000,
+                            disableOnInteraction: false,
+                            pauseOnMouseEnter: false
+                        }}
+                        navigation={{
+                            nextEl: '.swiper-button-next',
+                            prevEl: '.swiper-button-prev',
+                        }}
+                        breakpoints={{
+                            0: {
+                                slidesPerView: 1,
+                            },
+                            640: {
+                                slidesPerView: 2,
+                            },
+                            768: {
+                                slidesPerView: 3,
+                            },
+                            1024: {
+                                slidesPerView: 4,
+                            },
+                        }}
+                        className="mySwiper"
+                    >
+                        {newsCards.map((card: any, index: number) => (
+                            <SwiperSlide key={index}>
+                                <div className="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all">
+                                    <div className="h-48 bg-gray-100 relative">
+                                        <ImageWithFallback
+                                            src={card.image}
+                                            alt={card.title}
+                                            fill
+                                        />
+                                    </div>
+                                    <div
+                                        className="p-6 h-32 flex flex-col justify-between"
+                                        style={{ backgroundColor: card.color }}
+                                    >
+                                        <h3 className="text-white font-semibold text-lg leading-tight">
+                                            {card.title}
+                                        </h3>
+                                        <a href="#" className="text-white underline hover:no-underline transition-all">
+                                            Más info
+                                        </a>
+                                    </div>
+                                </div>
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
+
+                    {/* Custom Navigation Buttons for News Carousel */}
+                    <button
+                        onClick={() => {
+                            const swiper = document.querySelector('.mySwiper') as any;
+                            if (swiper?.swiper) {
+                                swiper.swiper.slidePrev();
+                            }
+                        }}
+                        className="absolute left-0 top-1/2 -translate-y-1/2 z-30 p-3 bg-white rounded-full shadow-lg border border-black hover:bg-black hover:text-white transition-all -translate-x-18 hidden md:block"
+                    >
+                        <ChevronLeft size={24} />
+                    </button>
+                    <button
+                        onClick={() => {
+                            const swiper = document.querySelector('.mySwiper') as any;
+                            if (swiper?.swiper) {
+                                swiper.swiper.slideNext();
+                            }
+                        }}
+                        className="absolute right-0 top-1/2 -translate-y-1/2 z-30 p-3 bg-white rounded-full shadow-lg border border-black hover:bg-black hover:text-white transition-all translate-x-18 hidden md:block"
+                    >
+                        <ChevronLeft size={24} className="rotate-180" />
+                    </button>
+                </div>
             </section>
         </div>
     );
