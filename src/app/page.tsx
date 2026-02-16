@@ -203,7 +203,7 @@ export default function Homepage() {
                         }}
                         className="absolute right-0 top-1/2 -translate-y-1/2 z-30 p-3 bg-white rounded-full shadow-lg border border-black hover:bg-black hover:text-white transition-all translate-x-18 hidden md:block"
                     >
-                        <ChevronRight size={24} className="rotate-180" />
+                        <ChevronRight size={24} />
                     </button>
                 </div>
             </section>
