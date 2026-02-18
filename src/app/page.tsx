@@ -3,10 +3,13 @@
 import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { ImageWithFallback } from "@/components/ImageWithFallback";
+import Image from "next/image";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
+import { novedadesCards } from '@/data/novedadesCards';
+import { categoriesData } from '@/data/categoriesData';
 
 export default function Homepage() {
     const [currentSlide, setCurrentSlide] = useState(0);
@@ -35,39 +38,6 @@ export default function Homepage() {
         }, 5000);
         return () => clearInterval(timer);
     }, [slides.length]);
-
-    const newsCards = [
-        {
-            color: "#F5A623",
-            title: "Nueva colección: Murgas Históricas",
-            image: "https://images.unsplash.com/photo-1697791173189-d56b15df4f33?w=800&q=80",
-        },
-        {
-            color: "#F8E71C",
-            title: "Exposición de fotografías 1920-1980",
-            image: "https://images.unsplash.com/photo-1637862666931-be59da5dd8ca?w=800&q=80",
-        },
-        {
-            color: "#417505",
-            title: "Archivo sonoro digitalizado",
-            image: "https://images.unsplash.com/photo-1764762164486-b6d565f706ff?w=800&q=80",
-        },
-        {
-            color: "#FF69B4",
-            title: "Entrevistas a directores históricos",
-            image: "https://images.unsplash.com/photo-1618613403887-ed08ea9f8f6e?w=800&q=80",
-        },
-        {
-            color: "#8B5CF6",
-            title: "Nuevos archivos digitales",
-            image: "https://images.unsplash.com/photo-1553729459-efe14ef6085c?w=800&q=80",
-        },
-        {
-            color: "#EC4899",
-            title: "Exposición fotográfica histórica",
-            image: "https://images.unsplash.com/photo-1589992344321-1234567890ab?w=800&q=80",
-        },
-    ];
 
     return (
         <div className="bg-white">
@@ -122,11 +92,11 @@ export default function Homepage() {
             </section>
 
             {/* Novedades Section */}
-            <section className="w-full px-6 py-16 relative">
+            <section className="w-full px-6 py-10 relative">
                 <div className="flex max-w-7xl mx-auto items-center justify-between mb-8">
                     <h2 className="text-3xl font-serif">Novedades:</h2>
                 </div>
-                <div className="relative max-w-7xl mx-auto">
+                <div className="relative max-w-7xl mx-auto overflow-visible">
                     <Swiper
                         modules={[Navigation, Autoplay]}
                         spaceBetween={16}
@@ -154,30 +124,31 @@ export default function Homepage() {
                                 slidesPerView: 4,
                             },
                         }}
-                        className="mySwiper"
+                        className="mySwiper overflow-visible"
                     >
-                        {newsCards.map((card: any, index: number) => (
+                        {novedadesCards.map((card: any, index: number) => (
                             <SwiperSlide key={index}>
-                                <div className="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all">
+                                <a href="#" className="block rounded-lg overflow-hidden transition-all bg-white hover:scale-95">
                                     <div className="h-48 bg-gray-100 relative">
                                         <ImageWithFallback
                                             src={card.image}
                                             alt={card.title}
                                             fill
+                                            className="object-cover"
                                         />
                                     </div>
                                     <div
-                                        className="p-6 h-32 flex flex-col justify-between"
+                                        className="p-6 h-24 flex flex-col justify-between relative"
                                         style={{ backgroundColor: card.color }}
                                     >
-                                        <h3 className="text-white font-semibold text-lg leading-tight">
-                                            {card.title}
-                                        </h3>
-                                        <a href="#" className="text-white underline hover:no-underline transition-all">
-                                            Más info
-                                        </a>
+                                        <div className="absolute inset-0 bg-black/15"></div>
+                                        <div className="relative z-10">
+                                            <h3 className="text-white font-bold text-base leading-tight text-shadow-strong">
+                                                {card.title}
+                                            </h3>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                             </SwiperSlide>
                         ))}
                     </Swiper>
@@ -205,6 +176,78 @@ export default function Homepage() {
                     >
                         <ChevronRight size={24} />
                     </button>
+                </div>
+            </section>
+
+            {/* Nuestra Biblioteca Section */}
+            <section className="w-full py-10 bg-gray-200">
+                <div className="max-w-7xl mx-auto px-6">
+                    <div className="grid md:grid-cols-2 gap-12 items-center mb-12">
+                        <div className="order-2 md:order-1">
+                            <h2 className="text-3xl mb-8 font-serif">Nuestra Biblioteca</h2>
+                            <div className="space-y-4 text-lg leading-relaxed">
+                                <p>
+                                    La Biblioteca Oficial del Carnaval Montevideano es un espacio dedicado a la preservación,
+                                    investigación y difusión de la memoria del carnaval uruguayo.
+                                </p>
+                                <p>
+                                    Nuestro acervo incluye documentos históricos, fotografías, grabaciones audiovisuales,
+                                    partituras, textos de espectáculos y testimonios orales que dan cuenta de más de un siglo
+                                    de tradición carnavalera.
+                                </p>
+                                <p>
+                                    Trabajamos día a día para poner en valor este patrimonio cultural invaluable, haciéndolo
+                                    accesible a investigadores, estudiantes, artistas y al público en general.
+                                </p>
+                            </div>
+                        </div>
+                        <div className="order-1 md:order-2">
+                            <div className="relative h-96 rounded-lg overflow-hidden shadow-lg">
+                                <Image
+                                    src="/plaza-cagancha.jpg"
+                                    alt="Plaza Cagancha - Montevideo"
+                                    width={800}
+                                    height={384}
+                                    className="w-full h-full object-cover"
+                                    onError={(e) => {
+                                        console.error('Error loading plaza cagancha image');
+                                        e.currentTarget.src = "https://mediospublicos.uy/wp-content/uploads/20230119_ZINA_8030-1005x670.jpg";
+                                    }}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Categorías Section */}
+            <section className="w-full px-6 py-10 bg-gray-50">
+                <div className="max-w-7xl mx-auto">
+                    <h2 className="text-3xl mb-12 font-serif">Categorías</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+                        {categoriesData.map((category) => (
+                            <a
+                                key={category.slug}
+                                href={`/categorias/${category.slug}`}
+                                className="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300"
+                            >
+                                <div className="relative h-64 ">
+                                    <ImageWithFallback
+                                        src={category.image}
+                                        alt={category.name}
+                                        fill
+                                        className="object-cover group-hover:scale-110 transition-transform duration-300"
+                                    />
+                                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors duration-300"></div>
+                                </div>
+                                <div className="absolute inset-0 flex items-center justify-center">
+                                    <h3 className="text-white font-bold text-xl text-center px-4 text-shadow-strong group-hover:scale-110 transition-transform duration-300">
+                                        {category.name}
+                                    </h3>
+                                </div>
+                            </a>
+                        ))}
+                    </div>
                 </div>
             </section>
         </div>

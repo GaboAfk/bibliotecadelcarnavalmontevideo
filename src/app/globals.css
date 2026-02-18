@@ -7,6 +7,10 @@
     --color-carnaval-yellow: #F8E71C;
     --color-carnaval-green: #417505;
     --color-carnaval-pink: #FF69B4;
+    --color-carnaval-purple: #8B5CF6;
+    --color-carnaval-rose: #EC4899;
+    --color-carnaval-gray: #F3F4F6;
+    --color-carnaval-dark: #1F2937;
 }
 
 :root {
@@ -129,4 +133,76 @@ html {
     width: 32px;
     height: 12px;
     border-radius: 6px;
+}
+
+/* Section Background Colors */
+.bg-carnaval-orange {
+    background-color: var(--color-carnaval-orange);
+}
+
+.bg-carnaval-yellow {
+    background-color: var(--color-carnaval-yellow);
+}
+
+.bg-carnaval-green {
+    background-color: var(--color-carnaval-green);
+}
+
+.bg-carnaval-pink {
+    background-color: var(--color-carnaval-pink);
+}
+
+.bg-carnaval-purple {
+    background-color: var(--color-carnaval-purple);
+}
+
+.bg-carnaval-rose {
+    background-color: var(--color-carnaval-rose);
+}
+
+.bg-carnaval-gray {
+    background-color: var(--color-carnaval-gray);
+}
+
+.bg-carnaval-dark {
+    background-color: var(--color-carnaval-dark);
+}
+
+/* Text Colors */
+.text-carnaval-orange {
+    color: var(--color-carnaval-orange);
+}
+
+.text-carnaval-yellow {
+    color: var(--color-carnaval-yellow);
+}
+
+.text-carnaval-green {
+    color: var(--color-carnaval-green);
+}
+
+.text-carnaval-pink {
+    color: var(--color-carnaval-pink);
+}
+
+.text-carnaval-purple {
+    color: var(--color-carnaval-purple);
+}
+
+.text-carnaval-rose {
+    color: var(--color-carnaval-rose);
+}
+
+
+/* Text shadows for better readability */
+.text-shadow-strong {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.text-shadow-medium {
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+.text-shadow-light {
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
 }
