@@ -7,6 +7,10 @@
     --color-carnaval-yellow: #F8E71C;
     --color-carnaval-green: #417505;
     --color-carnaval-pink: #FF69B4;
+    --color-carnaval-purple: #8B5CF6;
+    --color-carnaval-rose: #EC4899;
+    --color-carnaval-gray: #F3F4F6;
+    --color-carnaval-dark: #1F2937;
 }
 
 :root {
@@ -55,4 +59,150 @@ html {
 
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
+}
+
+/* Custom Swiper Navigation Styles */
+.swiper-button-prev,
+.swiper-button-next {
+    z-index: 50;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 12px;
+    background-color: white;
+    border-radius: 50%;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    border: 1px solid black;
+    transition: all 0.3s ease;
+}
+
+.swiper-button-prev:hover,
+.swiper-button-next:hover {
+    background-color: black;
+    color: white;
+}
+
+.swiper-button-prev {
+    left: 16px;
+}
+
+.swiper-button-next {
+    right: 16px;
+}
+
+.swiper-button-prev::after,
+.swiper-button-next::after {
+    font-size: 24px;
+    font-family: swiper-icons;
+    color: black;
+}
+
+.swiper-button-prev:hover::after,
+.swiper-button-next:hover::after {
+    color: white;
+}
+
+.mySwiper {
+    --swiper-navigation-size: 24px;
+    --swiper-navigation-color: #000;
+}
+
+/* Hero Swiper Pagination Styles */
+.swiper-pagination {
+    position: absolute;
+    bottom: 2rem;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    z-index: 10;
+}
+
+.swiper-pagination-bullet {
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.swiper-pagination-bullet-active {
+    background-color: white;
+    width: 32px;
+    height: 12px;
+    border-radius: 6px;
+}
+
+/* Section Background Colors */
+.bg-carnaval-orange {
+    background-color: var(--color-carnaval-orange);
+}
+
+.bg-carnaval-yellow {
+    background-color: var(--color-carnaval-yellow);
+}
+
+.bg-carnaval-green {
+    background-color: var(--color-carnaval-green);
+}
+
+.bg-carnaval-pink {
+    background-color: var(--color-carnaval-pink);
+}
+
+.bg-carnaval-purple {
+    background-color: var(--color-carnaval-purple);
+}
+
+.bg-carnaval-rose {
+    background-color: var(--color-carnaval-rose);
+}
+
+.bg-carnaval-gray {
+    background-color: var(--color-carnaval-gray);
+}
+
+.bg-carnaval-dark {
+    background-color: var(--color-carnaval-dark);
+}
+
+/* Text Colors */
+.text-carnaval-orange {
+    color: var(--color-carnaval-orange);
+}
+
+.text-carnaval-yellow {
+    color: var(--color-carnaval-yellow);
+}
+
+.text-carnaval-green {
+    color: var(--color-carnaval-green);
+}
+
+.text-carnaval-pink {
+    color: var(--color-carnaval-pink);
+}
+
+.text-carnaval-purple {
+    color: var(--color-carnaval-purple);
+}
+
+.text-carnaval-rose {
+    color: var(--color-carnaval-rose);
+}
+
+
+/* Text shadows for better readability */
+.text-shadow-strong {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.text-shadow-medium {
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+.text-shadow-light {
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
 }

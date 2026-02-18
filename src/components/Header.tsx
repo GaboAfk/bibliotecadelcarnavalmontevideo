@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BookOpen, Search, ChevronDown, Menu, X, ChevronUp } from "lucide-react";
@@ -10,6 +10,29 @@ export function Header() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const pathname = usePathname();
     const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const headerRef = useRef<HTMLElement | null>(null);
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (headerRef.current && !headerRef.current.contains(event.target as Node)) {
+                setMobileMenuOpen(false);
+            }
+        };
+
+        const handleScroll = () => {
+            setMobileMenuOpen(false);
+        };
+
+        if (mobileMenuOpen) {
+            document.addEventListener("mousedown", handleClickOutside);
+            window.addEventListener("scroll", handleScroll);
+        }
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, [mobileMenuOpen]);
 
     const categories = [
         { name: "Humoristas", slug: "humoristas" },
@@ -27,7 +50,7 @@ export function Header() {
             }`;
     };
     return (
-        <header className="fixed top-0 left-0 right-0 bg-white  z-50">
+        <header ref={headerRef} className="fixed top-0 left-0 right-0 bg-white z-50 shadow-md shadow-md border-b border-gray-100">
             <div className="max-w mx-auto px-6 py-4">
                 <div className="flex items-center justify-between">
                     {/* Logo */}
@@ -40,6 +63,9 @@ export function Header() {
 
                     {/* Desktop Navigation */}
                     <nav className="hidden md:flex items-center gap-0.5">
+                        <button className="text-black hover:opacity-60 transition-opacity">
+                            <Search size={20} />
+                        </button>
                         <Link href="/" className={navLinkClass("/")}>
                             Inicio
                         </Link>
@@ -100,9 +126,7 @@ export function Header() {
                         <Link href="/carnaval-2026" className={navLinkClass("/carnaval-2026")}>
                             Carnaval 2026
                         </Link>
-                        <button className="text-black hover:opacity-60 transition-opacity">
-                            <Search size={20} />
-                        </button>
+
                     </nav>
 
                     {/* Mobile menu button */}
@@ -117,10 +141,10 @@ export function Header() {
                 {/* Mobile Navigation */}
                 {mobileMenuOpen && (
                     <nav className="md:hidden mt-4 pb-4  pt-4 space-y-3">
-                        <Link href="/" className="block text-black hover:opacity-60 transition-opacity">
+                        <Link href="/" className="block text-black hover:opacity-60 transition-opacity" onClick={() => setMobileMenuOpen(false)}>
                             Inicio
                         </Link>
-                        <Link href="/nuestra-biblioteca" className="block text-black hover:opacity-60 transition-opacity">
+                        <Link href="/nuestra-biblioteca" className="block text-black hover:opacity-60 transition-opacity" onClick={() => setMobileMenuOpen(false)}>
                             Nuestra biblioteca
                         </Link>
 
@@ -140,6 +164,7 @@ export function Header() {
                                             key={category.slug}
                                             href={`/categorias/${category.slug}`}
                                             className="block text-black hover:opacity-60 transition-opacity text-sm"
+                                            onClick={() => setMobileMenuOpen(false)}
                                         >
                                             {category.name}
                                         </Link>
@@ -148,10 +173,10 @@ export function Header() {
                             )}
                         </div>
 
-                        <Link href="/historia" className="block text-black hover:opacity-60 transition-opacity">
+                        <Link href="/historia" className="block text-black hover:opacity-60 transition-opacity" onClick={() => setMobileMenuOpen(false)}>
                             Historia
                         </Link>
-                        <Link href="/carnaval-2026" className="block text-black hover:opacity-60 transition-opacity">
+                        <Link href="/carnaval-2026" className="block text-black hover:opacity-60 transition-opacity" onClick={() => setMobileMenuOpen(false)}>
                             Carnaval 2026
                         </Link>
                     </nav>
