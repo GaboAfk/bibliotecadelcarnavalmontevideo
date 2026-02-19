@@ -70,8 +70,23 @@ export default function MurgasPage() {
     const letters = Object.keys(murgas).sort();
 
     return (
-        <div className="bg-white pt-28 pb-16">
+        <div className="bg-white pt-24 pb-16">
+            {/* Page Title Banner */}
+            <div className="w-full bg-black text-white py-4">
+                <div className="max-w-7xl mx-auto px-6">
+                    <h1 className="text-4xl md:text-5xl font-serif text-center tracking-wide">Murgas</h1>
+                </div>
+            </div>
+
             <div className="max-w mx-auto px-6">
+                <nav className="flex items-center gap-2 mt-4 text-sm text-gray-600">
+                    <Link href="/" className="hover:underline">Inicio</Link>
+                    <ChevronRight size={16} />
+                    <span className="">Categorías</span>
+                    <ChevronRight size={16} />
+                    <span>Murgas</span>
+                </nav>
+
                 {/* Hero */}
                 <div className="relative h-96 mb-12 rounded-lg overflow-hidden">
                     <ImageWithFallback
@@ -81,7 +96,7 @@ export default function MurgasPage() {
                         priority
                         className="object-cover"
                     />
-                    <div className="absolute inset-0  bg-gradient-to-t from-black/50 via-black/30 to-transparent"></div>
+                    <div className="absolute inset-0  bg-gradient-to-t from-black/10 via-black/5 to-transparent"></div>
 
                     {/* Badge */}
                     <div className="absolute bottom-4 md:bottom-8 right-4 md:right-8 bg-white p-4 rounded-lg max-w-xs md:max-w-sm shadow-lg">
@@ -93,15 +108,11 @@ export default function MurgasPage() {
 
                 {/* Descripción */}
                 <div className="max-w-7xl mx-auto mb-12">
-                    <h1 className="text-4xl mb-6 font-serif">Murgas</h1>
                     <p className="text-lg leading-relaxed mb-4">
-                        La murga es uno de los géneros más emblemáticos del carnaval uruguayo. Surgida a principios del siglo XX
-                        con influencias europeas, la murga se caracteriza por su coro de voces masculinas, su crítica social
-                        incisiva y su humor popular.
-                    </p>
-                    <p className="text-lg leading-relaxed mb-4">
-                        Con instrumentos de percusión como bombo, platillos y redoblante, las murgas presentan espectáculos que
-                        combinan música, poesía, teatro y crítica social.
+                        La murga se caracteriza por criticar sin ataduras, apelando al humor, la ironía y la poesía; también por construir con sus versos acertadas caricaturas de la
+                        sociedad y los personajes públicos del momento. Está compuesta por un coro, un director y un trío de percusionistas que tocan la tradicional batería de
+                        murga (bombo, platillos y redoblante). El coro tiene una particular forma de cantar y una fuerte presencia escénica. La murga como género musical es de
+                        los más populares y representativos de Uruguay.
                     </p>
                 </div>
 

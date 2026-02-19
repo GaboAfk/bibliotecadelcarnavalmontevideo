@@ -42,7 +42,7 @@ export default function Homepage() {
     return (
         <div className="bg-white">
             {/* Simple Hero Carousel */}
-            <section className="relative h-[70vh] md:h-screen mt-16 overflow-hidden">
+            <section className="relative h-[90vh] mt-16 overflow-hidden">
                 <Swiper
                     modules={[Autoplay, Pagination]}
                     spaceBetween={0}
@@ -141,7 +141,7 @@ export default function Homepage() {
                                         className="p-6 h-24 flex flex-col justify-between relative"
                                         style={{ backgroundColor: card.color }}
                                     >
-                                        <div className="absolute inset-0 bg-black/15"></div>
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/5 via-black/2 to-transparent"></div>
                                         <div className="relative z-10">
                                             <h3 className="text-white font-bold text-base leading-tight text-shadow-strong">
                                                 {card.title}
