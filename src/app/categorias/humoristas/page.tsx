@@ -30,7 +30,7 @@ export default function HumoristasPage() {
                 {/* Hero */}
                 <div className="relative h-96 mb-12 rounded-lg overflow-hidden">
                     <ImageWithFallback
-                        src="/humoristas.jpg"
+                        src="/images/humoristas/humoristas.jpg"
                         alt="Elenco de humoristas en el escenario"
                         fill
                         priority

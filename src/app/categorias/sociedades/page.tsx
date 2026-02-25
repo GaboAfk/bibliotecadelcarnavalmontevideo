@@ -32,7 +32,7 @@ export default function SociedadesPage() {
                 {/* Hero */}
                 <div className="relative h-96 mb-12 rounded-lg overflow-hidden">
                     <ImageWithFallback
-                        src="/sociedad_de_negros_y_lubolos.jpg"
+                        src="/images/sociedades/sociedad_de_negros_y_lubolos.jpg"
                         alt="Comparsa de negros y lubolos"
                         fill
                         priority

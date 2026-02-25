@@ -30,7 +30,7 @@ export default function RevistasPage() {
                 {/* Hero */}
                 <div className="relative h-96 mb-12 rounded-lg overflow-hidden">
                     <ImageWithFallback
-                        src="/revistas.jpg"
+                        src="/images/revistas/revistas.jpg"
                         alt="Vestuario colorido de revistas"
                         fill
                         priority

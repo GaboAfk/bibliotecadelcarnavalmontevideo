@@ -35,7 +35,7 @@ export default function MurgasPage() {
                 {/* Hero */}
                 <div className="relative h-96 mb-12 rounded-lg overflow-hidden">
                     <ImageWithFallback
-                        src="/murgas.jpg"
+                        src="/images/murgas/murgas.png"
                         alt="Murgas en escenario"
                         fill
                         priority

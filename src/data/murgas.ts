@@ -42,129 +42,186 @@ export const murgasData: Record<string, MurgaData> = {
         history: "Fundada en 1972, Agarrate Catalina es una de las murgas más queridas del carnaval montevideano. Su nombre surge de una expresión popular y representa la esencia del carnaval tradicional.",
         shows: [
             {
-                id: slugify("El Viaje"),
+                id: "el-viaje",
                 title: "El Viaje",
                 image: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=400&q=80",
                 year: 2008,
                 repertoire: [
-                    { title: "Presentación", content: "Introducción el novio de la nieta" },
-                    { title: "Novio de la nieta", content: "Novio de la nieta" },
-                    { title: "Introducción los energizantes", content: "Los Energizantes" },
-                    { title: "Los Energizantes", content: "Auto Asamblea" },
-                    { title: "Los Viejos Militares", content: "La Niebla - En prosa" },
-                    { title: "La Niebla", content: "Recitado Retirada" },
+                    {
+                        title: "Presentación",
+                        content: "Introducción el novio de la nieta"
+                    },
+                    {
+                        title: "Novio de la nieta",
+                        content: "Novio de la nieta"
+                    },
+                    {
+                        title: "Introducción los energizantes",
+                        content: "Los Energizantes"
+                    },
+                    {
+                        title: "Los Energizantes",
+                        content: "Auto Asamblea"
+                    },
+                    {
+                        title: "Los Viejos Militares",
+                        content: "La Niebla - En prosa"
+                    },
+                    {
+                        title: "La Niebla",
+                        content: "Recitado Retirada"
+                    },
                     {
                         title: "Retirada: El Viaje",
-                        lyrics: `Este es el comienzo de mi viaje,
-es el final de mi camino.
-No llevo prisa ni equipaje,
-solo cenizas en el mar
-de este remendado corazón,
-para viajar.
-
-Navegar, siempre navegar
-sobre el cielo azul
-tan fugaz, todo es tan fugaz,
-vieja juventud,
-será mi piel del viento sur.
-Mi nombre será tierra y nada más,
-mi sangre sol, tu llanto luz,
-semillas de la ingenua eternidad.
-
-Cuando las campanas de la vieja catedral
-hablen de las huellas de mi eterna soledad,
-todo habrá sido sólo un instante
-de fulgurante y triste oropel.
-Si el dolor se adueña del momento de partir,
-llevo contraseñas, escondites para mí
-donde gritarle a la muerte ciega
-todas las cosas que yo le robé.
-Guardo, para soltarle y empañarle
-la victoria,
-balas atropelladas,
-un minuto de memoria,
-todas mis madrugadas,
-nueve lunas, mil botellas,
-una muchacha pobre
-que un día fue mi doncella.
-El patio de mi infancia,
-mi ventana, todo el cielo,
-las manos de mi padre
-protegiéndome del mundo entero.
-
-Solo esperando mi tren
-me arrancan de mi camino
-mi sombra quemándose,
-gota por gota,
-pálida,
-única.
-El miedo de la nada,
-la esperanza de un sendero,
-la sangre de mi sangre
-despidiéndome del mundo entero.
-Amigos con el alma buena y el abrazo cálido,
-amores de miradas limpias y de sueños ávidos,
-millones de carcajadas empapadas de alcohol,
-canciones a quemarropa derrotando al dolor.
-Segundos de felicidad y tres o cuatro lágrimas.
-Sobrevivientes, náufragos, inquilinos,
-somos la sombra heroica de lo que fuimos.
-Fuimos peleando tercos como pudimos
-esta batalla inútil contra el destino.
-Llevo un juramento sin jurar,
-llevo una oración sin terminar,
-el dolor de no ser nada más
-y mi testamento sin firmar.
-Nada tuve, nada dejé:
-mi pobreza ya me la gasté.
-Si hoy tengo una flor en el ojal
-es para dejarle en el final.
-Si he de morir
-que me muera de tanto vivir,
-con la furia de la tempestad
-incendiándome el alma
-al partir.
-
-Si he de partir
-que me parta la vida
-un amor
-y transforme mis huesos en flor
-en algún carnaval.
-Y todo lo que fui
-lo dejo en el adiós,
-viviendo en el lugar
-de lo que soy.
-Y lo que quise ser
-detrás de este telón
-apenas fue
-una efímera ilusión
-Ya se encienden las luces del final.
-Agradezco porque llegué hasta acá
-escapando a la muerte en un camión,
-en un camión que se va.`
+                        lyrics: "Este es el comienzo de mi viaje,\nes el final de mi camino.\nNo llevo prisa ni equipaje,\nsolo cenizas en el mar\nde este remendado corazón,\npara viajar.\n\nNavegar, siempre navegar\nsobre el cielo azul\ntan fugaz, todo es tan fugaz,\nvieja juventud,\nserá mi piel del viento sur.\nMi nombre será tierra y nada más,\nmi sangre sol, tu llanto luz,\nsemillas de la ingenua eternidad.\n\nCuando las campanas de la vieja catedral\nhablen de las huellas de mi eterna soledad,\ntodo habrá sido sólo un instante\nde fulgurante y triste oropel.\nSi el dolor se adueña del momento de partir,\nllevo contraseñas, escondites para mí\ndonde gritarle a la muerte ciega\ntodas las cosas que yo le robé.\nGuardo, para soltarle y empañarle\nla victoria,\nbalas atropelladas,\nun minuto de memoria,\ntodas mis madrugadas,\nnueve lunas, mil botellas,\nuna muchacha pobre\nque un día fue mi doncella.\nEl patio de mi infancia,\nmi ventana, todo el cielo,\nlas manos de mi padre\nprotegiéndome del mundo entero.\n\nSolo esperando mi tren\nme arrancan de mi camino\nmi sombra quemándose,\ngota por gota,\npálida,\núnica.\nEl miedo de la nada,\nla esperanza de un sendero,\nla sangre de mi sangre\ndespidiéndome del mundo entero.\nAmigos con el alma buena y el abrazo cálido,\namores de miradas limpias y de sueños ávidos,\nmillones de carcajadas empapadas de alcohol,\ncanciones a quemarropa derrotando al dolor.\nSegundos de felicidad y tres o cuatro lágrimas.\nSobrevivientes, náufragos, inquilinos,\nsomos la sombra heroica de lo que fuimos.\nFuimos peleando tercos como pudimos\nesta batalla inútil contra el destino.\nLlevo un juramento sin jurar,\nllevo una oración sin terminar,\nel dolor de no ser nada más\ny mi testamento sin firmar.\nNada tuve, nada dejé:\nmi pobreza ya me la gasté.\nSi hoy tengo una flor en el ojal\nes para dejarle en el final.\nSi he de morir\nque me muera de tanto vivir,\ncon la furia de la tempestad\nincendiándome el alma\nal partir.\n\nSi he de partir\nque me parta la vida\nun amor\ny transforme mis huesos en flor\nen algún carnaval.\nY todo lo que fui\nlo dejo en el adiós,\nviviendo en el lugar\nde lo que soy.\nY lo que quise ser\ndetrás de este telón\napenas fue\nuna efímera ilusión\nYa se encienden las luces del final.\nAgradezco porque llegué hasta acá\nescapando a la muerte en un camión,\nen un camión que se va."
                     }
                 ],
                 credits: [
-                    { role: "Director Responsable", names: ["Yamandú Cardozo"] },
-                    { role: "Textos", names: ["Yamandú Cardozo", "Tabaré Cardozo", "Carlos Tanco (con aportes de: Martín Cardozo, Rafael Cotelo y Gonzalo Camarotta)"] },
-                    { role: "Director escénico", names: ["Martín Duarte"] },
-                    { role: "Arreglos corales", names: ["Martín Duarte"] },
-                    { role: "Puesta en escena", names: ["Freddy González"] },
-                    { role: "Vestuario", names: ["Hugo Millán"] },
-                    { role: "Realización de vestuario", names: ["Hugo Millán", "Mariela Villasante", "María Brum"] },
-                    { role: "Maquillaje", names: ["Paula Gómez"] },
-                    { role: "Sombreros", names: ["Daniel Ovidio", "Mariana Fernández Cabrera", "Marian Ghougassian"] },
-                    { role: "Escenografía, seres humanos, pelucas y accesorios", names: ["Alfredo Iriarte", "Mariano Junio", "María López", "Gabriela Guastavino"] },
-                    { role: "Cuerda de primos", names: ["Yamandú Cardozo", "Matías Beracochea", "Martín Cardozo", "Darío Rabotti", "Andrés Pazos", "Leonardo Viana"] },
-                    { role: "Cuerda de sobreprimos", names: ["Carolina Gómez", "Victoria Gómez", "Ivanna Amarillo"] },
-                    { role: "Cuerda de segundos", names: ["Rafael Cotelo", "Richard Parado", "Diego Pérez", "Eder Fructos", "Carlos Barraza", "Maximiliano Pérez", "Levón Guiondjián"] },
-                    { role: "Bombo", names: ["Nicolás Arnicho"] },
-                    { role: "Platillos", names: ["Humberto Orique"] },
-                    { role: "Redoblante", names: ["Diego Bustelo"] },
-                    { role: "Iluminación", names: ["Martín Blanchet"] },
-                    { role: "Asistente de iluminación", names: ["Adrián Basedas"] },
-                    { role: "Utilería", names: ["Federico Fernández", "Lilia Fernández", "Nicolás Gentile", "Hugo Moroni"] },
-                    { role: "Transporte", names: ["Rodolfo \"Manzana\" Montemurro"] }
+                    {
+                        role: "Director Responsable",
+                        names: [
+                            "Yamandú Cardozo"
+                        ]
+                    },
+                    {
+                        role: "Textos",
+                        names: [
+                            "Yamandú Cardozo",
+                            "Tabaré Cardozo",
+                            "Carlos Tanco (con aportes de: Martín Cardozo, Rafael Cotelo y Gonzalo Camarotta)"
+                        ]
+                    },
+                    {
+                        role: "Director escénico",
+                        names: [
+                            "Martín Duarte"
+                        ]
+                    },
+                    {
+                        role: "Arreglos corales",
+                        names: [
+                            "Martín Duarte"
+                        ]
+                    },
+                    {
+                        role: "Puesta en escena",
+                        names: [
+                            "Freddy González"
+                        ]
+                    },
+                    {
+                        role: "Vestuario",
+                        names: [
+                            "Hugo Millán"
+                        ]
+                    },
+                    {
+                        role: "Realización de vestuario",
+                        names: [
+                            "Hugo Millán",
+                            "Mariela Villasante",
+                            "María Brum"
+                        ]
+                    },
+                    {
+                        role: "Maquillaje",
+                        names: [
+                            "Paula Gómez"
+                        ]
+                    },
+                    {
+                        role: "Sombreros",
+                        names: [
+                            "Daniel Ovidio",
+                            "Mariana Fernández Cabrera",
+                            "Marian Ghougassian"
+                        ]
+                    },
+                    {
+                        role: "Escenografía, seres humanos, pelucas y accesorios",
+                        names: [
+                            "Alfredo Iriarte",
+                            "Mariano Junio",
+                            "María López",
+                            "Gabriela Guastavino"
+                        ]
+                    },
+                    {
+                        role: "Cuerda de primos",
+                        names: [
+                            "Yamandú Cardozo",
+                            "Matías Beracochea",
+                            "Martín Cardozo",
+                            "Darío Rabotti",
+                            "Andrés Pazos",
+                            "Leonardo Viana"
+                        ]
+                    },
+                    {
+                        role: "Cuerda de sobreprimos",
+                        names: [
+                            "Carolina Gómez",
+                            "Victoria Gómez",
+                            "Ivanna Amarillo"
+                        ]
+                    },
+                    {
+                        role: "Cuerda de segundos",
+                        names: [
+                            "Rafael Cotelo",
+                            "Richard Parado",
+                            "Diego Pérez",
+                            "Eder Fructos",
+                            "Carlos Barraza",
+                            "Maximiliano Pérez",
+                            "Levón Guiondjián"
+                        ]
+                    },
+                    {
+                        role: "Bombo",
+                        names: [
+                            "Nicolás Arnicho"
+                        ]
+                    },
+                    {
+                        role: "Platillos",
+                        names: [
+                            "Humberto Orique"
+                        ]
+                    },
+                    {
+                        role: "Redoblante",
+                        names: [
+                            "Diego Bustelo"
+                        ]
+                    },
+                    {
+                        role: "Iluminación",
+                        names: [
+                            "Martín Blanchet"
+                        ]
+                    },
+                    {
+                        role: "Asistente de iluminación",
+                        names: [
+                            "Adrián Basedas"
+                        ]
+                    },
+                    {
+                        role: "Utilería",
+                        names: [
+                            "Federico Fernández",
+                            "Lilia Fernández",
+                            "Nicolás Gentile",
+                            "Hugo Moroni"
+                        ]
+                    },
+                    {
+                        role: "Transporte",
+                        names: [
+                            "Rodolfo \"Manzana\" Montemurro"
+                        ]
+                    }
                 ],
                 gallery: [
                     "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=800&q=80",
@@ -177,34 +234,66 @@ en un camión que se va.`
                 ]
             },
             {
-                id: slugify("Tablado Amateur"),
+                id: "tablado-amateur",
                 title: "Tablado Amateur",
                 image: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=400&q=80",
                 year: 2010,
                 repertoire: [
-                    { title: "Presentación", content: "Introducción el novio de la nieta" }
-                ],
-
+                    {
+                        title: "Presentación",
+                        content: "Introducción el novio de la nieta"
+                    }
+                ]
             },
             {
-                id: slugify("El Fin del Mundo"),
+                id: "el-fin-del-mundo",
                 title: "El Fin del Mundo",
-                image: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=400&q=80",
+                image: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=400&q=80"
             },
             {
-                id: slugify("Defensores Causas"),
+                id: "defensores-causas",
                 title: "Defensores Causas",
-                image: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=400&q=80",
+                image: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=400&q=80"
             },
             {
-                id: slugify("El Tiempo"),
+                id: "el-tiempo",
                 title: "El Tiempo",
-                image: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=400&q=80",
+                image: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=400&q=80"
             },
             {
-                id: slugify("El Corso del Humano"),
+                id: "el-corso-del-humano",
                 title: "El Corso del Humano",
-                image: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=400&q=80",
+                image: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=400&q=80"
+            },
+            {
+                id: "la-comunidad",
+                title: "La Comunidad",
+                image: "https://www.agarratecatalina.com.uy/media/widgetkit/lacomunidad-254ed9f508419fb53c2738506175540d.jpg",
+                year: 2012,
+                credits: [
+                    {
+                        role: "Director Responsable",
+                        names: [
+                            "Yamandú Cardozo "
+                        ]
+                    },
+                    {
+                        role: "Textos",
+                        names: [
+                            "Yamandú Cardozo, Tabaré Cardozo  (con aportes de: Carlos Tanco, Martín Cardozo, Rafael Cotelo)"
+                        ]
+                    },
+                    {
+                        role: "Músicas inéditas",
+                        names: [
+                            "Pablo Porciúncula, Tabaré Cardozo, Darío Prieto"
+                        ]
+                    }
+                ],
+                data: "La Comunidad\n: \n\nTextos: Yamandú Cardozo, Tabaré Cardozo  (con aportes de: Carlos Tanco, Martín Cardozo, Rafael Cotelo)\n\nMúsicas inéditas: Pablo Porciúncula, Tabaré Cardozo, Darío Prieto\n\nArreglos corales: Darío Prieto (colaboración de Tabaré Cardozo, Pablo Porciúncula)\n\nPuesta en escena: Alberto “Coco” Rivero\n\nDiseño de vestuario: Mercedes Lalanne\n\nAsistente de vestuario: Victoria Cretenze\n\nRealización de vestuario: Mari Grün \n\nRealización de Sombreros: Daniel Ovidio Fernández y Mariana Fernández\n\nMáscaras, escenografía, accesorios: Diseño: Alfredo Iriarte, Gabriela\n\nGuastavino Realización: Alfredo Iriarte, Gabriela Guastavino, Mariano Junio, María López\n\nMaquillaje: Paula Gómez\n\nIluminación: José María Papariello\n\nSonido: Carlos Sículi \n\nDirector escénico: Darío Prieto\n\nCuerda de primos: Yamandú Cardozo, Matías Beracochea, Martín Cardozo, Darío Rabotti, Andrés Pazos, Maximiliano Porciúncula\n\nCuerda de sobreprimos: Carolina Gómez, Victoria Gómez, Maximiliano       Porciúncula, Freddy Bessio\n\nCuerda de segundos: Diego Pérez, Aníbal Pazos, Eder Fructos, Levón Guiondjián, Leonardo Viana, Nicolás Minetti\n\nBombo: Freddy “Zurdo” Bessio  \n\nPlatillos: Humberto “Samanta” Orique, Nicolás Verde\n\nRedoblante: Diego Bustelo, Nicolás Verde\n\nSuplentes en giras: Dustin Scotto, Michel González, Pablo Porciúncula\n\nUtilería: Federico Fernández, Nicolás Gentile, Hernán Futten\n\nTransporte: Pablo Cabrera\n\nVentas: Viviana Ortiz\n\nLocal de ensayo: Club Banco Hipotecario, Iglesia Metodista del Buceo y Anfiteatro  Torre de las Telecomunicaciones\n\nCoordinación general: Aníbal Pazos, Andrés Pazos y Fernando Mino\n\nProducción comercial y contrataciones: Fernando Mino",
+                gallery: [
+                    "/images/murgas/lacomunidad-agarrate-catalina.jpg"
+                ]
             }
         ],
         positions: [
@@ -240,14 +329,14 @@ en un camión que se va.`
         history: "La Antimurga BCG nace como una propuesta disruptiva que busca renovar el género manteniendo su esencia crítica y popular.",
         shows: [
             {
-                id: slugify("Tablado Amateur"),
+                id: "tablado-amateur",
                 title: "Tablado Amateur",
-                image: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=400&q=80",
+                image: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=400&q=80"
             },
             {
-                id: slugify("El Fin del Mundo"),
+                id: "el-fin-del-mundo",
                 title: "El Fin del Mundo",
-                image: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=400&q=80",
+                image: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=400&q=80"
             }
         ],
         positions: [
@@ -311,4 +400,4 @@ export const murgasAlphabet: Record<string, string[]> = {
     Z: ["Zíngaros"],
 };
 
-export const availableMurgas = Object.values(murgasData).map(murga => murga.name);
+export const availableMurgas = Object.values(murgasData).map(e => e.name);

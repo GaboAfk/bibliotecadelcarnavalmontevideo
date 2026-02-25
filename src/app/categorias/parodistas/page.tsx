@@ -30,7 +30,7 @@ export default function ParodistasPage() {
                 {/* Hero */}
                 <div className="relative h-96 mb-12 rounded-lg overflow-hidden">
                     <ImageWithFallback
-                        src="/parodistas.jpg"
+                        src="/images/parodistas/parodistas.jpg"
                         alt="Parodistas en escena teatral"
                         fill
                         priority

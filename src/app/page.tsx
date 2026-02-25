@@ -15,17 +15,17 @@ export default function Homepage() {
 
     const slides = [
         {
-            image: "/carrusel1.jpg",
+            image: "/hero/carrusel1.jpg",
             subtitle: "Sabemos que",
             title: "Solo hay cultura si se pone en valor",
         },
         {
-            image: "/carrusel2.jpg",
+            image: "/hero/carrusel2.jpg",
             subtitle: "Preservamos",
             title: "La memoria viva del carnaval uruguayo",
         },
         {
-            image: "/carrusel3.jpg",
+            image: "/hero/carrusel3.jpg",
             subtitle: "Celebramos",
             title: "La tradición y el arte carnavalesco",
         },
