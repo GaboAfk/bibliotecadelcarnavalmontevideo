@@ -5,29 +5,8 @@ import { ImageWithFallback } from "@/components/ImageWithFallback";
 import { ChevronRight } from "lucide-react";
 import { NovedadesSection } from "@/components/NovedadesSection";
 import { AlphabetGrid } from "@/components/AlphabetGrid";
-
-const sociedades: Record<string, string[]> = {
-    A: ["Ataques del Barrio"],
-    B: ["Barrio Rampla"],
-    C: ["Candombe Joven"],
-    D: ["Diablos Negros"],
-    E: ["Espíritu del Candombe"],
-    L: ["Los Negros del Barrio"],
-    M: ["Mozo Viejo"],
-    P: ["Palermo Candombero"],
-    R: ["Raza Negra"],
-    V: ["Valores"],
-};
-
-function slugify(name: string) {
-    return name
-        .toLowerCase()
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .replace(/[^a-z0-9\s-]/g, "")
-        .trim()
-        .replace(/\s+/g, "-");
-}
+import { sociedadesAlphabet, availableSociedades } from '@/data/sociedades';
+import { slugify } from '@/utils/slugify';
 
 export default function SociedadesPage() {
     return (
@@ -53,7 +32,7 @@ export default function SociedadesPage() {
                 {/* Hero */}
                 <div className="relative h-96 mb-12 rounded-lg overflow-hidden">
                     <ImageWithFallback
-                        src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=1600&q=80"
+                        src="/sociedad_de_negros_y_lubolos.jpg"
                         alt="Comparsa de negros y lubolos"
                         fill
                         priority
@@ -64,13 +43,13 @@ export default function SociedadesPage() {
                     {/* Badge */}
                     <div className="absolute bottom-4 md:bottom-8 right-4 md:right-8 bg-white p-4 rounded-lg max-w-xs md:max-w-sm shadow-lg">
                         <p className="text-xs md:text-sm">
-                            <strong>Valores:</strong> Mejor cuerda de tambores del desfile 2025
+                            <strong>Yambo Kenia</strong> - 2018
                         </p>
                     </div>
                 </div>
 
                 {/* Descripción */}
-                <div className="max-w-4xl mx-auto mb-12 space-y-4 text-lg leading-relaxed">
+                <div className="max-w-7xl mx-auto mb-12 space-y-4 text-lg leading-relaxed">
                     <p>
                         Las sociedades de negros y lubolos rescatan la memoria afrouruguaya y la elevan con comparsas contundentes. Sus tambores,
                         bailes y banderas llenan la calle de color y reivindican la tradición ancestral del candombe.
@@ -82,10 +61,11 @@ export default function SociedadesPage() {
                 </div>
 
                 <AlphabetGrid
-                    data={sociedades}
+                    data={sociedadesAlphabet}
                     baseUrl="/categorias/sociedades"
                     title="Explorá nuestro archivo de sociedades:"
                     slugify={slugify}
+                    availableItems={availableSociedades}
                 />
             </div>
 

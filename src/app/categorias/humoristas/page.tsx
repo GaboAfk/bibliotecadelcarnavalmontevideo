@@ -4,6 +4,9 @@ import Link from "next/link";
 import { ImageWithFallback } from "@/components/ImageWithFallback";
 import { ChevronRight } from "lucide-react";
 import { NovedadesSection } from "@/components/NovedadesSection";
+import { AlphabetGrid } from "@/components/AlphabetGrid";
+import { humoristasAlphabet, availableHumoristas } from '@/data/humoristas';
+import { slugify } from '@/utils/slugify';
 
 export default function HumoristasPage() {
     return (
@@ -27,7 +30,7 @@ export default function HumoristasPage() {
                 {/* Hero */}
                 <div className="relative h-96 mb-12 rounded-lg overflow-hidden">
                     <ImageWithFallback
-                        src="https://images.unsplash.com/photo-1474949104756-4dc2b0f3d71c?w=1600&q=80"
+                        src="/humoristas.jpg"
                         alt="Elenco de humoristas en el escenario"
                         fill
                         priority
@@ -44,7 +47,7 @@ export default function HumoristasPage() {
                 </div>
 
                 {/* Descripción */}
-                <div className="max-w-4xl mx-auto mb-12 space-y-4 text-lg leading-relaxed">
+                <div className="max-w-7xl mx-auto mb-12 space-y-4 text-lg leading-relaxed">
                     <p>
                         Los humoristas son el pulso desenfadado del carnaval. Con sketches veloces, personajes icónicos y un sentido
                         del humor que combina sátira política con referencias cotidianas, transforman el escenario en un show de comicidad
@@ -56,6 +59,14 @@ export default function HumoristasPage() {
                         populares durante todo el carnaval.
                     </p>
                 </div>
+
+                <AlphabetGrid
+                    data={humoristasAlphabet}
+                    baseUrl="/categorias/humoristas"
+                    title="Explorá nuestro archivo de humoristas:"
+                    slugify={slugify}
+                    availableItems={availableHumoristas}
+                />
             </div>
 
             <NovedadesSection />

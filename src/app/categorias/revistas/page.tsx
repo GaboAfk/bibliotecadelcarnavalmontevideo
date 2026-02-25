@@ -5,29 +5,8 @@ import { ImageWithFallback } from "@/components/ImageWithFallback";
 import { ChevronRight } from "lucide-react";
 import { NovedadesSection } from "@/components/NovedadesSection";
 import { AlphabetGrid } from "@/components/AlphabetGrid";
-
-const revistas: Record<string, string[]> = {
-    A: ["Araca la Cana"],
-    B: ["Blanca Luz"],
-    C: ["Contrafarsa"],
-    D: ["Diablos Verdes"],
-    E: ["Espectáculo"],
-    F: ["Feelings"],
-    L: ["Los Choby Choby"],
-    M: ["Momolandia"],
-    R: ["Revistas Unidas"],
-    S: ["Salpicón"],
-};
-
-function slugify(name: string) {
-    return name
-        .toLowerCase()
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .replace(/[^a-z0-9\s-]/g, "")
-        .trim()
-        .replace(/\s+/g, "-");
-}
+import { revistasAlphabet, availableRevistas } from '@/data/revistas';
+import { slugify } from '@/utils/slugify';
 
 export default function RevistasPage() {
     return (
@@ -51,7 +30,7 @@ export default function RevistasPage() {
                 {/* Hero */}
                 <div className="relative h-96 mb-12 rounded-lg overflow-hidden">
                     <ImageWithFallback
-                        src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=1600&q=80"
+                        src="/revistas.jpg"
                         alt="Vestuario colorido de revistas"
                         fill
                         priority
@@ -62,13 +41,13 @@ export default function RevistasPage() {
                     {/* Badge */}
                     <div className="absolute bottom-4 md:bottom-8 right-4 md:right-8 bg-white p-4 rounded-lg max-w-xs md:max-w-sm shadow-lg">
                         <p className="text-xs md:text-sm">
-                            <strong>Feelings:</strong> Mejor vestuario y coreografía 2025
+                            <strong>Tabú:</strong>  primer premio en categoría revistas 2020
                         </p>
                     </div>
                 </div>
 
                 {/* Descripción */}
-                <div className="max-w-4xl mx-auto mb-12 space-y-4 text-lg leading-relaxed">
+                <div className="max-w-7xl mx-auto mb-12 space-y-4 text-lg leading-relaxed">
                     <p>
                         Las revistas combinan glamour, humor y crítica social con grandes cuadros coreográficos. Son espectáculos de revista musical
                         con vestuarios lujosos, cuerpos de baile numerosos y arreglos corales luminosos que transforman el tablado en una pasarela.
@@ -80,10 +59,11 @@ export default function RevistasPage() {
                 </div>
 
                 <AlphabetGrid
-                    data={revistas}
+                    data={revistasAlphabet}
                     baseUrl="/categorias/revistas"
                     title="Explorá nuestro archivo de revistas:"
                     slugify={slugify}
+                    availableItems={availableRevistas}
                 />
             </div>
 

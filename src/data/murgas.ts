@@ -1,3 +1,5 @@
+import { slugify } from '@/utils/slugify';
+
 export interface ShowSection {
     title: string;
     content?: string;
@@ -14,6 +16,7 @@ export interface Show {
     title: string;
     image: string;
     year?: number;
+    promotionDate?: string;
     repertoire?: ShowSection[];
     gallery?: string[];
     data?: string;
@@ -39,7 +42,7 @@ export const murgasData: Record<string, MurgaData> = {
         history: "Fundada en 1972, Agarrate Catalina es una de las murgas más queridas del carnaval montevideano. Su nombre surge de una expresión popular y representa la esencia del carnaval tradicional.",
         shows: [
             {
-                id: "agarrate-el-viaje",
+                id: slugify("El Viaje"),
                 title: "El Viaje",
                 image: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=400&q=80",
                 year: 2008,
@@ -174,7 +177,7 @@ en un camión que se va.`
                 ]
             },
             {
-                id: "agarrate-tablado-amateur",
+                id: slugify("Tablado Amateur"),
                 title: "Tablado Amateur",
                 image: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=400&q=80",
                 year: 2010,
@@ -184,22 +187,22 @@ en un camión que se va.`
 
             },
             {
-                id: "agarrate-fin-mundo",
+                id: slugify("El Fin del Mundo"),
                 title: "El Fin del Mundo",
                 image: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=400&q=80",
             },
             {
-                id: "agarrate-defensores",
+                id: slugify("Defensores Causas"),
                 title: "Defensores Causas",
                 image: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=400&q=80",
             },
             {
-                id: "agarrate-tiempo",
+                id: slugify("El Tiempo"),
                 title: "El Tiempo",
                 image: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=400&q=80",
             },
             {
-                id: "agarrate-corso",
+                id: slugify("El Corso del Humano"),
                 title: "El Corso del Humano",
                 image: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=400&q=80",
             }
@@ -237,12 +240,12 @@ en un camión que se va.`
         history: "La Antimurga BCG nace como una propuesta disruptiva que busca renovar el género manteniendo su esencia crítica y popular.",
         shows: [
             {
-                id: "antimurga-tablado",
+                id: slugify("Tablado Amateur"),
                 title: "Tablado Amateur",
                 image: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=400&q=80",
             },
             {
-                id: "antimurga-fin",
+                id: slugify("El Fin del Mundo"),
                 title: "El Fin del Mundo",
                 image: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=400&q=80",
             }
@@ -261,3 +264,51 @@ en un camión que se va.`
         information: "Antimurga BCG representa una nueva generación de propuestas carnavaleras."
     }
 };
+
+export const murgasAlphabet: Record<string, string[]> = {
+    A: [
+        "Agarrate Catalina",
+        "Antimurga BCG",
+        "Araca la Cana",
+        "Asaltantes con Patente",
+    ],
+    B: ["Bal Condal"],
+    C: [
+        "Cayó la Cabra",
+        "Contrafarsa",
+        "Curtidores de Hongos",
+    ],
+    D: [
+        "Diablos Verdes",
+        "Don Timoteo",
+        "Doña Bastarda",
+    ],
+    F: ["Falta y Resto"],
+    L: [
+        "La Antimurga Joven",
+        "La Clave",
+        "La Gran Muñeca",
+        "La Margarita",
+        "La Mojigata",
+        "Los Aristócratas",
+        "Los Choby Choby",
+        "Los Diablos Verdes",
+        "Los Diablos",
+        "Los Enchufados",
+        "Los Guardiola",
+        "Los Muchachos",
+    ],
+    M: [
+        "Metele que son Pasteles",
+        "Momolandia",
+    ],
+    N: ["Nazarenos"],
+    P: ["Patos Cabreros"],
+    Q: ["Queso Magro"],
+    R: ["Reina de la Teja"],
+    S: ["Sacate el Pulover", "Salpicón"],
+    V: ["Vengador Anónimo"],
+    Z: ["Zíngaros"],
+};
+
+export const availableMurgas = Object.values(murgasData).map(murga => murga.name);

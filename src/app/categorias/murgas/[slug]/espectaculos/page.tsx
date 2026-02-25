@@ -73,59 +73,88 @@ export default function ShowsPage({ params }: ShowPageProps) {
 
                 {/* Shows Grid */}
                 <div className="mt-12">
+                    <style>{`
+                        .triangle-badge {
+                            clip-path: polygon(0 0, 100% 0, 50% 100%);
+                        }
+                        .show-card:hover .show-image {
+                            transform: scale(1.05);
+                        }
+                    `}</style>
                     {murgaData.shows.length > 0 ? (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            {murgaData.shows.map((show) => (
-                                <Link
-                                    key={show.id}
-                                    href={`/categorias/murgas/${slug}/espectaculos/${show.id}`}
-                                    className="group rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
-                                >
-                                    {/* Carnival Flag Banner */}
-                                    <div className="relative h-8 bg-gradient-to-r from-red-600 via-yellow-400 to-blue-600 flex items-center justify-center overflow-hidden">
-                                        <div className="flex gap-1">
-                                            {[...Array(5)].map((_, i) => (
-                                                <div
-                                                    key={i}
-                                                    className="w-0 h-0 border-l-4 border-r-4 border-t-6 border-l-transparent border-r-transparent border-t-white"
-                                                    style={{
-                                                        animation: `wave 1s ease-in-out ${i * 0.1}s infinite`
-                                                    }}
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
+                            {murgaData.shows.map((show, index) => {
+                                const isMiddleColumn = index % 3 === 1;
+                                const accentColors = [
+                                    { bg: '#fbbf24', text: '#000', name: 'yellow' },
+                                    { bg: '#9333ea', text: '#fff', name: 'purple' },
+                                    { bg: '#059669', text: '#fff', name: 'green' },
+                                    { bg: '#db2777', text: '#fff', name: 'pink' },
+                                ];
+                                const colorIndex = index % accentColors.length;
+                                const accent = accentColors[colorIndex];
+
+                                return (
+                                    <div key={show.id} className={`show-card group relative ${isMiddleColumn ? 'lg:mt-12' : ''}`}>
+                                        <Link
+                                            href={`/categorias/murgas/${slug}/espectaculos/${show.id}`}
+                                            className="block"
+                                        >
+                                            {/* Show Image with Triangle Badge */}
+                                            <div className="relative overflow-hidden rounded-xl shadow-xl bg-gray-200 aspect-[4/3] mb-6">
+                                                <ImageWithFallback
+                                                    src={show.image}
+                                                    alt={show.title}
+                                                    fill
+                                                    className="show-image w-full h-full object-cover transition-transform duration-700 ease-out"
                                                 />
-                                            ))}
-                                        </div>
-                                        <style>{`
-                                            @keyframes wave {
-                                                0%, 100% { transform: translateY(0); }
-                                                50% { transform: translateY(-4px); }
-                                            }
-                                        `}</style>
-                                    </div>
 
-                                    {/* Show Image */}
-                                    <div className="relative h-64 overflow-hidden bg-gray-200">
-                                        <ImageWithFallback
-                                            src={show.image}
-                                            alt={show.title}
-                                            fill
-                                            className="object-cover group-hover:scale-110 transition-transform duration-300"
-                                        />
-                                    </div>
+                                                {/* Year Triangle Badge */}
+                                                {(show.year || show.promotionDate) && (
+                                                    <div className="absolute top-0 left-6 z-20">
+                                                        <div
+                                                            className="triangle-badge w-14 h-20 flex flex-col items-center pt-2 shadow-lg font-serif font-black text-sm tracking-tighter"
+                                                            style={{ backgroundColor: accent.bg, color: accent.text }}
+                                                        >
+                                                            {show.year || new Date(show.promotionDate!).getFullYear()}
+                                                        </div>
+                                                    </div>
+                                                )}
 
-                                    {/* Show Info */}
-                                    <div className="p-6 bg-white">
-                                        <h3 className="text-xl font-serif font-bold mb-3">
-                                            {show.title}
-                                        </h3>
-                                        <div className="flex items-center gap-2 text-sm text-gray-600">
-                                            <span className="inline-block w-2 h-2 bg-black rounded-full"></span>
-                                            <time dateTime={show.promotionDate}>
-                                                {formatDate(show.promotionDate)}
-                                            </time>
-                                        </div>
+                                                {/* Hover Overlay */}
+                                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                                                    <button className="flex items-center gap-2 text-white font-semibold">
+                                                        Ver Detalles →
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            {/* Show Info */}
+                                            <div>
+                                                <h3
+                                                    className="text-2xl font-serif font-bold transition-colors"
+                                                    style={{ color: accent.bg }}
+                                                >
+                                                    {show.title}
+                                                </h3>
+                                                <div
+                                                    className="w-12 h-1 mt-3 group-hover:w-24 transition-all duration-500"
+                                                    style={{ backgroundColor: accent.bg }}
+                                                ></div>
+
+                                                {show.promotionDate && (
+                                                    <div className="flex items-center gap-2 text-sm text-gray-600 mt-3">
+                                                        <span className="inline-block w-2 h-2 bg-black rounded-full"></span>
+                                                        <time dateTime={show.promotionDate}>
+                                                            {formatDate(show.promotionDate)}
+                                                        </time>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </Link>
                                     </div>
-                                </Link>
-                            ))}
+                                );
+                            })}
                         </div>
                     ) : (
                         <div className="text-center py-12">

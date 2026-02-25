@@ -8,65 +8,11 @@ import 'swiper/css/navigation';
 import { NovedadesSection } from "@/components/NovedadesSection";
 import { AlphabetGrid } from "@/components/AlphabetGrid";
 
-// ─── Data ─────────────────────────────────────────────────────
-const murgas: Record<string, string[]> = {
-    A: [
-        "Agarrate Catalina",
-        "Antimurga BCG",
-        "Araca la Cana",
-        "Asaltantes con Patente",
-    ],
-    B: ["Bal Condal"],
-    C: [
-        "Cayó la Cabra",
-        "Contrafarsa",
-        "Curtidores de Hongos",
-    ],
-    D: [
-        "Diablos Verdes",
-        "Don Timoteo",
-        "Doña Bastarda",
-    ],
-    F: ["Falta y Resto"],
-    L: [
-        "La Antimurga Joven",
-        "La Clave",
-        "La Gran Muñeca",
-        "La Margarita",
-        "La Mojigata",
-        "Los Aristócratas",
-        "Los Choby Choby",
-        "Los Diablos Verdes",
-        "Los Diablos",
-        "Los Enchufados",
-        "Los Guardiola",
-        "Los Muchachos",
-    ],
-    M: [
-        "Metele que son Pasteles",
-        "Momolandia",
-    ],
-    N: ["Nazarenos"],
-    P: ["Patos Cabreros"],
-    Q: ["Queso Magro"],
-    R: ["Reina de la Teja"],
-    S: ["Sacate el Pulover", "Salpicón"],
-    V: ["Vengador Anónimo"],
-    Z: ["Zíngaros"],
-};
-
-function slugify(name: string) {
-    return name
-        .toLowerCase()
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .replace(/[^a-z0-9\s-]/g, "")
-        .trim()
-        .replace(/\s+/g, "-");
-}
+import { murgasAlphabet, availableMurgas } from '@/data/murgas';
+import { slugify } from '@/utils/slugify';
 
 export default function MurgasPage() {
-    const letters = Object.keys(murgas).sort();
+    const letters = Object.keys(murgasAlphabet).sort();
 
     return (
         <div className="bg-white pt-24 pb-16">
@@ -89,7 +35,7 @@ export default function MurgasPage() {
                 {/* Hero */}
                 <div className="relative h-96 mb-12 rounded-lg overflow-hidden">
                     <ImageWithFallback
-                        src="/murga.png"
+                        src="/murgas.jpg"
                         alt="Murgas en escenario"
                         fill
                         priority
@@ -116,10 +62,11 @@ export default function MurgasPage() {
                 </div>
 
                 <AlphabetGrid
-                    data={murgas}
+                    data={murgasAlphabet}
                     baseUrl="/categorias/murgas"
                     title="Explorá nuestro archivo de murgas:"
                     slugify={slugify}
+                    availableItems={availableMurgas}
                 />
             </div>
 

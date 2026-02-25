@@ -5,29 +5,8 @@ import { ImageWithFallback } from "@/components/ImageWithFallback";
 import { ChevronRight } from "lucide-react";
 import { NovedadesSection } from "@/components/NovedadesSection";
 import { AlphabetGrid } from "@/components/AlphabetGrid";
-
-const parodistas: Record<string, string[]> = {
-    A: ["Agarrate Catalina"],
-    B: ["Blanca Luz"],
-    C: ["Contrafarsa"],
-    D: ["Diablos Verdes"],
-    E: ["Espectáculo"],
-    F: ["Falta y Resto"],
-    L: ["Los Antiguos", "Los Choby Choby"],
-    M: ["Momolandia"],
-    P: ["Parodistas Unidos"],
-    S: ["Salpicón"],
-};
-
-function slugify(name: string) {
-    return name
-        .toLowerCase()
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .replace(/[^a-z0-9\s-]/g, "")
-        .trim()
-        .replace(/\s+/g, "-");
-}
+import { parodistasAlphabet, availableParodistas } from '@/data/parodistas';
+import { slugify } from '@/utils/slugify';
 
 export default function ParodistasPage() {
     return (
@@ -51,7 +30,7 @@ export default function ParodistasPage() {
                 {/* Hero */}
                 <div className="relative h-96 mb-12 rounded-lg overflow-hidden">
                     <ImageWithFallback
-                        src="https://images.unsplash.com/photo-1462212210333-335063b676d2?w=1600&q=80"
+                        src="/parodistas.jpg"
                         alt="Parodistas en escena teatral"
                         fill
                         priority
@@ -62,13 +41,13 @@ export default function ParodistasPage() {
                     {/* Badge */}
                     <div className="absolute bottom-4 md:bottom-8 right-4 md:right-8 bg-white p-4 rounded-lg max-w-xs md:max-w-sm shadow-lg">
                         <p className="text-xs md:text-sm">
-                            <strong>Los Antiguos:</strong> Mejor parodia dramática del Carnaval 2025
+                            <strong>Los Muchachos:</strong> primer premio en categoría parodistas 2020
                         </p>
                     </div>
                 </div>
 
                 {/* Descripción */}
-                <div className="max-w-4xl mx-auto mb-12 space-y-4 text-lg leading-relaxed">
+                <div className="max-w-7xl mx-auto mb-12 space-y-4 text-lg leading-relaxed">
                     <p>
                         Los parodistas llevan al tablado puestas teatrales completas: cambian de personajes, recrean escenas históricas y mezclan humor
                         con narrativas intensas. Cada presentación combina coreografías, coros potentes y una escenografía que se transforma ante el público.
@@ -80,10 +59,11 @@ export default function ParodistasPage() {
                 </div>
 
                 <AlphabetGrid
-                    data={parodistas}
+                    data={parodistasAlphabet}
                     baseUrl="/categorias/parodistas"
                     title="Explorá nuestro archivo de parodistas:"
                     slugify={slugify}
+                    availableItems={availableParodistas}
                 />
             </div>
 

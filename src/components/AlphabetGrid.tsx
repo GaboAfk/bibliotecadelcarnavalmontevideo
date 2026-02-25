@@ -7,9 +7,10 @@ interface AlphabetGridProps {
     baseUrl: string;
     title: string;
     slugify: (name: string) => string;
+    availableItems?: string[]; // Items that have detailed data and should be clickable
 }
 
-export function AlphabetGrid({ data, baseUrl, title, slugify }: AlphabetGridProps) {
+export function AlphabetGrid({ data, baseUrl, title, slugify, availableItems }: AlphabetGridProps) {
     const letters = Object.keys(data).sort();
 
     return (
@@ -23,16 +24,29 @@ export function AlphabetGrid({ data, baseUrl, title, slugify }: AlphabetGridProp
                     >
                         <div className="text-2xl font-bold mb-3 text-black transition-all duration-200 cursor-default">{letter}</div>
                         <ul className="space-y-1">
-                            {data[letter].map((name) => (
-                                <li key={name}>
-                                    <Link
-                                        href={`${baseUrl}/${slugify(name)}`}
-                                        className="block py-1 text-black hover:scale-90 hover:font-black cursor-default transition-all "
-                                    >
-                                        {name}
-                                    </Link>
-                                </li>
-                            ))}
+                            {data[letter].map((name) => {
+                                const isAvailable = availableItems?.includes(name);
+                                if (isAvailable) {
+                                    return (
+                                        <li key={name}>
+                                            <Link
+                                                href={`${baseUrl}/${slugify(name)}`}
+                                                className="block py-1 text-black hover:scale-90 hover:font-black cursor-pointer transition-all "
+                                            >
+                                                {name}
+                                            </Link>
+                                        </li>
+                                    );
+                                } else {
+                                    return (
+                                        <li key={name}>
+                                            <span className="block py-1 text-gray-400 cursor-not-allowed">
+                                                {name}
+                                            </span>
+                                        </li>
+                                    );
+                                }
+                            })}
                         </ul>
                     </div>
                 ))}
