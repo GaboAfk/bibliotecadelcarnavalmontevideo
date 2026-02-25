@@ -176,7 +176,7 @@ export function SearchBar({ onSelect }: SearchBarProps) {
                         setIsOpen(true);
                     }}
                     onFocus={() => setIsOpen(true)}
-                    className="w-64 px-4 py-2 pl-10 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-black focus:ring-1 focus:ring-black"
+                    className="w-72 px-4 py-2 pl-10 text-sm border border-gray-300 focus:outline-none focus:border-black focus:ring-1 focus:ring-black"
                 />
                 <Search size={16} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
                 {query && (

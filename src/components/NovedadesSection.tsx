@@ -1,12 +1,13 @@
 "use client";
 
+import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { ImageWithFallback } from "@/components/ImageWithFallback";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
-import { novedadesCards } from '@/data/novedadesCards';
+import { novedadesData } from '@/data/novedades';
 
 export function NovedadesSection() {
     return (
@@ -44,29 +45,29 @@ export function NovedadesSection() {
                     }}
                     className="mySwiper overflow-visible"
                 >
-                    {novedadesCards.map((card: any, index: number) => (
-                        <SwiperSlide key={index}>
-                            <a href="#" className="block rounded-lg overflow-hidden transition-all bg-white hover:scale-95">
+                    {novedadesData.map((novedad) => (
+                        <SwiperSlide key={novedad.id}>
+                            <Link href={`/novedades/${novedad.id}`} className="block rounded-lg overflow-hidden transition-all bg-white hover:scale-95">
                                 <div className="h-48 bg-gray-100 relative">
                                     <ImageWithFallback
-                                        src={card.image}
-                                        alt={card.title}
+                                        src={novedad.image}
+                                        alt={novedad.title}
                                         fill
                                         className="object-cover"
                                     />
                                 </div>
                                 <div
                                     className="p-6 h-24 flex flex-col justify-between relative"
-                                    style={{ backgroundColor: card.color }}
+                                    style={{ backgroundColor: novedad.color }}
                                 >
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/5 via-black/2 to-transparent"></div>
                                     <div className="relative z-10">
                                         <h3 className="text-white font-bold text-base leading-tight text-shadow-strong">
-                                            {card.title}
+                                            {novedad.title}
                                         </h3>
                                     </div>
                                 </div>
-                            </a>
+                            </Link>
                         </SwiperSlide>
                     ))}
                 </Swiper>
