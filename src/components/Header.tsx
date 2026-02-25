@@ -3,7 +3,8 @@
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BookOpen, Search, ChevronDown, Menu, X, ChevronUp } from "lucide-react";
+import { BookOpen, ChevronDown, Menu, X, ChevronUp } from "lucide-react";
+import { SearchBar } from "./SearchBar";
 
 export function Header() {
     const [categoriesOpen, setCategoriesOpen] = useState(false);
@@ -63,9 +64,7 @@ export function Header() {
 
                     {/* Desktop Navigation */}
                     <nav className="hidden md:flex items-center gap-0.5">
-                        <button className="text-black hover:opacity-60 transition-opacity">
-                            <Search size={20} />
-                        </button>
+                        <SearchBar />
                         <Link href="/" className={navLinkClass("/")}>
                             Inicio
                         </Link>
@@ -141,6 +140,9 @@ export function Header() {
                 {/* Mobile Navigation */}
                 {mobileMenuOpen && (
                     <nav className="md:hidden mt-4 pb-4  pt-4 space-y-3">
+                        <div className="mb-4" >
+                            <SearchBar onSelect={() => setMobileMenuOpen(false)} />
+                        </div>
                         <Link href="/" className="block text-black hover:opacity-60 transition-opacity" onClick={() => setMobileMenuOpen(false)}>
                             Inicio
                         </Link>
