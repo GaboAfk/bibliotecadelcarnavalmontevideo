@@ -1,13 +1,13 @@
 "use client";
 
-import { murgasData } from "@/data/murgas";
+import { parodistasData } from "@/data/parodistas";
 import Link from "next/link";
 import { ImageWithFallback } from "@/components/ImageWithFallback";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { ChevronRight, ChevronDown } from "lucide-react";
 
-type MurgaPageProps = {
+type ParodistaPageProps = {
     params: Promise<{
         slug: string;
     }>;
@@ -15,10 +15,12 @@ type MurgaPageProps = {
 
 type SectionType = "historia" | "espectaculos" | "posiciones" | "discografia" | "trivia" | "galeria" | "informacion";
 
-export default function MurgaDetailPage({ params }: MurgaPageProps) {
+export default function ParodistaDetailPage({ params }: ParodistaPageProps) {
     const router = useRouter();
     const { slug } = React.use(params);
-    const murgaData = murgasData[slug];
+    const parodistaData = Object.values(parodistasData).find(
+        p => p.name.toLowerCase().replace(/\s+/g, '-') === slug
+    );
     const [activeSection, setActiveSection] = useState<SectionType>("historia");
     const [expandedSections, setExpandedSections] = useState<Record<SectionType, boolean>>({
         historia: true,
@@ -30,17 +32,17 @@ export default function MurgaDetailPage({ params }: MurgaPageProps) {
         informacion: false,
     });
 
-    if (!murgaData) {
+    if (!parodistaData) {
         return (
             <div className="bg-white pt-24 pb-16 min-h-screen">
                 <div className="max-w-7xl mx-auto px-6">
-                    <h1 className="text-4xl mb-6 font-serif">Murga no encontrada</h1>
-                    <p className="text-lg mb-8">La murga que buscas no existe en nuestro archivo.</p>
+                    <h1 className="text-4xl mb-6 font-serif">Parodista no encontrado</h1>
+                    <p className="text-lg mb-8">El parodista que buscas no existe en nuestro archivo.</p>
                     <button
                         onClick={() => router.back()}
                         className="text-black hover:underline"
                     >
-                        ← Volver a Murgas
+                        ← Volver a Parodistas
                     </button>
                 </div>
             </div>
@@ -48,25 +50,21 @@ export default function MurgaDetailPage({ params }: MurgaPageProps) {
     }
 
     const toggleSection = (section: SectionType) => {
-        if (section === "espectaculos") {
-            router.push(`/categorias/murgas/${slug}/espectaculos`);
-        } else {
-            setExpandedSections(prev => ({
-                ...prev,
-                [section]: !prev[section]
-            }));
-            setActiveSection(section);
-        }
+        setExpandedSections(prev => ({
+            ...prev,
+            [section]: !prev[section]
+        }));
+        setActiveSection(section);
     };
 
     const sections: { id: SectionType; label: string; hasContent: boolean }[] = [
         { id: "historia", label: "Historia", hasContent: true },
-        { id: "espectaculos", label: "Espectáculos", hasContent: murgaData.shows.length > 0 },
-        { id: "posiciones", label: "Posiciones", hasContent: !!murgaData.positions?.length },
-        { id: "discografia", label: "Discografía", hasContent: !!murgaData.discography?.length },
-        { id: "trivia", label: "Trivia", hasContent: !!murgaData.trivia?.length },
-        { id: "galeria", label: "Galería", hasContent: !!murgaData.gallery?.length },
-        { id: "informacion", label: "Información", hasContent: !!murgaData.information },
+        { id: "espectaculos", label: "Espectáculos", hasContent: parodistaData.shows.length > 0 },
+        { id: "posiciones", label: "Posiciones", hasContent: !!parodistaData.positions?.length },
+        { id: "discografia", label: "Discografía", hasContent: !!parodistaData.discography?.length },
+        { id: "trivia", label: "Trivia", hasContent: !!parodistaData.trivia?.length },
+        { id: "galeria", label: "Galería", hasContent: !!parodistaData.gallery?.length },
+        { id: "informacion", label: "Información", hasContent: !!parodistaData.information },
     ];
 
     return (
@@ -74,7 +72,7 @@ export default function MurgaDetailPage({ params }: MurgaPageProps) {
             {/* Page Title Banner */}
             <div className="w-full bg-black text-white py-4">
                 <div className="max-w-7xl mx-auto px-6">
-                    <h1 className="text-4xl md:text-5xl font-serif text-center tracking-wide">{murgaData.name}</h1>
+                    <h1 className="text-4xl md:text-5xl font-serif text-center tracking-wide">{parodistaData.name}</h1>
                 </div>
             </div>
 
@@ -85,16 +83,16 @@ export default function MurgaDetailPage({ params }: MurgaPageProps) {
                     <ChevronRight size={16} />
                     <span>Categorías</span>
                     <ChevronRight size={16} />
-                    <Link href="/categorias/murgas" className="hover:underline">Murgas</Link>
+                    <Link href="/categorias/parodistas" className="hover:underline">Parodistas</Link>
                     <ChevronRight size={16} />
-                    <span>{murgaData.name}</span>
+                    <span>{parodistaData.name}</span>
                 </nav>
 
                 {/* Hero */}
                 <div className="relative h-96 mb-12 rounded-lg overflow-hidden">
                     <ImageWithFallback
-                        src="https://images.unsplash.com/photo-1701974832971-785ff3b3ef49?w=1200&q=80"
-                        alt={`${murgaData.name} en escenario`}
+                        src={parodistaData.shows[0]?.image || "https://images.unsplash.com/photo-1462212210333-335063b676d2?w=1200&q=80"}
+                        alt={`${parodistaData.name} en escenario`}
                         fill
                         priority
                         className="object-cover"
@@ -117,13 +115,10 @@ export default function MurgaDetailPage({ params }: MurgaPageProps) {
                                         className={`w-full text-left px-4 py-3 rounded-lg transition-colors flex items-center justify-between ${expandedSections[section.id] ? "bg-black text-white" : section.hasContent ? "hover:bg-gray-200 text-black" : "text-gray-400 cursor-not-allowed"} ${!section.hasContent ? "opacity-50" : ""}`}
                                     >
                                         <span>{section.label}</span>
-                                        {section.id !== "espectaculos" && (
-                                            <ChevronDown
-                                                size={16}
-                                                className={`transition-transform ${expandedSections[section.id] ? "rotate-180" : ""
-                                                    }`}
-                                            />
-                                        )}
+                                        <ChevronDown
+                                            size={16}
+                                            className={`transition-transform ${expandedSections[section.id] ? "rotate-180" : ""}`}
+                                        />
                                     </button>
                                 ))}
                             </div>
@@ -137,17 +132,32 @@ export default function MurgaDetailPage({ params }: MurgaPageProps) {
                             <section className="mb-12">
                                 <h2 className="text-3xl font-serif mb-6">Historia</h2>
                                 <p className="text-lg leading-relaxed text-gray-700">
-                                    {murgaData.history}
+                                    {parodistaData.history}
                                 </p>
                             </section>
                         )}
 
+                        {/* Espectáculos */}
+                        {expandedSections.espectaculos && parodistaData.shows && (
+                            <section className="mb-12">
+                                <h2 className="text-3xl font-serif mb-6">Espectáculos</h2>
+                                <div className="space-y-3">
+                                    {parodistaData.shows.map((show, index) => (
+                                        <div key={index} className="border-l-4 border-black pl-4 py-2">
+                                            <p className="text-lg font-bold">{show.title}</p>
+                                            {show.year && <p className="text-gray-600">Año: {show.year}</p>}
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+                        )}
+
                         {/* Posiciones */}
-                        {expandedSections.posiciones && murgaData.positions && (
+                        {expandedSections.posiciones && parodistaData.positions && (
                             <section className="mb-12">
                                 <h2 className="text-3xl font-serif mb-6">Posiciones</h2>
                                 <div className="space-y-3">
-                                    {murgaData.positions.map((position, index) => (
+                                    {parodistaData.positions.map((position, index) => (
                                         <div key={index} className="border-l-4 border-black pl-4 py-2">
                                             <p className="text-lg">{position}</p>
                                         </div>
@@ -157,11 +167,11 @@ export default function MurgaDetailPage({ params }: MurgaPageProps) {
                         )}
 
                         {/* Discografía */}
-                        {expandedSections.discografia && murgaData.discography && (
+                        {expandedSections.discografia && parodistaData.discography && (
                             <section className="mb-12">
                                 <h2 className="text-3xl font-serif mb-6">Discografía</h2>
                                 <div className="space-y-3">
-                                    {murgaData.discography.map((album, index) => (
+                                    {parodistaData.discography.map((album, index) => (
                                         <div key={index} className="border-l-4 border-black pl-4 py-2">
                                             <p className="text-lg">{album}</p>
                                         </div>
@@ -171,11 +181,11 @@ export default function MurgaDetailPage({ params }: MurgaPageProps) {
                         )}
 
                         {/* Trivia */}
-                        {expandedSections.trivia && murgaData.trivia && (
+                        {expandedSections.trivia && parodistaData.trivia && (
                             <section className="mb-12">
                                 <h2 className="text-3xl font-serif mb-6">Trivia</h2>
                                 <div className="space-y-3">
-                                    {murgaData.trivia.map((fact, index) => (
+                                    {parodistaData.trivia.map((fact, index) => (
                                         <div key={index} className="flex gap-4">
                                             <div className="w-2 h-2 bg-black rounded-full mt-2 flex-shrink-0"></div>
                                             <p className="text-lg text-gray-700">{fact}</p>
@@ -186,11 +196,11 @@ export default function MurgaDetailPage({ params }: MurgaPageProps) {
                         )}
 
                         {/* Galería */}
-                        {expandedSections.galeria && murgaData.gallery && murgaData.gallery.length > 0 && (
+                        {expandedSections.galeria && parodistaData.gallery && parodistaData.gallery.length > 0 && (
                             <section className="mb-12">
                                 <h2 className="text-3xl font-serif mb-6">Galería</h2>
                                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                                    {murgaData.gallery.map((image, index) => (
+                                    {parodistaData.gallery.map((image, index) => (
                                         <div key={index} className="relative h-48 rounded-lg overflow-hidden">
                                             <ImageWithFallback
                                                 src={image}
@@ -205,20 +215,19 @@ export default function MurgaDetailPage({ params }: MurgaPageProps) {
                         )}
 
                         {/* Información */}
-                        {expandedSections.informacion && murgaData.information && (
+                        {expandedSections.informacion && parodistaData.information && (
                             <section className="mb-12">
                                 <h2 className="text-3xl font-serif mb-6">Información</h2>
                                 <p className="text-lg leading-relaxed text-gray-700">
-                                    {murgaData.information}
+                                    {parodistaData.information}
                                 </p>
                             </section>
                         )}
 
-
                         <section className="mb-12 border-t pt-8">
                             <h2 className="text-3xl font-serif mb-6">Descripción</h2>
                             <p className="text-lg leading-relaxed text-gray-700">
-                                {murgaData.description}
+                                {parodistaData.description}
                             </p>
                         </section>
                     </div>
@@ -227,10 +236,10 @@ export default function MurgaDetailPage({ params }: MurgaPageProps) {
                 {/* Back Button */}
                 <div className="border-t pt-8">
                     <Link
-                        href="/categorias/murgas"
+                        href="/categorias/parodistas"
                         className="inline-flex items-center gap-2 text-black hover:underline"
                     >
-                        ← Volver a todas las murgas
+                        ← Volver a todos los parodistas
                     </Link>
                 </div>
             </div>
