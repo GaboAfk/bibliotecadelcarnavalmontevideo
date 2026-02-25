@@ -2,12 +2,11 @@
 
 import Link from "next/link";
 import { ImageWithFallback } from "@/components/ImageWithFallback";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Autoplay, Pagination } from 'swiper/modules';
+import { ChevronRight } from "lucide-react";
 import 'swiper/css';
 import 'swiper/css/navigation';
-import { novedadesCards } from '@/data/novedadesCards';
+import { NovedadesSection } from "@/components/NovedadesSection";
+import { AlphabetGrid } from "@/components/AlphabetGrid";
 
 // ─── Data ─────────────────────────────────────────────────────
 const murgas: Record<string, string[]> = {
@@ -116,121 +115,15 @@ export default function MurgasPage() {
                     </p>
                 </div>
 
-                {/* Alphabet grid */}
-                <div className="max-w-7xl mx-auto">
-                    <h2 className="text-2xl mb-8 font-serif">Explorá nuestro archivo de murgas:</h2>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-px bg-gray-300">
-                        {letters.map((letter) => (
-                            <div
-                                key={letter}
-                                className="bg-gray-50 p-5 hover:bg-gray-100 transition-colors"
-                            >
-                                <div className="text-2xl font-bold mb-3 text-black transition-all duration-200 cursor-default">{letter}</div>
-                                <ul className="space-y-1">
-                                    {murgas[letter].map((name) => (
-                                        <li key={name}>
-                                            <Link
-                                                href={`/categorias/murgas/${slugify(name)}`}
-                                                className="block py-1 text-black hover:scale-90 hover:font-black cursor-default transition-all "
-                                            >
-                                                {name}
-                                            </Link>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        ))}
-                    </div>
-                </div>
+                <AlphabetGrid
+                    data={murgas}
+                    baseUrl="/categorias/murgas"
+                    title="Explorá nuestro archivo de murgas:"
+                    slugify={slugify}
+                />
             </div>
 
-            {/* Novedades Section */}
-            <section className="w-full px-6 py-10 relative">
-                <div className="flex max-w-7xl mx-auto items-center justify-between mb-8">
-                    <h2 className="text-3xl font-serif">Novedades:</h2>
-                </div>
-                <div className="relative max-w-7xl mx-auto overflow-visible">
-                    <Swiper
-                        modules={[Navigation, Autoplay]}
-                        spaceBetween={16}
-                        loop={true}
-                        autoplay={{
-                            delay: 3000,
-                            disableOnInteraction: false,
-                            pauseOnMouseEnter: false
-                        }}
-                        navigation={{
-                            nextEl: '.swiper-button-next',
-                            prevEl: '.swiper-button-prev',
-                        }}
-                        breakpoints={{
-                            0: {
-                                slidesPerView: 1,
-                            },
-                            640: {
-                                slidesPerView: 2,
-                            },
-                            768: {
-                                slidesPerView: 3,
-                            },
-                            1024: {
-                                slidesPerView: 4,
-                            },
-                        }}
-                        className="mySwiper overflow-visible"
-                    >
-                        {novedadesCards.map((card: any, index: number) => (
-                            <SwiperSlide key={index}>
-                                <a href="#" className="block rounded-lg overflow-hidden transition-all bg-white hover:scale-95">
-                                    <div className="h-48 bg-gray-100 relative">
-                                        <ImageWithFallback
-                                            src={card.image}
-                                            alt={card.title}
-                                            fill
-                                            className="object-cover"
-                                        />
-                                    </div>
-                                    <div
-                                        className="p-6 h-24 flex flex-col justify-between relative"
-                                        style={{ backgroundColor: card.color }}
-                                    >
-                                        <div className="absolute inset-0 bg-black/15"></div>
-                                        <div className="relative z-10">
-                                            <h3 className="text-white font-bold text-base leading-tight text-shadow-strong">
-                                                {card.title}
-                                            </h3>
-                                        </div>
-                                    </div>
-                                </a>
-                            </SwiperSlide>
-                        ))}
-                    </Swiper>
-
-                    {/* Custom Navigation Buttons for News Carousel */}
-                    <button
-                        onClick={() => {
-                            const swiper = document.querySelector('.mySwiper') as any;
-                            if (swiper?.swiper) {
-                                swiper.swiper.slidePrev();
-                            }
-                        }}
-                        className="absolute left-0 top-1/2 -translate-y-1/2 z-30 p-3 bg-white rounded-full shadow-lg border border-black hover:bg-black hover:text-white transition-all -translate-x-18 hidden md:block"
-                    >
-                        <ChevronLeft size={24} />
-                    </button>
-                    <button
-                        onClick={() => {
-                            const swiper = document.querySelector('.mySwiper') as any;
-                            if (swiper?.swiper) {
-                                swiper.swiper.slideNext();
-                            }
-                        }}
-                        className="absolute right-0 top-1/2 -translate-y-1/2 z-30 p-3 bg-white rounded-full shadow-lg border border-black hover:bg-black hover:text-white transition-all translate-x-18 hidden md:block"
-                    >
-                        <ChevronRight size={24} />
-                    </button>
-                </div>
-            </section>
+            <NovedadesSection />
         </div>
     );
 }

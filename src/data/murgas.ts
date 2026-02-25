@@ -13,10 +13,8 @@ export interface Show {
     id: string;
     title: string;
     image: string;
-    promotionDate: string;
     year?: number;
     repertoire?: ShowSection[];
-    presentation?: string;
     gallery?: string[];
     data?: string;
     credits?: ShowCredit[];
@@ -44,9 +42,7 @@ export const murgasData: Record<string, MurgaData> = {
                 id: "agarrate-el-viaje",
                 title: "El Viaje",
                 image: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=400&q=80",
-                promotionDate: "2024-02-15",
                 year: 2008,
-                presentation: "Este es el comienzo de mi viaje, es el final de mi camino. No llevo prisa ni equipaje, solo cenizas en el mar de este remendado corazón, para viajar.",
                 repertoire: [
                     { title: "Presentación", content: "Introducción el novio de la nieta" },
                     { title: "Novio de la nieta", content: "Novio de la nieta" },
@@ -181,31 +177,31 @@ en un camión que se va.`
                 id: "agarrate-tablado-amateur",
                 title: "Tablado Amateur",
                 image: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=400&q=80",
-                promotionDate: "2024-02-15"
+                year: 2010,
+                repertoire: [
+                    { title: "Presentación", content: "Introducción el novio de la nieta" }
+                ],
+
             },
             {
                 id: "agarrate-fin-mundo",
                 title: "El Fin del Mundo",
                 image: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=400&q=80",
-                promotionDate: "2024-02-20"
             },
             {
                 id: "agarrate-defensores",
                 title: "Defensores Causas",
                 image: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=400&q=80",
-                promotionDate: "2024-02-25"
             },
             {
                 id: "agarrate-tiempo",
                 title: "El Tiempo",
                 image: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=400&q=80",
-                promotionDate: "2024-03-01"
             },
             {
                 id: "agarrate-corso",
                 title: "El Corso del Humano",
                 image: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=400&q=80",
-                promotionDate: "2024-03-05"
             }
         ],
         positions: [
@@ -244,13 +240,11 @@ en un camión que se va.`
                 id: "antimurga-tablado",
                 title: "Tablado Amateur",
                 image: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=400&q=80",
-                promotionDate: "2024-02-18"
             },
             {
                 id: "antimurga-fin",
                 title: "El Fin del Mundo",
                 image: "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=400&q=80",
-                promotionDate: "2024-02-22"
             }
         ],
         positions: [

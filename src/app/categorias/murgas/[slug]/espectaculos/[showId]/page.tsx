@@ -83,7 +83,7 @@ export default function ShowDetailPage({ params }: ShowDetailPageProps) {
             <div className="w-full bg-black text-white py-4">
                 <div className="max-w-7xl mx-auto px-6">
                     <h1 className="text-4xl md:text-5xl font-serif text-center tracking-wide">
-                        {murgaData.name}: {show.title}, {show.year}
+                        {murgaData.name}: {show.title} {show.year ? `(${show.year})` : ""}
                     </h1>
                 </div>
             </div>
