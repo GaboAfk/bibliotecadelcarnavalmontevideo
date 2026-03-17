@@ -104,3 +104,14 @@ export const sociedadesAlphabet: Record<string, string[]> = {
 };
 
 export const availableSociedades = Object.values(sociedadesData).map(sociedad => sociedad.name);
+
+export const sociedadesInfo = {
+    image: "/images/sociedades/sociedad_de_negros_y_lubolos.jpg",
+    alt: "Comparsa de negros y lubolos",
+    badge: "Yambo Kenia - 2018",
+    description: `La categoría Sociedades de Negros y Lubolos es una de las expresiones tradicionales del carnaval, vinculada históricamente a la cultura afro-uruguaya.
+
+Los conjuntos de esta categoría presentan espectáculos basados en la interpretación del candombe, mediante un cuerpo de baile, personajes tradicionales y una cuerda de tambores integrada por chico, repique y piano, instrumentos característicos de este género musical. El espectáculo incluye coreografías, cantos y escenas que evocan elementos históricos y simbólicos de la tradición afro-uruguaya.
+
+Entre los componentes escénicos más representativos se encuentran personajes como la Mama Vieja, el Gramillero y el Escobero, figuras tradicionales que forman parte del imaginario del candombe y de las comparsas carnavalescas. A través de la música, la danza y la puesta en escena, las Sociedades de Negros y Lubolos preservan y difunden una de las tradiciones culturales más significativas del país.`,
+};

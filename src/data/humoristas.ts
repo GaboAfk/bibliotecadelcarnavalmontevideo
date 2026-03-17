@@ -103,3 +103,14 @@ export const humoristasAlphabet: Record<string, string[]> = {
 };
 
 export const availableHumoristas = Object.values(humoristasData).map(humorista => humorista.name);
+
+export const humoristasInfo = {
+    image: "/images/humoristas/humoristas.jpg",
+    alt: "Elenco de humoristas en el escenario",
+    badge: "Los Carlitos: Premio a mejor espectáculo humorístico 2025",
+    description: `Esta categoría tiene como principal finalidad el humor.
+
+A diferencia de otras categorías del carnaval, el eje del espectáculo de humoristas se encuentra en la construcción de situaciones humorísticas originales, más que en la parodia de argumentos previamente conocidos. Los distintos cuadros que integran el espectáculo pueden abordar temas de actualidad, escenas de la vida cotidiana o personajes caricaturescos, recurriendo al absurdo, la sátira, el juego verbal y el humor físico como principales recursos expresivos.
+
+Los espectáculos suelen organizarse en una secuencia de cuadros o humoradas que articulan una propuesta humorística general, incorporando canciones, intervenciones musicales y elementos coreográficos. La actuación y la creación de personajes constituyen elementos centrales del género, así como el ritmo escénico y la interacción cómica entre los integrantes del conjunto.`,
+};

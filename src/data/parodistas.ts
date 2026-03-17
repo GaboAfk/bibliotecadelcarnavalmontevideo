@@ -104,3 +104,14 @@ export const parodistasAlphabet: Record<string, string[]> = {
 };
 
 export const availableParodistas = Object.values(parodistasData).map(parodista => parodista.name);
+
+export const parodistasInfo = {
+    image: "/images/parodistas/parodistas.jpg",
+    alt: "Parodistas en escena teatral",
+    badge: "Los Muchachos: primer premio en categoría parodistas 2020",
+    description: `Los conjuntos de parodistas presentan espectáculos teatrales-musicales basados en la parodia de argumentos provenientes de obras literarias, relatos históricos, biografías o hechos y personajes de conocimiento público.
+
+De acuerdo con la reglamentación del concurso oficial de carnaval, la parodia consiste en una imitación burlesca realizada en tono jocoso y con intención artística, a partir de obras, hechos o personajes reconocibles por el público. Estas historias son reinterpretadas mediante actuación, música, humor, danza y elaboradas puestas escénicas.
+
+El espectáculo de parodistas suele organizarse alrededor de una o más parodias centrales, que desarrollan el argumento elegido mediante escenas teatrales, canciones y cuadros coreográficos, pudiendo incorporar también momentos humorísticos o dramáticos según la propuesta artística del conjunto.`,
+};

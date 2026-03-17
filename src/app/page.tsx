@@ -9,27 +9,13 @@ import { Autoplay, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { categoriesData } from '@/data/categoriesData';
+import { frasesPromo } from '@/data/frasesPromo';
+import { nuestraBiblioteca } from '@/data/nuestraBiblioteca';
 
 export default function Homepage() {
     const [currentSlide, setCurrentSlide] = useState(0);
 
-    const slides = [
-        {
-            image: "/hero/carrusel1.jpg",
-            subtitle: "Sabemos que",
-            title: "Solo hay cultura si se pone en valor",
-        },
-        {
-            image: "/hero/carrusel2.jpg",
-            subtitle: "Preservamos",
-            title: "La memoria viva del carnaval uruguayo",
-        },
-        {
-            image: "/hero/carrusel3.jpg",
-            subtitle: "Celebramos",
-            title: "La tradición y el arte carnavalesco",
-        },
-    ];
+    const slides = frasesPromo;
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -97,21 +83,11 @@ export default function Homepage() {
                 <div className="max-w-7xl mx-auto px-6">
                     <div className="grid md:grid-cols-2 gap-12 items-center mb-12">
                         <div className="order-2 md:order-1">
-                            <h2 className="text-3xl mb-8 font-serif">Nuestra Biblioteca</h2>
+                            <h2 className="text-3xl mb-8 font-serif">{nuestraBiblioteca.title}</h2>
                             <div className="space-y-4 text-lg leading-relaxed">
-                                <p>
-                                    La Biblioteca Oficial del Carnaval Montevideano es un espacio dedicado a la preservación,
-                                    investigación y difusión de la memoria del carnaval uruguayo.
-                                </p>
-                                <p>
-                                    Nuestro acervo incluye documentos históricos, fotografías, grabaciones audiovisuales,
-                                    partituras, textos de espectáculos y testimonios orales que dan cuenta de más de un siglo
-                                    de tradición carnavalera.
-                                </p>
-                                <p>
-                                    Trabajamos día a día para poner en valor este patrimonio cultural invaluable, haciéndolo
-                                    accesible a investigadores, estudiantes, artistas y al público en general.
-                                </p>
+                                {nuestraBiblioteca.body.split("\n\n").map((p, i) => (
+                                    <p key={i}>{p}</p>
+                                ))}
                             </div>
                         </div>
                         <div className="order-1 md:order-2">

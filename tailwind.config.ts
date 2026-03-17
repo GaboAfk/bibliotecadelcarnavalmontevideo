@@ -8,6 +8,9 @@ const config: Config = {
     ],
     theme: {
         extend: {
+            screens: {
+                nav: "1140px",
+            },
             fontFamily: {
                 serif: ["Playfair Display", "Georgia", "serif"],
                 sans: ["Inter", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "sans-serif"],

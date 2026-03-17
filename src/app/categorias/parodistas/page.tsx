@@ -5,7 +5,7 @@ import { ImageWithFallback } from "@/components/ImageWithFallback";
 import { ChevronRight } from "lucide-react";
 import { NovedadesSection } from "@/components/NovedadesSection";
 import { AlphabetGrid } from "@/components/AlphabetGrid";
-import { parodistasAlphabet, availableParodistas } from '@/data/parodistas';
+import { parodistasAlphabet, availableParodistas, parodistasInfo } from '@/data/parodistas';
 import { slugify } from '@/utils/slugify';
 
 export default function ParodistasPage() {
@@ -30,8 +30,8 @@ export default function ParodistasPage() {
                 {/* Hero */}
                 <div className="relative h-96 mb-12 rounded-lg overflow-hidden">
                     <ImageWithFallback
-                        src="/images/parodistas/parodistas.jpg"
-                        alt="Parodistas en escena teatral"
+                        src={parodistasInfo.image}
+                        alt={parodistasInfo.alt}
                         fill
                         priority
                         className="object-cover"
@@ -40,22 +40,15 @@ export default function ParodistasPage() {
 
                     {/* Badge */}
                     <div className="absolute bottom-4 md:bottom-8 right-4 md:right-8 bg-white p-4 rounded-lg max-w-xs md:max-w-sm shadow-lg">
-                        <p className="text-xs md:text-sm">
-                            <strong>Los Muchachos:</strong> primer premio en categoría parodistas 2020
-                        </p>
+                        <p className="text-xs md:text-sm">{parodistasInfo.badge}</p>
                     </div>
                 </div>
 
                 {/* Descripción */}
                 <div className="max-w-7xl mx-auto mb-12 space-y-4 text-lg leading-relaxed">
-                    <p>
-                        Los parodistas llevan al tablado puestas teatrales completas: cambian de personajes, recrean escenas históricas y mezclan humor
-                        con narrativas intensas. Cada presentación combina coreografías, coros potentes y una escenografía que se transforma ante el público.
-                    </p>
-                    <p>
-                        Este género exige precisión actoral y vocal. Los cuadros suelen recorrer diferentes épocas y estilos musicales, con arreglos corales
-                        pensados para sostener la historia y destacar la creatividad de cada conjunto.
-                    </p>
+                    {parodistasInfo.description.split("\n\n").map((p, i) => (
+                        <p key={i}>{p}</p>
+                    ))}
                 </div>
 
                 <AlphabetGrid
