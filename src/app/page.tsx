@@ -79,7 +79,7 @@ export default function Homepage() {
             <NovedadesSection />
 
             {/* Nuestra Biblioteca Section */}
-            <section className="w-full py-10 bg-gray-200">
+            {/* <section className="w-full py-10 bg-gray-200">
                 <div className="max-w-7xl mx-auto px-6">
                     <div className="grid md:grid-cols-2 gap-12 items-center mb-12">
                         <div className="order-2 md:order-1">
@@ -107,7 +107,7 @@ export default function Homepage() {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section> */}
 
             {/* Categorías Section */}
             <section className="w-full px-6 py-10 bg-gray-50">
