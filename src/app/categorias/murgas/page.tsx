@@ -8,7 +8,7 @@ import 'swiper/css/navigation';
 import { NovedadesSection } from "@/components/NovedadesSection";
 import { AlphabetGrid } from "@/components/AlphabetGrid";
 
-import { murgasAlphabet, availableMurgas } from '@/data/murgas';
+import { murgasAlphabet, availableMurgas, murgasInfo } from '@/data/murgas';
 import { slugify } from '@/utils/slugify';
 
 export default function MurgasPage() {
@@ -35,8 +35,8 @@ export default function MurgasPage() {
                 {/* Hero */}
                 <div className="relative h-96 mb-12 rounded-lg overflow-hidden">
                     <ImageWithFallback
-                        src="/images/murgas/murgas.png"
-                        alt="Murgas en escenario"
+                        src={murgasInfo.image}
+                        alt={murgasInfo.alt}
                         fill
                         priority
                         className="object-cover"
@@ -45,20 +45,13 @@ export default function MurgasPage() {
 
                     {/* Badge */}
                     <div className="absolute bottom-4 md:bottom-8 right-4 md:right-8 bg-white p-4 rounded-lg max-w-xs md:max-w-sm shadow-lg">
-                        <p className="text-xs md:text-sm">
-                            <strong>Doña Bastarda:</strong> Primer premio de la categoría Murgas, Carnaval 2025
-                        </p>
+                        <p className="text-xs md:text-sm">{murgasInfo.badge}</p>
                     </div>
                 </div>
 
                 {/* Descripción */}
                 <div className="max-w-7xl mx-auto mb-12">
-                    <p className="text-lg leading-relaxed mb-4">
-                        La murga se caracteriza por criticar sin ataduras, apelando al humor, la ironía y la poesía; también por construir con sus versos acertadas caricaturas de la
-                        sociedad y los personajes públicos del momento. Está compuesta por un coro, un director y un trío de percusionistas que tocan la tradicional batería de
-                        murga (bombo, platillos y redoblante). El coro tiene una particular forma de cantar y una fuerte presencia escénica. La murga como género musical es de
-                        los más populares y representativos de Uruguay.
-                    </p>
+                    <p className="text-lg leading-relaxed mb-4">{murgasInfo.description}</p>
                 </div>
 
                 <AlphabetGrid

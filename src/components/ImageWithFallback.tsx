@@ -27,7 +27,7 @@ export function ImageWithFallback({
     const [error, setError] = useState(false);
     const [useFallback, setUseFallback] = useState(false);
 
-    if (error || useFallback) {
+    if (!src || error || useFallback) {
         if (fallbackSrc && !useFallback) {
             setUseFallback(true);
             setError(false);

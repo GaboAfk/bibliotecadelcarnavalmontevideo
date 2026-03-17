@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { ImageWithFallback } from "@/components/ImageWithFallback";
+import { nuestraBiblioteca } from '@/data/nuestraBiblioteca';
 
 export default function NuestraBibliotecaPage() {
     return (
@@ -20,21 +21,11 @@ export default function NuestraBibliotecaPage() {
 
             <div className="bg-white pt-10 pb-10">
                 <div className="max-w mx-auto px-20">
-                    <h1 className="text-4xl mb-8 font-serif">Nuestra Biblioteca</h1>
+                    <h1 className="text-4xl mb-8 font-serif">{nuestraBiblioteca.title}</h1>
                     <div className="space-y-4 text-lg leading-relaxed">
-                        <p>
-                            La Biblioteca Oficial del Carnaval Montevideano es un espacio dedicado a la preservación,
-                            investigación y difusión de la memoria del carnaval uruguayo.
-                        </p>
-                        <p>
-                            Nuestro acervo incluye documentos históricos, fotografías, grabaciones audiovisuales,
-                            partituras, textos de espectáculos y testimonios orales que dan cuenta de más de siglo
-                            de tradición carnavalera.
-                        </p>
-                        <p>
-                            Trabajamos día a día para poner en valor este patrimonio cultural invaluable, haciéndolo
-                            accesible a investigadores, estudiantes, artistas y al público en general.
-                        </p>
+                        {nuestraBiblioteca.body.split("\n\n").map((p, i) => (
+                            <p key={i}>{p}</p>
+                        ))}
                     </div>
                 </div>
             </div>

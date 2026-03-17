@@ -63,7 +63,7 @@ export function Header() {
                     </Link>
 
                     {/* Desktop Navigation */}
-                    <nav className="hidden md:flex items-center gap-0.5">
+                    <nav className="hidden nav:flex items-center gap-0.5">
                         <SearchBar />
                         <Link href="/" className={navLinkClass("/")}>
                             Inicio
@@ -130,7 +130,7 @@ export function Header() {
 
                     {/* Mobile menu button */}
                     <button
-                        className="md:hidden text-black"
+                        className="nav:hidden text-black"
                         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                     >
                         {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -139,7 +139,7 @@ export function Header() {
 
                 {/* Mobile Navigation */}
                 {mobileMenuOpen && (
-                    <nav className="md:hidden mt-4 pb-4  pt-4 space-y-3">
+                    <nav className="nav:hidden mt-4 pb-4  pt-4 space-y-3">
                         <div className="mb-4" >
                             <SearchBar onSelect={() => setMobileMenuOpen(false)} />
                         </div>

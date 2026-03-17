@@ -5,7 +5,7 @@ import { ImageWithFallback } from "@/components/ImageWithFallback";
 import { ChevronRight } from "lucide-react";
 import { NovedadesSection } from "@/components/NovedadesSection";
 import { AlphabetGrid } from "@/components/AlphabetGrid";
-import { humoristasAlphabet, availableHumoristas } from '@/data/humoristas';
+import { humoristasAlphabet, availableHumoristas, humoristasInfo } from '@/data/humoristas';
 import { slugify } from '@/utils/slugify';
 
 export default function HumoristasPage() {
@@ -30,8 +30,8 @@ export default function HumoristasPage() {
                 {/* Hero */}
                 <div className="relative h-96 mb-12 rounded-lg overflow-hidden">
                     <ImageWithFallback
-                        src="/images/humoristas/humoristas.jpg"
-                        alt="Elenco de humoristas en el escenario"
+                        src={humoristasInfo.image}
+                        alt={humoristasInfo.alt}
                         fill
                         priority
                         className="object-cover"
@@ -40,24 +40,15 @@ export default function HumoristasPage() {
 
                     {/* Badge */}
                     <div className="absolute bottom-4 md:bottom-8 right-4 md:right-8 bg-white p-4 rounded-lg max-w-xs md:max-w-sm shadow-lg">
-                        <p className="text-xs md:text-sm">
-                            <strong>Los Carlitos:</strong> Premio a mejor espectáculo humorístico 2025
-                        </p>
+                        <p className="text-xs md:text-sm">{humoristasInfo.badge}</p>
                     </div>
                 </div>
 
                 {/* Descripción */}
                 <div className="max-w-7xl mx-auto mb-12 space-y-4 text-lg leading-relaxed">
-                    <p>
-                        Los humoristas son el pulso desenfadado del carnaval. Con sketches veloces, personajes icónicos y un sentido
-                        del humor que combina sátira política con referencias cotidianas, transforman el escenario en un show de comicidad
-                        vibrante y coreografías ajustadas.
-                    </p>
-                    <p>
-                        Sus espectáculos mezclan actuación teatral, canto en conjunto y una batería milimétricamente sincronizada. Cada año
-                        sorprenden con puestas en escena repletas de guiños actuales y textos afilados que se convierten en frases
-                        populares durante todo el carnaval.
-                    </p>
+                    {humoristasInfo.description.split("\n\n").map((p, i) => (
+                        <p key={i}>{p}</p>
+                    ))}
                 </div>
 
                 <AlphabetGrid

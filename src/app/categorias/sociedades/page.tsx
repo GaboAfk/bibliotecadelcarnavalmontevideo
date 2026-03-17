@@ -5,7 +5,7 @@ import { ImageWithFallback } from "@/components/ImageWithFallback";
 import { ChevronRight } from "lucide-react";
 import { NovedadesSection } from "@/components/NovedadesSection";
 import { AlphabetGrid } from "@/components/AlphabetGrid";
-import { sociedadesAlphabet, availableSociedades } from '@/data/sociedades';
+import { sociedadesAlphabet, availableSociedades, sociedadesInfo } from '@/data/sociedades';
 import { slugify } from '@/utils/slugify';
 
 export default function SociedadesPage() {
@@ -32,8 +32,8 @@ export default function SociedadesPage() {
                 {/* Hero */}
                 <div className="relative h-96 mb-12 rounded-lg overflow-hidden">
                     <ImageWithFallback
-                        src="/images/sociedades/sociedad_de_negros_y_lubolos.jpg"
-                        alt="Comparsa de negros y lubolos"
+                        src={sociedadesInfo.image}
+                        alt={sociedadesInfo.alt}
                         fill
                         priority
                         className="object-cover"
@@ -42,22 +42,15 @@ export default function SociedadesPage() {
 
                     {/* Badge */}
                     <div className="absolute bottom-4 md:bottom-8 right-4 md:right-8 bg-white p-4 rounded-lg max-w-xs md:max-w-sm shadow-lg">
-                        <p className="text-xs md:text-sm">
-                            <strong>Yambo Kenia</strong> - 2018
-                        </p>
+                        <p className="text-xs md:text-sm">{sociedadesInfo.badge}</p>
                     </div>
                 </div>
 
                 {/* Descripción */}
                 <div className="max-w-7xl mx-auto mb-12 space-y-4 text-lg leading-relaxed">
-                    <p>
-                        Las sociedades de negros y lubolos rescatan la memoria afrouruguaya y la elevan con comparsas contundentes. Sus tambores,
-                        bailes y banderas llenan la calle de color y reivindican la tradición ancestral del candombe.
-                    </p>
-                    <p>
-                        Cada conjunto coordina tambores chico, repique y piano, además de una cuerda coreográfica que suma escobilleros, gramilleros
-                        y vedettes. La potencia rítmica y la elegancia de sus puestas convierten a la categoría en un símbolo cultural imprescindible.
-                    </p>
+                    {sociedadesInfo.description.split("\n\n").map((p, i) => (
+                        <p key={i}>{p}</p>
+                    ))}
                 </div>
 
                 <AlphabetGrid

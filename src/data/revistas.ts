@@ -104,3 +104,10 @@ export const revistasAlphabet: Record<string, string[]> = {
 };
 
 export const availableRevistas = Object.values(revistasData).map(revista => revista.name);
+
+export const revistasInfo = {
+    image: "/images/revistas/revistas.jpg",
+    alt: "Vestuario colorido de revistas",
+    badge: "Tabú: primer premio en categoría revistas 2020",
+    description: `Inspiradas en el formato de la revista musical teatral, estas agrupaciones se caracterizan por el protagonismo de las coreografías, los arreglos musicales y la puesta en escena, así como por la utilización de vestuarios elaborados, escenografías y cambios de cuadro que construyen un espectáculo dinámico y variado. A lo largo del espectáculo pueden abordarse distintos temas o situaciones mediante números musicales, escenas humorísticas y pasajes coreográficos.`,
+};

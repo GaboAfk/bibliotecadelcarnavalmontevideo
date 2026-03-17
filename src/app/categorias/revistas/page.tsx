@@ -5,7 +5,7 @@ import { ImageWithFallback } from "@/components/ImageWithFallback";
 import { ChevronRight } from "lucide-react";
 import { NovedadesSection } from "@/components/NovedadesSection";
 import { AlphabetGrid } from "@/components/AlphabetGrid";
-import { revistasAlphabet, availableRevistas } from '@/data/revistas';
+import { revistasAlphabet, availableRevistas, revistasInfo } from '@/data/revistas';
 import { slugify } from '@/utils/slugify';
 
 export default function RevistasPage() {
@@ -30,8 +30,8 @@ export default function RevistasPage() {
                 {/* Hero */}
                 <div className="relative h-96 mb-12 rounded-lg overflow-hidden">
                     <ImageWithFallback
-                        src="/images/revistas/revistas.jpg"
-                        alt="Vestuario colorido de revistas"
+                        src={revistasInfo.image}
+                        alt={revistasInfo.alt}
                         fill
                         priority
                         className="object-cover"
@@ -40,22 +40,15 @@ export default function RevistasPage() {
 
                     {/* Badge */}
                     <div className="absolute bottom-4 md:bottom-8 right-4 md:right-8 bg-white p-4 rounded-lg max-w-xs md:max-w-sm shadow-lg">
-                        <p className="text-xs md:text-sm">
-                            <strong>Tabú:</strong>  primer premio en categoría revistas 2020
-                        </p>
+                        <p className="text-xs md:text-sm">{revistasInfo.badge}</p>
                     </div>
                 </div>
 
                 {/* Descripción */}
                 <div className="max-w-7xl mx-auto mb-12 space-y-4 text-lg leading-relaxed">
-                    <p>
-                        Las revistas combinan glamour, humor y crítica social con grandes cuadros coreográficos. Son espectáculos de revista musical
-                        con vestuarios lujosos, cuerpos de baile numerosos y arreglos corales luminosos que transforman el tablado en una pasarela.
-                    </p>
-                    <p>
-                        Cada conjunto crea historias visuales llenas de brillo y energía, donde los cambios de vestuario, la iluminación y el repertorio
-                        pop convierten la categoría en uno de los momentos más vibrantes del carnaval.
-                    </p>
+                    {revistasInfo.description.split("\n\n").map((p, i) => (
+                        <p key={i}>{p}</p>
+                    ))}
                 </div>
 
                 <AlphabetGrid
