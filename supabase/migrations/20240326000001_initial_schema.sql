@@ -3,10 +3,6 @@
 -- ============================================================
 -- Ejecutar en Supabase SQL Editor o como archivo de migración
 
--- Habilitar extensión para UUIDs
-CREATE EXTENSION IF NOT EXISTS "pgcrypto";
-
-
 -- ============================================================
 -- 1. CATEGORIES
 -- Representa las 5 categorías del carnaval
@@ -241,3 +237,28 @@ CREATE POLICY "auth_write_puntajes"          ON puntajes          FOR ALL USING 
 CREATE POLICY "auth_write_menciones"         ON menciones         FOR ALL USING (auth.role() = 'authenticated');
 CREATE POLICY "auth_write_frases_promo"      ON frases_promo      FOR ALL USING (auth.role() = 'authenticated');
 CREATE POLICY "auth_write_static_content"    ON static_content    FOR ALL USING (auth.role() = 'authenticated');
+
+INSERT INTO storage.buckets (id, name, public)
+VALUES ('agrupaciones', 'agrupaciones', true);
+
+-- Bucket público para media general
+INSERT INTO storage.buckets (id, name, public)
+VALUES ('media', 'media', true);
+
+-- Política: cualquiera puede leer
+CREATE POLICY "public read agrupaciones"
+  ON storage.objects FOR SELECT
+  USING (bucket_id = 'agrupaciones');
+
+CREATE POLICY "public read media"
+  ON storage.objects FOR SELECT
+  USING (bucket_id = 'media');
+
+-- Política: solo autenticados pueden subir/borrar
+CREATE POLICY "auth upload agrupaciones"
+  ON storage.objects FOR INSERT
+  WITH CHECK (bucket_id = 'agrupaciones' AND auth.role() = 'authenticated');
+
+CREATE POLICY "auth upload media"
+  ON storage.objects FOR INSERT
+  WITH CHECK (bucket_id = 'media' AND auth.role() = 'authenticated');
