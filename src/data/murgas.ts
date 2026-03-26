@@ -511,5 +511,9 @@ export const murgasInfo = {
     image: "/images/murgas/murgas.png",
     alt: "Murgas en escenario",
     badge: "Doña Bastarda: Primer premio de la categoría Murgas, Carnaval 2025",
-    description: "La murga es una de las mayores expresiones de la cultura uruguaya por su adhesión popular. Si bien se identifica como uno de sus orígenes a Cádiz, (sobre todo desde 1908), ha tenido innumerables transformaciones desde finales del siglo XIX. Es un género único y en las últimas décadas se ha transformado en una manifestación cultural que cosecha adeptos en todo el mundo. La murga uruguaya, actualmente está integrada por 17 componentes: un director escénico y coral, 13 componen el coro y 3 integrantes que conforman la batería, compuesta por platillos, bombo y redoblante.",
+    description: `La murga es una de las mayores expresiones de la cultura uruguaya por su adhesión popular. Si bien se identifica como uno de sus orígenes a Cádiz, (sobre todo desde 1908), ha tenido innumerables transformaciones desde finales del siglo XIX.
+
+Es un género único y en las últimas décadas se ha transformado en una manifestación cultural que cosecha adeptos en todo el mundo.
+
+La murga uruguaya, actualmente está integrada por 17 componentes: un director escénico y coral, 13 componen el coro y 3 integrantes que conforman la batería, compuesta por platillos, bombo y redoblante.`,
 };

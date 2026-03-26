@@ -22,7 +22,7 @@ export function ImageWithFallback({
     width,
     height,
     priority = false,
-    fallbackSrc,
+    fallbackSrc = "/logo_default.png",
 }: ImageWithFallbackProps) {
     const [error, setError] = useState(false);
     const [useFallback, setUseFallback] = useState(false);
