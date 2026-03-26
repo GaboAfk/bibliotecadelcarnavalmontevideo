@@ -91,7 +91,7 @@ export function Footer() {
                             </svg>
                         </a>
                         <div className="h-5 border-l border-gray-300 mx-2"></div>
-                        <img src="/footerlogo.png" alt="Footer Logo" className="h-8" />
+                        <img src="/logo_biblioteca_optimizado.svg" alt="Footer Logo" className="h-8" />
                     </div>
                 </div>
             </div>

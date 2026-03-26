@@ -59,7 +59,7 @@ export function Header() {
                         <span className="text-md md:text-md tracking-wider uppercase leading-tight">
                             BIBLIOTECA OFICIAL <br />DEL CARNAVAL<br /> MONTEVIDEANO
                         </span>
-                        <img src="/navbar carnaval icono.png" alt="Biblioteca Carnaval" className="w-36 h-16 flex-shrink-0" />
+                        <img src="/logo_biblioteca_optimizado.svg" alt="Biblioteca Carnaval" className=" object-contain flex-shrink-0" />
                     </Link>
 
                     {/* Desktop Navigation */}

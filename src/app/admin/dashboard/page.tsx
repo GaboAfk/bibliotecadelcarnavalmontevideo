@@ -6,6 +6,7 @@ import {
     LogOut, GitBranch, Loader, CheckCircle, XCircle,
     ArrowLeft, Plus, Trash2, Save, Upload, ChevronDown, ChevronUp, ImageIcon
 } from "lucide-react";
+import { ImageWithFallback } from "@/components/ImageWithFallback";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -146,7 +147,13 @@ function ImageField({ label, value, onChange, category, onUpload }: {
                 />
             </div>
             {value && (
-                <img src={value} alt="" className="mt-2 h-24 w-auto rounded border border-gray-200 object-cover" onError={e => (e.currentTarget.style.display = "none")} />
+                <ImageWithFallback
+                    src={value}
+                    alt=""
+                    width={96}
+                    height={96}
+                    className="mt-2 w-auto h-24 rounded border border-gray-200 object-cover"
+                />
             )}
         </div>
     );
@@ -218,8 +225,13 @@ function GalleryField({ label, values, onChange, category, onUpload }: {
                 {values.map((v, i) => (
                     <div key={i} className="relative group">
                         {v
-                            ? <img src={v} alt="" className="w-full h-24 object-cover rounded border border-gray-200"
-                                onError={e => (e.currentTarget.style.opacity = "0.3")} />
+                            ? <ImageWithFallback
+                                src={v}
+                                alt=""
+                                width={100}
+                                height={96}
+                                className="w-full h-24 object-cover rounded border border-gray-200"
+                            />
                             : <div className="w-full h-24 bg-gray-100 rounded border border-dashed border-gray-300 flex items-center justify-center">
                                 <ImageIcon size={20} className="text-gray-300" />
                             </div>
@@ -372,7 +384,13 @@ function EntityEditor({ slug, category, data, onSave, onBack, onUploadImage }: {
             {/* Header con miniatura */}
             <div className="flex items-center gap-4">
                 {thumb
-                    ? <img src={thumb} alt="" className="w-20 h-20 object-cover rounded-lg border border-gray-200" onError={e => (e.currentTarget.style.display = "none")} />
+                    ? <ImageWithFallback
+                        src={thumb}
+                        alt=""
+                        width={80}
+                        height={80}
+                        className="w-20 h-20 object-cover rounded-lg border border-gray-200"
+                    />
                     : <div className="w-20 h-20 bg-gray-100 rounded-lg flex items-center justify-center border border-gray-200"><ImageIcon size={24} className="text-gray-300" /></div>
                 }
                 <div>
@@ -417,7 +435,13 @@ function EntityEditor({ slug, category, data, onSave, onBack, onUploadImage }: {
                 {entity.shows.map(show => (
                     <div key={show.id} className="flex items-center gap-3 border border-gray-100 rounded-lg p-3 hover:bg-gray-50">
                         {show.image
-                            ? <img src={show.image} alt="" className="w-14 h-14 object-cover rounded" onError={e => (e.currentTarget.style.display = "none")} />
+                            ? <ImageWithFallback
+                                src={show.image}
+                                alt=""
+                                width={56}
+                                height={56}
+                                className="w-14 h-14 object-cover rounded"
+                            />
                             : <div className="w-14 h-14 bg-gray-100 rounded flex items-center justify-center"><ImageIcon size={16} className="text-gray-400" /></div>
                         }
                         <div className="flex-1 min-w-0">
@@ -631,7 +655,13 @@ function EntityList({ category, label, onSelect, onAdd, onDelete, onBack }: {
                                 className="flex items-center gap-3 flex-1 p-3 text-left min-w-0"
                             >
                                 {thumb
-                                    ? <img src={thumb} alt="" className="w-14 h-14 object-cover rounded flex-shrink-0" onError={e => (e.currentTarget.style.display = "none")} />
+                                    ? <ImageWithFallback
+                                        src={thumb}
+                                        alt=""
+                                        width={56}
+                                        height={56}
+                                        className="w-14 h-14 object-cover rounded flex-shrink-0"
+                                    />
                                     : <div className="w-14 h-14 bg-gray-100 rounded flex-shrink-0 flex items-center justify-center"><ImageIcon size={18} className="text-gray-300" /></div>
                                 }
                                 <div className="flex-1 min-w-0">
@@ -700,7 +730,13 @@ function NovedadList({ onSelect, onBack }: {
                         className="w-full flex items-center gap-4 border border-gray-100 rounded-lg p-4 hover:bg-gray-50 text-left transition-colors"
                     >
                         {n.image
-                            ? <img src={n.image} alt="" className="w-12 h-12 object-cover rounded flex-shrink-0" onError={e => (e.currentTarget.style.display = "none")} />
+                            ? <ImageWithFallback
+                                src={n.image}
+                                alt=""
+                                width={48}
+                                height={48}
+                                className="w-12 h-12 object-cover rounded flex-shrink-0"
+                            />
                             : <div className="w-12 h-12 rounded flex-shrink-0 flex items-center justify-center" style={{ backgroundColor: n.color }}><ImageIcon size={16} className="text-white" /></div>
                         }
                         <div className="flex-1 min-w-0">

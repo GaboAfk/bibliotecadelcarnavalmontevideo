@@ -51,7 +51,7 @@ export default function MurgasPage() {
 
                 {/* Descripción */}
                 <div className="max-w-7xl mx-auto mb-12">
-                    <p className="text-lg leading-relaxed mb-4">{murgasInfo.description}</p>
+                    <p className="text-lg leading-relaxed mb-4 whitespace-pre-wrap">{murgasInfo.description}</p>
                 </div>
 
                 <AlphabetGrid
