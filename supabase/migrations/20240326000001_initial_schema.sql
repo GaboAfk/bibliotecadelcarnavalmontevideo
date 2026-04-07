@@ -37,6 +37,7 @@ CREATE TABLE agrupaciones (
     discography     TEXT[],
     trivia          TEXT[],
     gallery         TEXT[],     -- array de URLs de imágenes
+    disponible      BOOLEAN DEFAULT TRUE,
     created_at      TIMESTAMPTZ DEFAULT NOW()
 );
 
@@ -170,10 +171,10 @@ CREATE INDEX idx_menciones_tipo ON menciones(tipo);
 
 
 -- ============================================================
--- 10. FRASES PROMO
+-- 10. HERO FRASES
 -- Slides del hero de la home
 -- ============================================================
-CREATE TABLE frases_promo (
+CREATE TABLE hero_frases (
     id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     image       TEXT NOT NULL,
     subtitle    TEXT,
@@ -192,6 +193,7 @@ CREATE TABLE static_content (
     id          TEXT PRIMARY KEY,   -- ej: 'nuestra-biblioteca'
     title       TEXT NOT NULL,
     body        TEXT,
+    image       TEXT,
     updated_at  TIMESTAMPTZ DEFAULT NOW()
 );
 
@@ -209,7 +211,7 @@ ALTER TABLE novedades           ENABLE ROW LEVEL SECURITY;
 ALTER TABLE carnaval_editions   ENABLE ROW LEVEL SECURITY;
 ALTER TABLE puntajes            ENABLE ROW LEVEL SECURITY;
 ALTER TABLE menciones           ENABLE ROW LEVEL SECURITY;
-ALTER TABLE frases_promo        ENABLE ROW LEVEL SECURITY;
+ALTER TABLE hero_frases        ENABLE ROW LEVEL SECURITY;
 ALTER TABLE static_content      ENABLE ROW LEVEL SECURITY;
 
 -- Política: cualquiera puede leer
@@ -222,7 +224,7 @@ CREATE POLICY "public_read_novedades"        ON novedades         FOR SELECT USI
 CREATE POLICY "public_read_editions"         ON carnaval_editions FOR SELECT USING (true);
 CREATE POLICY "public_read_puntajes"         ON puntajes          FOR SELECT USING (true);
 CREATE POLICY "public_read_menciones"        ON menciones         FOR SELECT USING (true);
-CREATE POLICY "public_read_frases_promo"     ON frases_promo      FOR SELECT USING (true);
+CREATE POLICY "public_read_hero_frases"     ON hero_frases      FOR SELECT USING (true);
 CREATE POLICY "public_read_static_content"   ON static_content    FOR SELECT USING (true);
 
 -- Política: solo usuarios autenticados pueden escribir
@@ -235,7 +237,7 @@ CREATE POLICY "auth_write_novedades"         ON novedades         FOR ALL USING 
 CREATE POLICY "auth_write_editions"          ON carnaval_editions FOR ALL USING (auth.role() = 'authenticated');
 CREATE POLICY "auth_write_puntajes"          ON puntajes          FOR ALL USING (auth.role() = 'authenticated');
 CREATE POLICY "auth_write_menciones"         ON menciones         FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "auth_write_frases_promo"      ON frases_promo      FOR ALL USING (auth.role() = 'authenticated');
+CREATE POLICY "auth_write_hero_frases"      ON hero_frases      FOR ALL USING (auth.role() = 'authenticated');
 CREATE POLICY "auth_write_static_content"    ON static_content    FOR ALL USING (auth.role() = 'authenticated');
 
 INSERT INTO storage.buckets (id, name, public)

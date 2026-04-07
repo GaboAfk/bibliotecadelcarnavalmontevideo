@@ -12,6 +12,7 @@ interface ImageWithFallbackProps {
     height?: number;
     priority?: boolean;
     fallbackSrc?: string;
+    sizes?: string;
 }
 
 export function ImageWithFallback({

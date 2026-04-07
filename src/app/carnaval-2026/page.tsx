@@ -1,7 +1,5 @@
 import { carnaval2026 } from '@/data/carnaval2026';
 import { ImageWithFallback } from '@/components/ImageWithFallback';
-import Link from 'next/link';
-import { ChevronRight } from 'lucide-react';
 
 export default function Carnaval2026Page() {
     const { title, intro, puntajes, mencionesDirectas, mencionesTecnicasDirectas, mencionesTecnicasNominacion, mencionesColectivas, mencionesIndividuales } = carnaval2026;

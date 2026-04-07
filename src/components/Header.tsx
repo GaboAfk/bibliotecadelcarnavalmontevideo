@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BookOpen, ChevronDown, Menu, X, ChevronUp } from "lucide-react";
+import { ChevronDown, Menu, X, ChevronUp } from "lucide-react";
 import { SearchBar } from "./SearchBar";
 
 export function Header() {

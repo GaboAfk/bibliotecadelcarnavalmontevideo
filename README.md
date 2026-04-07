@@ -1,36 +1,38 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Biblioteca del Carnaval Montevideo
 
-## Getting Started
+Proyecto de la Biblioteca del Carnaval de Montevideo construido con Next.js 16, React 19 y Tailwind CSS 4, utilizando Supabase como backend.
 
-First, run the development server:
+## Instalación y Configuración
+
+### 1. Instalar Homebrew
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Instalar Supabase con Homebrew
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+brew install supabase/tap/supabase
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 3. Configurar Variables de Entorno
 
-## Learn More
+Copiar el archivo de ejemplo:
+```bash
+cp .env.example .env.local
+```
 
-To learn more about Next.js, take a look at the following resources:
+Las variables locales ya están configuradas para usar Supabase local:
+- API: http://127.0.0.1:54321
+- Studio: http://127.0.0.1:54323 (panel de administración)
+- DB: postgresql://postgres:postgres@127.0.0.1:54322/postgres
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 4. Desplegar con run dev:full
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run dev:full
+```
 
-## Deploy on Vercel
+Este comando iniciará Supabase local (usando la instalación de Homebrew) y luego el servidor de desarrollo de Next.js.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
-import { novedadesData } from "@/data/novedades";
+// import { useNovedades } from "@/hooks/useData";
 import { ImageWithFallback } from "@/components/ImageWithFallback";
 import { NovedadesSection } from "@/components/NovedadesSection";
+import { fetchNovedades } from "@/lib/data-queries";
 
 interface NovedadPageProps {
     params: Promise<{
@@ -12,7 +13,8 @@ interface NovedadPageProps {
 
 export default async function NovedadPage({ params }: NovedadPageProps) {
     const { slug } = await params;
-    const novedad = novedadesData.find(n => n.id === slug);
+    const novedades = await fetchNovedades();
+    const novedad = novedades.find(n => n.id === slug);
 
     if (!novedad) {
         return (
@@ -46,7 +48,7 @@ export default async function NovedadPage({ params }: NovedadPageProps) {
                 {/* Hero Image */}
                 <div className="relative h-96 mb-12 rounded-lg overflow-hidden">
                     <ImageWithFallback
-                        src={novedad.image}
+                        src={novedad.image || '/logo_default.png'}
                         alt={novedad.title}
                         fill
                         priority
@@ -59,9 +61,9 @@ export default async function NovedadPage({ params }: NovedadPageProps) {
                     {/* Metadata */}
                     <div className="flex items-center gap-4 mb-8 text-sm text-gray-600">
                         <div className="flex items-center gap-2">
-                            <span className="inline-block w-3 h-3 rounded-full" style={{ backgroundColor: novedad.color }}></span>
-                            <time dateTime={novedad.date}>
-                                {new Date(novedad.date).toLocaleDateString('es-UY', {
+                            <span className="inline-block w-3 h-3 rounded-full" style={{ backgroundColor: novedad.color || '#000' }}></span>
+                            <time dateTime={novedad.date || ''}>
+                                {new Date(novedad.date || '').toLocaleDateString('es-UY', {
                                     year: 'numeric',
                                     month: 'long',
                                     day: 'numeric'

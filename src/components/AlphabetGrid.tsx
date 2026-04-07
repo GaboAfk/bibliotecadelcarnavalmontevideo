@@ -1,16 +1,18 @@
 "use client";
 
 import Link from "next/link";
+import { slugify } from "@/lib/utils";
 
 interface AlphabetGridProps {
     data: Record<string, string[]>;
     baseUrl: string;
     title: string;
-    slugify: (name: string) => string;
     availableItems?: string[]; // Items that have detailed data and should be clickable
 }
 
-export function AlphabetGrid({ data, baseUrl, title, slugify, availableItems }: AlphabetGridProps) {
+
+
+export function AlphabetGrid({ data, baseUrl, title, availableItems }: AlphabetGridProps) {
     const letters = Object.keys(data).sort();
 
     return (

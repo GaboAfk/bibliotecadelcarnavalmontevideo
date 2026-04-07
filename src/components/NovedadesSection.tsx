@@ -7,9 +7,38 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
-import { novedadesData } from '@/data/novedades';
+import { useNovedades } from '@/hooks/useData';
+import { Novedad } from '@/lib/supabase-client';
 
 export function NovedadesSection() {
+    const { novedades, loading, error } = useNovedades();
+
+    if (loading) {
+        return (
+            <section className="w-full px-6 py-10 relative">
+                <div className="flex max-w-7xl mx-auto items-center justify-between mb-8">
+                    <h2 className="text-3xl font-serif">Novedades:</h2>
+                </div>
+                <div className="relative max-w-7xl mx-auto overflow-visible">
+                    <div className="text-center py-10">Cargando novedades...</div>
+                </div>
+            </section>
+        );
+    }
+
+    if (error) {
+        return (
+            <section className="w-full px-6 py-10 relative">
+                <div className="flex max-w-7xl mx-auto items-center justify-between mb-8">
+                    <h2 className="text-3xl font-serif">Novedades:</h2>
+                </div>
+                <div className="relative max-w-7xl mx-auto overflow-visible">
+                    <div className="text-center py-10 text-red-600">Error al cargar novedades: {error}</div>
+                </div>
+            </section>
+        );
+    }
+
     return (
         <section className="w-full px-6 py-10 relative">
             <div className="flex max-w-7xl mx-auto items-center justify-between mb-8">
@@ -45,12 +74,12 @@ export function NovedadesSection() {
                     }}
                     className="mySwiper overflow-visible"
                 >
-                    {novedadesData.map((novedad) => (
+                    {novedades.map((novedad: Novedad) => (
                         <SwiperSlide key={novedad.id}>
                             <Link href={`/novedades/${novedad.id}`} className="block rounded-lg overflow-hidden transition-all bg-white hover:scale-95">
                                 <div className="h-48 bg-gray-100 relative">
                                     <ImageWithFallback
-                                        src={novedad.image}
+                                        src={novedad.image || '/placeholder.jpg'}
                                         alt={novedad.title}
                                         fill
                                         className="object-cover"
@@ -58,7 +87,7 @@ export function NovedadesSection() {
                                 </div>
                                 <div
                                     className="p-6 h-24 flex flex-col justify-between relative"
-                                    style={{ backgroundColor: novedad.color }}
+                                    style={{ backgroundColor: novedad.color || '#000' }}
                                 >
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/5 via-black/2 to-transparent"></div>
                                     <div className="relative z-10">

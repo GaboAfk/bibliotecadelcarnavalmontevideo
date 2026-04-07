@@ -8,11 +8,15 @@ import 'swiper/css/navigation';
 import { NovedadesSection } from "@/components/NovedadesSection";
 import { AlphabetGrid } from "@/components/AlphabetGrid";
 
-import { murgasAlphabet, availableMurgas, murgasInfo } from '@/data/murgas';
-import { slugify } from '@/utils/slugify';
+// import { murgasAlphabet, availableMurgas, murgasInfo } from '@/data/murgas';
+import { murgasAlphabet, availableMurgas, } from '@/data/murgas';
 
-export default function MurgasPage() {
-    const letters = Object.keys(murgasAlphabet).sort();
+import { fetchCategories } from "@/lib/data-queries";
+
+export default async function MurgasPage() {
+    const categories = await fetchCategories();
+    const murgasCategory = categories.find((category) => category.slug === "murgas");
+    console.log(murgasCategory);
 
     return (
         <div className="bg-white pt-24 pb-16">
@@ -35,8 +39,8 @@ export default function MurgasPage() {
                 {/* Hero */}
                 <div className="relative h-96 mb-12 rounded-lg overflow-hidden">
                     <ImageWithFallback
-                        src={murgasInfo.image}
-                        alt={murgasInfo.alt}
+                        src={murgasCategory?.info_image || ""}
+                        alt={murgasCategory?.info_alt || ""}
                         fill
                         priority
                         className="object-cover"
@@ -45,20 +49,19 @@ export default function MurgasPage() {
 
                     {/* Badge */}
                     <div className="absolute bottom-4 md:bottom-8 right-4 md:right-8 bg-white p-4 rounded-lg max-w-xs md:max-w-sm shadow-lg">
-                        <p className="text-xs md:text-sm">{murgasInfo.badge}</p>
+                        <p className="text-xs md:text-sm">{murgasCategory?.info_badge}</p>
                     </div>
                 </div>
 
                 {/* Descripción */}
                 <div className="max-w-7xl mx-auto mb-12">
-                    <p className="text-lg leading-relaxed mb-4 whitespace-pre-wrap">{murgasInfo.description}</p>
+                    <p className="text-lg leading-relaxed mb-4 whitespace-pre-wrap">{murgasCategory?.info_description}</p>
                 </div>
 
                 <AlphabetGrid
                     data={murgasAlphabet}
                     baseUrl="/categorias/murgas"
                     title="Explorá nuestro archivo de murgas:"
-                    slugify={slugify}
                     availableItems={availableMurgas}
                 />
             </div>

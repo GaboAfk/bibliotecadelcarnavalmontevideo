@@ -4,9 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:full": "bash -c 'supabase start && npm run generate-types && npm run dev'",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "generate-types": "supabase gen types typescript --local --schema public > src/lib/database.types.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.100.1",
