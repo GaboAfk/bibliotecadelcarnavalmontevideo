@@ -6,9 +6,6 @@ import 'swiper/css/navigation';
 import { NovedadesSection } from "@/components/NovedadesSection";
 import { AlphabetGrid } from "@/components/AlphabetGrid";
 
-// import { murgasAlphabet, availableMurgas, murgasInfo } from '@/data/murgas';
-import { murgasAlphabet, availableMurgas, } from '@/data/murgas';
-
 import { fetchCategories } from "@/lib/data-queries";
 
 export default async function CategoriaPage({ params }: { params: Promise<{ categoria: string }> }) {
@@ -60,7 +57,6 @@ export default async function CategoriaPage({ params }: { params: Promise<{ cate
                     category={categoria}
                     baseUrl={`/categorias/${categoria}`}
                     title={`Explorá nuestro archivo de ${currentCategory?.name?.toLowerCase() || 'categoría'}:`}
-                    availableItems={availableMurgas}
                 />
             </div>
 

@@ -19,6 +19,7 @@ export type Database = {
           gallery: string[] | null
           history: string | null
           id: string
+          image: string | null
           information: string | null
           name: string
           positions: string[] | null
@@ -34,6 +35,7 @@ export type Database = {
           gallery?: string[] | null
           history?: string | null
           id?: string
+          image?: string | null
           information?: string | null
           name: string
           positions?: string[] | null
@@ -49,6 +51,7 @@ export type Database = {
           gallery?: string[] | null
           history?: string | null
           id?: string
+          image?: string | null
           information?: string | null
           name?: string
           positions?: string[] | null
@@ -270,7 +273,7 @@ export type Database = {
           },
         ]
       }
-      show_sections: {
+      show_repertory: {
         Row: {
           content: string | null
           id: string
@@ -297,7 +300,7 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "show_sections_show_id_fkey"
+            foreignKeyName: "show_repertory_show_id_fkey"
             columns: ["show_id"]
             isOneToOne: false
             referencedRelation: "shows"

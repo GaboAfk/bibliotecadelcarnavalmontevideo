@@ -6,16 +6,13 @@ interface AlphabetGridProps {
     category: string;
     baseUrl: string;
     title: string;
-    availableItems?: string[]; // Items that have detailed data and should be clickable
 }
 
 
 
-export async function AlphabetGrid({ category, baseUrl, title, availableItems }: AlphabetGridProps) {
+export async function AlphabetGrid({ category, baseUrl, title }: AlphabetGridProps) {
 
     const data = await fetchAgrupacionesByCategory(category);
-    console.log("category", category);
-    console.log("data", data);
 
     // Agrupar por letra inicial
     const groupedByLetter = data.reduce((acc, item) => {
@@ -26,9 +23,6 @@ export async function AlphabetGrid({ category, baseUrl, title, availableItems }:
         acc[firstLetter].push(item);
         return acc;
     }, {} as Record<string, any[]>);
-    // console.log("groupedByLetter", groupedByLetter);
-    const allNames = Object.values(groupedByLetter).flat().map(item => item.name);
-    console.log("agrupaciones", allNames);
     const letters = Object.keys(groupedByLetter).sort();
 
     return (
@@ -43,27 +37,16 @@ export async function AlphabetGrid({ category, baseUrl, title, availableItems }:
                         <div className="text-2xl font-bold mb-3 text-black transition-all duration-200 cursor-default">{letter}</div>
                         <ul className="space-y-1">
                             {groupedByLetter[letter].map((item) => {
-                                const isAvailable = availableItems?.includes(item.name);
-                                if (isAvailable) {
-                                    return (
-                                        <li key={item.name}>
-                                            <Link
-                                                href={`${baseUrl}/${slugify(item.name)}`}
-                                                className="block py-1 text-black hover:scale-90 hover:font-black cursor-pointer transition-all "
-                                            >
-                                                {item.name}
-                                            </Link>
-                                        </li>
-                                    );
-                                } else {
-                                    return (
-                                        <li key={item.name}>
-                                            <span className="block py-1 text-gray-400 cursor-not-allowed">
-                                                {item.name}
-                                            </span>
-                                        </li>
-                                    );
-                                }
+                                return (
+                                    <li key={item.name}>
+                                        <Link
+                                            href={`${baseUrl}/${slugify(item.name)}`}
+                                            className="block py-1 text-black hover:scale-90 hover:font-black cursor-pointer transition-all "
+                                        >
+                                            {item.name}
+                                        </Link>
+                                    </li>
+                                );
                             })}
                         </ul>
                     </div>

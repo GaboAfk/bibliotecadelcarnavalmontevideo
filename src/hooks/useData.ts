@@ -9,7 +9,7 @@ import {
   Mencion,
   Puntaje,
   Staff,
-  ShowSection,
+  ShowRepertory,
   StaticContent
 } from '@/lib/supabase-client'
 import {
@@ -24,7 +24,7 @@ import {
   fetchShowBySlug,
   fetchStaffByShow,
   fetchStaff,
-  fetchShowSections,
+  fetchShowRepertory,
   fetchCarnavalEdiciones,
   fetchHeroFrases,
   fetchMencionesByEdition,

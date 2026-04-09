@@ -251,9 +251,9 @@ INSERT INTO menciones (edition_id, tipo, titulo, ganadores) VALUES
 -- ============================================================
 -- AGRUPACIONES - Murgas
 -- ============================================================
-INSERT INTO agrupaciones (slug, category_slug, name, description, history, positions, discography, trivia) VALUES
+INSERT INTO agrupaciones (slug, category_slug, name, image, description, history, positions, discography, trivia) VALUES
 (
-    'agarrate-catalina', 'murgas', 'Agarrate Catalina',
+    'agarrate-catalina', 'murgas', 'Agarrate Catalina', 'https://i.scdn.co/image/ab6761610000e5eb58166e110fea4bc383adb4a4',
     '',
     'La murga surge en abril de 2001, producto de la unión de Yamandú Cardozo y Carlos Tanco y otros artistas e integrantes de la murga "Eterna madrugada". Realizan su debut en el Concurso Oficial del Carnaval en el año 2003 con el espectáculo "Tablado Amateur". Obtuvieron el primer lugar del concurso oficial en los años 2005, 2006, 2008, 2011 y 2020.',
     ARRAY['2003: 11°','2004: 10°','2005: 1°','2006: 1°','2007: 5°','2008: 1°','2010: 4°','2011: 1°','2012: 10°','2019: 2°','2020: 1°','2022: 2°'],
@@ -261,7 +261,7 @@ INSERT INTO agrupaciones (slug, category_slug, name, description, history, posit
     ARRAY['La murga surge en abril de 2001 por iniciativa de Yamandú Cardozo y Carlos Tanco','Debutaron en el Concurso Oficial en 2003','Obtuvieron 5 primeros premios: 2005, 2006, 2008, 2011 y 2020','Han recorrido los cinco continentes como embajadores culturales del Uruguay']
 ),
 (
-    'falta-y-resto', 'murgas', 'Falta y Resto',
+    'falta-y-resto', 'murgas', 'Falta y Resto', NULL,
     'Falta y Resto es una murga uruguaya fundada en 1965. Ha sido una de las agrupaciones más influyentes y reconocidas del carnaval montevideano.',
     'Falta y Resto es una murga uruguaya fundada en 1965. Ha sido una de las agrupaciones más influyentes y reconocidas del carnaval montevideano. Su nombre surge de una expresión utilizada en los juegos de cartas rioplatenses.',
     ARRAY['1965: 2°','1968: 1°','1978: 1°','1979: 1°','1980: 1°','1985: 1°','1990: 1°','2020: 2°','2026: 4°'],
@@ -269,7 +269,7 @@ INSERT INTO agrupaciones (slug, category_slug, name, description, history, posit
     ARRAY[]::TEXT[]
 ),
 (
-    'a-la-bartola', 'murgas', 'A La Bartola',
+    'a-la-bartola', 'murgas', 'A La Bartola', NULL,
     '',
     '',
     ARRAY['2018: 7°','2019: 11°','2020: 6°','2022: 5°','2023: 6°','2024: 6°','2025: 1°','2026: 1°'],
@@ -277,7 +277,7 @@ INSERT INTO agrupaciones (slug, category_slug, name, description, history, posit
     ARRAY[]::TEXT[]
 ),
 (
-    'dona-bastarda', 'murgas', 'Doña Bastarda',
+    'dona-bastarda', 'murgas', 'Doña Bastarda', NULL,
     'Murga con trayectoria consolidada en el carnaval uruguayo, caracterizada por su potente propuesta escénica y coral.',
     'Doña Bastarda se ha consolidado como una de las murgas referentes del carnaval uruguayo, destacándose por su calidad vocal y propuestas innovadoras que han sabido mantener la esencia tradicional de la murga. Dirección responsable: Camilo Abellá López. Dirección artística: Camilo Abellá López, Imanol Sibes y Emiliano Tuala.',
     ARRAY['2018: 7°','2019: 11°','2020: 6°','2022: 5°','2023: 6°','2024: 6°','2025: 1°','2026: 1°'],
@@ -301,7 +301,7 @@ BEGIN
     INSERT INTO shows (agrupacion_id, slug, title, image, year, gallery)
     VALUES (
         ag_id, 'el-viaje', 'El Viaje',
-        'https://www.agarratecatalina.com.uy/media/widgetkit/Agarrate_Catalina-El_Viaje-Frontal.jpg',
+        'https://www.agarratecatalina.com.uy/media/widgetkit/Agarrate_Catalina-El_Viaje-Frontal-e116284641831ec7497b7a40ed2c6370.jpg',
         2008,
         ARRAY[
             'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=800&q=80',
@@ -309,7 +309,7 @@ BEGIN
         ]
     ) RETURNING id INTO show_id;
 
-    INSERT INTO show_sections (show_id, title, content, lyrics, sort_order) VALUES
+    INSERT INTO show_repertory (show_id, title, content, lyrics, sort_order) VALUES
     (show_id, 'Presentación', 'Introducción el novio de la nieta', NULL, 1),
     (show_id, 'Novio de la nieta', 'Novio de la nieta', NULL, 2),
     (show_id, 'Los Energizantes', 'Auto Asamblea', NULL, 3),

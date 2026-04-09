@@ -1,4 +1,4 @@
-import { supabase, Novedad, Agrupacion, Category, Show, CarnavalEdition, HeroFrase, Mencion, Puntaje, Staff, ShowSection, StaticContent } from '@/lib/supabase-client'
+import { supabase, Novedad, Agrupacion, Category, Show, CarnavalEdition, HeroFrase, Mencion, Puntaje, Staff, ShowRepertory, StaticContent } from '@/lib/supabase-client'
 
 // Novedades
 export async function fetchNovedades(): Promise<Novedad[]> {
@@ -131,9 +131,9 @@ export async function fetchStaff(agrupacionId: string): Promise<Staff[]> {
     return data || []
 }
 
-export async function fetchShowSections(showId: string): Promise<ShowSection[]> {
+export async function fetchShowRepertory(showId: string): Promise<ShowRepertory[]> {
     const { data, error } = await supabase
-        .from('show_sections')
+        .from('show_repertory')
         .select('*')
         .eq('show_id', showId)
         .order('sort_order', { ascending: true })

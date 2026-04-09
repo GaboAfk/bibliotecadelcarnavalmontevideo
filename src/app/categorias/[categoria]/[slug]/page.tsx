@@ -1,13 +1,14 @@
 "use client";
 
-import { murgasData } from "@/data/murgas";
 import Link from "next/link";
 import { ImageWithFallback } from "@/components/ImageWithFallback";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ChevronRight, ChevronDown } from "lucide-react";
+import { fetchAgrupacionBySlug } from "@/lib/data-queries";
+import { Agrupacion } from "@/lib/supabase-client";
 
-type MurgaPageProps = {
+type AgrupacionPageProps = {
     params: Promise<{
         slug: string;
     }>;
@@ -15,10 +16,26 @@ type MurgaPageProps = {
 
 type SectionType = "historia" | "espectaculos" | "posiciones" | "discografia" | "trivia" | "galeria" | "informacion";
 
-export default function MurgaDetailPage({ params }: MurgaPageProps) {
+export default function AgrupacionDetailPage({ params }: AgrupacionPageProps) {
     const router = useRouter();
     const { slug } = React.use(params);
-    const murgaData = murgasData[slug];
+    const [agrupacion, setAgrupacion] = useState<Agrupacion | null>(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const loadData = async () => {
+            try {
+                const data = await fetchAgrupacionBySlug(slug);
+                setAgrupacion(data);
+            } catch (error) {
+                console.error('Error loading agrupacion data:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        loadData();
+    }, [slug]);
     const [activeSection, setActiveSection] = useState<SectionType>("historia");
     const [expandedSections, setExpandedSections] = useState<Record<SectionType, boolean>>({
         historia: true,
@@ -30,17 +47,27 @@ export default function MurgaDetailPage({ params }: MurgaPageProps) {
         informacion: false,
     });
 
-    if (!murgaData) {
+    if (loading) {
         return (
             <div className="bg-white pt-24 pb-16 min-h-screen">
                 <div className="max-w-7xl mx-auto px-6">
-                    <h1 className="text-4xl mb-6 font-serif">Murga no encontrada</h1>
-                    <p className="text-lg mb-8">La murga que buscas no existe en nuestro archivo.</p>
+                    <h1 className="text-4xl mb-6 font-serif">Cargando...</h1>
+                </div>
+            </div>
+        );
+    }
+
+    if (!agrupacion) {
+        return (
+            <div className="bg-white pt-24 pb-16 min-h-screen">
+                <div className="max-w-7xl mx-auto px-6">
+                    <h1 className="text-4xl mb-6 font-serif">Agrupación no encontrada</h1>
+                    <p className="text-lg mb-8">La agrupación que buscas no existe en nuestro archivo.</p>
                     <button
                         onClick={() => router.back()}
                         className="text-black hover:underline"
                     >
-                        ← Volver a Murgas
+                        ← Volver
                     </button>
                 </div>
             </div>
@@ -60,13 +87,13 @@ export default function MurgaDetailPage({ params }: MurgaPageProps) {
     };
 
     const sections: { id: SectionType; label: string; hasContent: boolean }[] = [
-        { id: "historia", label: "Historia", hasContent: true },
-        { id: "espectaculos", label: "Espectáculos", hasContent: murgaData.shows.length > 0 },
-        { id: "posiciones", label: "Posiciones", hasContent: !!murgaData.positions?.length },
-        { id: "discografia", label: "Discografía", hasContent: !!murgaData.discography?.length },
-        { id: "trivia", label: "Trivia", hasContent: !!murgaData.trivia?.length },
-        { id: "galeria", label: "Galería", hasContent: !!murgaData.gallery?.length },
-        { id: "informacion", label: "Información", hasContent: !!murgaData.information },
+        { id: "historia", label: "Historia", hasContent: !!agrupacion.history },
+        { id: "espectaculos", label: "Espectáculos", hasContent: true },
+        { id: "posiciones", label: "Posiciones", hasContent: !!agrupacion.positions?.length },
+        { id: "discografia", label: "Discografía", hasContent: !!agrupacion.discography?.length },
+        { id: "trivia", label: "Trivia", hasContent: !!agrupacion.trivia?.length },
+        { id: "galeria", label: "Galería", hasContent: !!agrupacion.gallery?.length },
+        { id: "informacion", label: "Información", hasContent: !!agrupacion.information },
     ];
 
     return (
@@ -74,7 +101,7 @@ export default function MurgaDetailPage({ params }: MurgaPageProps) {
             {/* Page Title Banner */}
             <div className="w-full bg-black text-white py-4">
                 <div className="max-w-7xl mx-auto px-6">
-                    <h1 className="text-4xl md:text-5xl font-serif text-center tracking-wide">{murgaData.name}</h1>
+                    <h1 className="text-4xl md:text-5xl font-serif text-center tracking-wide">{agrupacion.name}</h1>
                 </div>
             </div>
 
@@ -87,14 +114,14 @@ export default function MurgaDetailPage({ params }: MurgaPageProps) {
                     <ChevronRight size={16} />
                     <Link href="/categorias/murgas" className="hover:underline">Murgas</Link>
                     <ChevronRight size={16} />
-                    <span>{murgaData.name}</span>
+                    <span>{agrupacion.name}</span>
                 </nav>
 
                 {/* Hero */}
                 <div className="relative h-96 mb-12 rounded-lg overflow-hidden">
                     <ImageWithFallback
-                        src="https://images.unsplash.com/photo-1701974832971-785ff3b3ef49?w=1200&q=80"
-                        alt={`${murgaData.name} en escenario`}
+                        src={agrupacion.image || ""}
+                        alt={`${agrupacion.name} en escenario`}
                         fill
                         priority
                         className="object-cover"
@@ -137,17 +164,17 @@ export default function MurgaDetailPage({ params }: MurgaPageProps) {
                             <section className="mb-12">
                                 <h2 className="text-3xl font-serif mb-6">Historia</h2>
                                 <p className="text-lg leading-relaxed text-gray-700">
-                                    {murgaData.history}
+                                    {agrupacion.history}
                                 </p>
                             </section>
                         )}
 
                         {/* Posiciones */}
-                        {expandedSections.posiciones && murgaData.positions && (
+                        {expandedSections.posiciones && agrupacion.positions && (
                             <section className="mb-12">
                                 <h2 className="text-3xl font-serif mb-6">Posiciones</h2>
                                 <div className="space-y-3">
-                                    {murgaData.positions.map((position, index) => (
+                                    {agrupacion.positions.map((position, index) => (
                                         <div key={index} className="border-l-4 border-black pl-4 py-2">
                                             <p className="text-lg">{position}</p>
                                         </div>
@@ -157,11 +184,11 @@ export default function MurgaDetailPage({ params }: MurgaPageProps) {
                         )}
 
                         {/* Discografía */}
-                        {expandedSections.discografia && murgaData.discography && (
+                        {expandedSections.discografia && agrupacion.discography && (
                             <section className="mb-12">
                                 <h2 className="text-3xl font-serif mb-6">Discografía</h2>
                                 <div className="space-y-3">
-                                    {murgaData.discography.map((album, index) => (
+                                    {agrupacion.discography.map((album, index) => (
                                         <div key={index} className="border-l-4 border-black pl-4 py-2">
                                             <p className="text-lg">{album}</p>
                                         </div>
@@ -171,11 +198,11 @@ export default function MurgaDetailPage({ params }: MurgaPageProps) {
                         )}
 
                         {/* Trivia */}
-                        {expandedSections.trivia && murgaData.trivia && (
+                        {expandedSections.trivia && agrupacion.trivia && (
                             <section className="mb-12">
                                 <h2 className="text-3xl font-serif mb-6">Trivia</h2>
                                 <div className="space-y-3">
-                                    {murgaData.trivia.map((fact, index) => (
+                                    {agrupacion.trivia.map((fact, index) => (
                                         <div key={index} className="flex gap-4">
                                             <div className="w-2 h-2 bg-black rounded-full mt-2 flex-shrink-0"></div>
                                             <p className="text-lg text-gray-700">{fact}</p>
@@ -186,11 +213,11 @@ export default function MurgaDetailPage({ params }: MurgaPageProps) {
                         )}
 
                         {/* Galería */}
-                        {expandedSections.galeria && murgaData.gallery && murgaData.gallery.length > 0 && (
+                        {expandedSections.galeria && agrupacion.gallery && agrupacion.gallery.length > 0 && (
                             <section className="mb-12">
                                 <h2 className="text-3xl font-serif mb-6">Galería</h2>
                                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                                    {murgaData.gallery.map((image, index) => (
+                                    {agrupacion.gallery.map((image, index) => (
                                         <div key={index} className="relative h-48 rounded-lg overflow-hidden">
                                             <ImageWithFallback
                                                 src={image}
@@ -205,11 +232,11 @@ export default function MurgaDetailPage({ params }: MurgaPageProps) {
                         )}
 
                         {/* Información */}
-                        {expandedSections.informacion && murgaData.information && (
+                        {expandedSections.informacion && agrupacion.information && (
                             <section className="mb-12">
                                 <h2 className="text-3xl font-serif mb-6">Información</h2>
                                 <p className="text-lg leading-relaxed text-gray-700">
-                                    {murgaData.information}
+                                    {agrupacion.information}
                                 </p>
                             </section>
                         )}
@@ -218,7 +245,7 @@ export default function MurgaDetailPage({ params }: MurgaPageProps) {
                         <section className="mb-12 border-t pt-8">
                             <h2 className="text-3xl font-serif mb-6">Descripción</h2>
                             <p className="text-lg leading-relaxed text-gray-700">
-                                {murgaData.description}
+                                {agrupacion.description}
                             </p>
                         </section>
                     </div>

@@ -30,6 +30,7 @@ CREATE TABLE agrupaciones (
     slug            TEXT NOT NULL UNIQUE,
     category_slug   TEXT NOT NULL REFERENCES categories(slug) ON DELETE RESTRICT,
     name            TEXT NOT NULL,
+    image           TEXT,
     description     TEXT,
     history         TEXT,
     information     TEXT,
@@ -71,7 +72,7 @@ CREATE INDEX idx_shows_year ON shows(year);
 -- 4. SHOW SECTIONS (Repertorio)
 -- Las secciones/cuadros dentro de cada espectáculo
 -- ============================================================
-CREATE TABLE show_sections (
+CREATE TABLE show_repertory (
     id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     show_id     UUID NOT NULL REFERENCES shows(id) ON DELETE CASCADE,
     title       TEXT NOT NULL,
@@ -80,7 +81,7 @@ CREATE TABLE show_sections (
     sort_order  INTEGER DEFAULT 0
 );
 
-CREATE INDEX idx_show_sections_show ON show_sections(show_id);
+CREATE INDEX idx_show_repertory_show ON show_repertory(show_id);
 
 
 -- ============================================================
@@ -210,7 +211,7 @@ CREATE TABLE static_content (
 ALTER TABLE categories          ENABLE ROW LEVEL SECURITY;
 ALTER TABLE agrupaciones        ENABLE ROW LEVEL SECURITY;
 ALTER TABLE shows               ENABLE ROW LEVEL SECURITY;
-ALTER TABLE show_sections       ENABLE ROW LEVEL SECURITY;
+ALTER TABLE show_repertory       ENABLE ROW LEVEL SECURITY;
 ALTER TABLE staff               ENABLE ROW LEVEL SECURITY;
 ALTER TABLE novedades           ENABLE ROW LEVEL SECURITY;
 ALTER TABLE carnaval_editions   ENABLE ROW LEVEL SECURITY;
@@ -223,7 +224,7 @@ ALTER TABLE static_content      ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "public_read_categories"       ON categories        FOR SELECT USING (true);
 CREATE POLICY "public_read_agrupaciones"     ON agrupaciones      FOR SELECT USING (true);
 CREATE POLICY "public_read_shows"            ON shows             FOR SELECT USING (true);
-CREATE POLICY "public_read_show_sections"    ON show_sections     FOR SELECT USING (true);
+CREATE POLICY "public_read_show_repertory"    ON show_repertory     FOR SELECT USING (true);
 CREATE POLICY "public_read_staff"            ON staff             FOR SELECT USING (true);
 CREATE POLICY "public_read_novedades"        ON novedades         FOR SELECT USING (true);
 CREATE POLICY "public_read_editions"         ON carnaval_editions FOR SELECT USING (true);
@@ -236,7 +237,7 @@ CREATE POLICY "public_read_static_content"   ON static_content    FOR SELECT USI
 CREATE POLICY "auth_write_categories"        ON categories        FOR ALL USING (auth.role() = 'authenticated');
 CREATE POLICY "auth_write_agrupaciones"      ON agrupaciones      FOR ALL USING (auth.role() = 'authenticated');
 CREATE POLICY "auth_write_shows"             ON shows             FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "auth_write_show_sections"     ON show_sections     FOR ALL USING (auth.role() = 'authenticated');
+CREATE POLICY "auth_write_show_repertory"     ON show_repertory     FOR ALL USING (auth.role() = 'authenticated');
 CREATE POLICY "auth_write_staff"              ON staff             FOR ALL USING (auth.role() = 'authenticated');
 CREATE POLICY "auth_write_novedades"         ON novedades         FOR ALL USING (auth.role() = 'authenticated');
 CREATE POLICY "auth_write_editions"          ON carnaval_editions FOR ALL USING (auth.role() = 'authenticated');

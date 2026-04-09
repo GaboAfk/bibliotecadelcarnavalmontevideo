@@ -48,7 +48,7 @@ export function NovedadesSection() {
                 <Swiper
                     modules={[Navigation, Autoplay]}
                     spaceBetween={16}
-                    loop={true}
+                    loop={novedades.length > 3}
                     autoplay={{
                         delay: 3000,
                         disableOnInteraction: false,

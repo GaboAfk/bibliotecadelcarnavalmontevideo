@@ -12,6 +12,8 @@ interface ImageWithFallbackProps {
     height?: number;
     fallbackSrc?: string;
     sizes?: string;
+    priority?: boolean;
+    lazy?: boolean;
 }
 
 export function ImageWithFallback({
@@ -22,6 +24,9 @@ export function ImageWithFallback({
     width,
     height,
     fallbackSrc = "/logo_default.png",
+    priority = false,
+    lazy = true,
+    sizes = fill ? "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" : undefined,
 }: ImageWithFallbackProps) {
     const [error, setError] = useState(false);
     const [useFallback, setUseFallback] = useState(false);
@@ -41,7 +46,8 @@ export function ImageWithFallback({
                     {...(fill
                         ? { fill, className: `object-contain ${className}` }
                         : { width: width || 800, height: height || 600, className })}
-                    loading="lazy"
+                    loading={priority ? "eager" : (lazy ? "lazy" : "eager")}
+                    priority={priority}
                 />
             );
         }
@@ -63,7 +69,8 @@ export function ImageWithFallback({
             alt={alt}
             onError={() => setError(true)}
             {...imageProps}
-            loading="lazy"
+            loading={priority ? "eager" : (lazy ? "lazy" : "eager")}
+            priority={priority}
         />
     );
 }

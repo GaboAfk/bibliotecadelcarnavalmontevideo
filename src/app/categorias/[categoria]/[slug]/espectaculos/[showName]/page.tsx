@@ -4,7 +4,7 @@ import { murgasData } from "@/data/murgas";
 import Link from "next/link";
 import { ImageWithFallback } from "@/components/ImageWithFallback";
 import { useRouter } from "next/navigation";
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { ChevronRight, ChevronDown, ChevronLeft } from "lucide-react";
 import { Swiper as SwiperType } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -12,11 +12,13 @@ import { Navigation, Thumbs } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
+import { fetchAgrupacionBySlug, fetchShowBySlug, fetchStaffByShow, fetchShowRepertory } from "@/lib/data-queries";
+import { Agrupacion, Show, Staff, ShowRepertory } from "@/lib/supabase-client";
 
 type ShowDetailPageProps = {
     params: Promise<{
         slug: string;
-        showId: string;
+        showName: string;
     }>;
 };
 
@@ -24,21 +26,85 @@ type SectionType = "repertorio" | "galeria" | "datos";
 
 export default function ShowDetailPage({ params }: ShowDetailPageProps) {
     const router = useRouter();
-    const { slug, showId } = React.use(params);
-    const murgaData = murgasData[slug];
-    const show = murgaData?.shows.find(s => s.id === showId);
+    const { slug, showName } = React.use(params);
+    console.log("slug", slug);
+    console.log("showName", showName);
+
+    const [agrupacion, setAgrupacion] = useState<Agrupacion | null>(null);
+    const [show, setShow] = useState<Show | null>(null);
+    const [staff, setStaff] = useState<Staff[]>([]);
+    const [repertory, setRepertory] = useState<ShowRepertory[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const loadData = async () => {
+            try {
+                // Obtener el show usando showName (que es el slug del show)
+                const showData = await fetchShowBySlug(showName);
+                console.log("showData", showData);
+
+                if (!showData) {
+                    console.error("Show not found");
+                    setLoading(false);
+                    return;
+                }
+
+                // Obtener agrupación, staff y repertory en paralelo
+                const [agrupacionData, staffData, repertoryData] = await Promise.all([
+                    fetchAgrupacionBySlug(slug),
+                    fetchStaffByShow(showData.id),
+                    fetchShowRepertory(showData.id)
+                ]);
+
+                console.log("agrupacionData", agrupacionData);
+                console.log("staffData", staffData);
+                console.log("repertoryData", repertoryData);
+
+                setAgrupacion(agrupacionData);
+                setShow(showData);
+                setStaff(staffData);
+                setRepertory(repertoryData);
+            } catch (error) {
+                console.error('Error loading show data:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        loadData();
+    }, [showName]);
+
+    console.log("show.image", show?.image);
+    // console.log("staff", staff);
+    // console.log("repertory", repertory);
+
+    // console.log("agrupación", agrupacion?.name);
+
+    // console.log("repertory", repertory);
+
     const [expandedSections, setExpandedSections] = useState<Record<SectionType, boolean>>({
         repertorio: true,
         galeria: false,
         datos: false,
     });
+
     const [selectedRepertoireItem, setSelectedRepertoireItem] = useState<number>(0);
     const [isLightboxOpen, setIsLightboxOpen] = useState<boolean>(false);
     const [selectedGalleryIndex, setSelectedGalleryIndex] = useState<number>(0);
     const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
     const mainSwiperRef = useRef<SwiperType | null>(null);
 
-    if (!murgaData || !show) {
+    if (loading) {
+        return (
+            <div className="bg-white pt-24 pb-16 min-h-screen">
+                <div className="max-w-7xl mx-auto px-6">
+                    <h1 className="text-4xl mb-6 font-serif">Cargando...</h1>
+                </div>
+            </div>
+        );
+    }
+
+    if (!show) {
         return (
             <div className="bg-white pt-24 pb-16 min-h-screen">
                 <div className="max-w-7xl mx-auto px-6">
@@ -63,7 +129,7 @@ export default function ShowDetailPage({ params }: ShowDetailPageProps) {
     };
 
     const sections: { id: SectionType; label: string; hasContent: boolean }[] = [
-        { id: "repertorio", label: "Repertorio", hasContent: !!show.repertoire?.length },
+        { id: "repertorio", label: "Repertorio", hasContent: !!repertory?.length },
         { id: "galeria", label: "Galería", hasContent: !!show.gallery?.length },
         { id: "datos", label: "Datos", hasContent: !!show.data },
     ];
@@ -83,7 +149,7 @@ export default function ShowDetailPage({ params }: ShowDetailPageProps) {
             <div className="w-full bg-black text-white py-4">
                 <div className="max-w-7xl mx-auto px-6">
                     <h1 className="text-4xl md:text-5xl font-serif text-center tracking-wide">
-                        {murgaData.name}: {show.title} {show.year ? `(${show.year})` : ""}
+                        {agrupacion?.name}: {show.title} {show.year ? `(${show.year})` : ""}
                     </h1>
                 </div>
             </div>
@@ -98,7 +164,7 @@ export default function ShowDetailPage({ params }: ShowDetailPageProps) {
                     <Link href="/categorias/murgas" className="hover:underline">Murgas</Link>
                     <ChevronRight size={16} />
                     <Link href={`/categorias/murgas/${slug}`} className="hover:underline">
-                        {murgaData.name}
+                        {agrupacion?.name}
                     </Link>
                     <ChevronRight size={16} />
                     <Link href={`/categorias/murgas/${slug}/espectaculos`} className="hover:underline">
@@ -114,7 +180,7 @@ export default function ShowDetailPage({ params }: ShowDetailPageProps) {
                     <div className="flex items-center justify-center">
                         <div className="relative h-96 w-full rounded-lg overflow-hidden">
                             <ImageWithFallback
-                                src={show.image}
+                                src={show.image || ""}
                                 alt={`${show.title} en escenario`}
                                 fill
                                 priority
@@ -124,12 +190,12 @@ export default function ShowDetailPage({ params }: ShowDetailPageProps) {
                     </div>
 
                     {/* Credits */}
-                    {show.credits && show.credits.length > 0 && (
+                    {staff && staff.length > 0 && (
                         <div className="bg-gray-50 rounded-lg p-4 text-xs space-y-2">
-                            {show.credits.map((credit, index) => (
+                            {staff.map((member, index) => (
                                 <div key={index}>
-                                    <span className="font-semibold text-black">{credit.role}:</span>
-                                    <span className="text-gray-700 ml-1">{credit.names.join(", ")}</span>
+                                    <span className="font-semibold text-black">{member.role}:</span>
+                                    <span className="text-gray-700 ml-1">{member.names.join(", ")}</span>
                                 </div>
                             ))}
                         </div>
@@ -160,9 +226,9 @@ export default function ShowDetailPage({ params }: ShowDetailPageProps) {
                                         </button>
 
                                         {/* Repertorio Submenu */}
-                                        {section.id === "repertorio" && expandedSections.repertorio && show.repertoire && (
+                                        {section.id === "repertorio" && expandedSections.repertorio && repertory && (
                                             <div className="mt-2 space-y-1 pl-2">
-                                                {show.repertoire.map((item, index) => (
+                                                {repertory.map((item, index) => (
                                                     <button
                                                         key={index}
                                                         onClick={() => setSelectedRepertoireItem(index)}
@@ -185,15 +251,15 @@ export default function ShowDetailPage({ params }: ShowDetailPageProps) {
                     {/* Right Content */}
                     <div className="md:col-span-3">
                         {/* Repertorio */}
-                        {expandedSections.repertorio && show.repertoire && (
+                        {expandedSections.repertorio && repertory && (
                             <section className="mb-12">
                                 <h2 className="text-3xl font-serif mb-6">Repertorio</h2>
                                 <div className="bg-gray-50 rounded-lg p-8">
                                     <h3 className="text-2xl font-semibold mb-4">
-                                        {show.repertoire[selectedRepertoireItem].title}
+                                        {repertory[selectedRepertoireItem].title}
                                     </h3>
                                     <div className="text-lg leading-relaxed text-gray-700 whitespace-pre-line text-center">
-                                        {show.repertoire[selectedRepertoireItem].lyrics || show.repertoire[selectedRepertoireItem].content}
+                                        {repertory[selectedRepertoireItem].lyrics || repertory[selectedRepertoireItem].content}
                                     </div>
                                 </div>
                             </section>
