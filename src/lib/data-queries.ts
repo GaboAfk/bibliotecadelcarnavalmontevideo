@@ -1,4 +1,4 @@
-import { supabase, Novedad, Agrupacion, Category, Show, CarnavalEdition, HeroFrase, Mencion, Puntaje, ShowCredit, ShowSection, StaticContent } from '@/lib/supabase-client'
+import { supabase, Novedad, Agrupacion, Category, Show, CarnavalEdition, HeroFrase, Mencion, Puntaje, Staff, ShowSection, StaticContent } from '@/lib/supabase-client'
 
 // Novedades
 export async function fetchNovedades(): Promise<Novedad[]> {
@@ -105,13 +105,27 @@ export async function fetchShowBySlug(slug: string): Promise<Show | null> {
     return data
 }
 
-// Show Credits y Sections
-export async function fetchShowCredits(showId: string): Promise<ShowCredit[]> {
+// Staff por espectáculo
+export async function fetchStaffByShow(showId: string): Promise<Staff[]> {
     const { data, error } = await supabase
-        .from('show_credits')
+        .from('staff')
         .select('*')
         .eq('show_id', showId)
-        .order('id', { ascending: true })
+        .order('order_index', { ascending: true })
+
+    if (error) throw error
+    return data || []
+}
+
+// Staff general de agrupación
+export async function fetchStaff(agrupacionId: string): Promise<Staff[]> {
+    const { data, error } = await supabase
+        .from('staff')
+        .select('*')
+        .eq('agrupacion_id', agrupacionId)
+        .is('show_id', null)
+        .order('category', { ascending: true })
+        .order('order_index', { ascending: true })
 
     if (error) throw error
     return data || []

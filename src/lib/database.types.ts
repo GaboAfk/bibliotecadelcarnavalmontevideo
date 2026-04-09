@@ -15,6 +15,7 @@ export type Database = {
           created_at: string | null
           description: string | null
           discography: string[] | null
+          disponible: boolean | null
           gallery: string[] | null
           history: string | null
           id: string
@@ -29,6 +30,7 @@ export type Database = {
           created_at?: string | null
           description?: string | null
           discography?: string[] | null
+          disponible?: boolean | null
           gallery?: string[] | null
           history?: string | null
           id?: string
@@ -43,6 +45,7 @@ export type Database = {
           created_at?: string | null
           description?: string | null
           discography?: string[] | null
+          disponible?: boolean | null
           gallery?: string[] | null
           history?: string | null
           id?: string
@@ -267,35 +270,6 @@ export type Database = {
           },
         ]
       }
-      show_credits: {
-        Row: {
-          id: string
-          names: string[]
-          role: string
-          show_id: string
-        }
-        Insert: {
-          id?: string
-          names: string[]
-          role: string
-          show_id: string
-        }
-        Update: {
-          id?: string
-          names?: string[]
-          role?: string
-          show_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "show_credits_show_id_fkey"
-            columns: ["show_id"]
-            isOneToOne: false
-            referencedRelation: "shows"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       show_sections: {
         Row: {
           content: string | null
@@ -374,6 +348,51 @@ export type Database = {
             columns: ["agrupacion_id"]
             isOneToOne: false
             referencedRelation: "agrupaciones"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      staff: {
+        Row: {
+          agrupacion_id: string
+          category: string
+          id: string
+          names: string[]
+          order_index: number | null
+          role: string
+          show_id: string | null
+        }
+        Insert: {
+          agrupacion_id: string
+          category: string
+          id?: string
+          names: string[]
+          order_index?: number | null
+          role: string
+          show_id?: string | null
+        }
+        Update: {
+          agrupacion_id?: string
+          category?: string
+          id?: string
+          names?: string[]
+          order_index?: number | null
+          role?: string
+          show_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "staff_agrupacion_id_fkey"
+            columns: ["agrupacion_id"]
+            isOneToOne: false
+            referencedRelation: "agrupaciones"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "staff_show_id_fkey"
+            columns: ["show_id"]
+            isOneToOne: false
+            referencedRelation: "shows"
             referencedColumns: ["id"]
           },
         ]

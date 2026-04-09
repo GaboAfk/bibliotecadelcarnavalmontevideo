@@ -84,17 +84,22 @@ CREATE INDEX idx_show_sections_show ON show_sections(show_id);
 
 
 -- ============================================================
--- 5. SHOW CREDITS
--- Créditos artísticos/técnicos por espectáculo
+-- 5. STAFF
+-- Personal técnico, componentes y créditos por espectáculo (unificado)
 -- ============================================================
-CREATE TABLE show_credits (
-    id      UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    show_id UUID NOT NULL REFERENCES shows(id) ON DELETE CASCADE,
-    role    TEXT NOT NULL,
-    names   TEXT[] NOT NULL
+CREATE TABLE staff (
+    id            UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    agrupacion_id UUID NOT NULL REFERENCES agrupaciones(id) ON DELETE CASCADE,
+    show_id       UUID REFERENCES shows(id) ON DELETE CASCADE, -- NULL para staff general, no NULL para créditos de show específico
+    role          TEXT NOT NULL,
+    names         TEXT[] NOT NULL,
+    category      TEXT NOT NULL, -- 'tecnico', 'componentes', 'bateria'
+    order_index   INTEGER DEFAULT 0
 );
 
-CREATE INDEX idx_show_credits_show ON show_credits(show_id);
+CREATE INDEX idx_staff_agrupacion ON staff(agrupacion_id);
+CREATE INDEX idx_staff_show ON staff(show_id);
+CREATE INDEX idx_staff_category ON staff(category);
 
 
 -- ============================================================
@@ -206,7 +211,7 @@ ALTER TABLE categories          ENABLE ROW LEVEL SECURITY;
 ALTER TABLE agrupaciones        ENABLE ROW LEVEL SECURITY;
 ALTER TABLE shows               ENABLE ROW LEVEL SECURITY;
 ALTER TABLE show_sections       ENABLE ROW LEVEL SECURITY;
-ALTER TABLE show_credits        ENABLE ROW LEVEL SECURITY;
+ALTER TABLE staff               ENABLE ROW LEVEL SECURITY;
 ALTER TABLE novedades           ENABLE ROW LEVEL SECURITY;
 ALTER TABLE carnaval_editions   ENABLE ROW LEVEL SECURITY;
 ALTER TABLE puntajes            ENABLE ROW LEVEL SECURITY;
@@ -219,7 +224,7 @@ CREATE POLICY "public_read_categories"       ON categories        FOR SELECT USI
 CREATE POLICY "public_read_agrupaciones"     ON agrupaciones      FOR SELECT USING (true);
 CREATE POLICY "public_read_shows"            ON shows             FOR SELECT USING (true);
 CREATE POLICY "public_read_show_sections"    ON show_sections     FOR SELECT USING (true);
-CREATE POLICY "public_read_show_credits"     ON show_credits      FOR SELECT USING (true);
+CREATE POLICY "public_read_staff"            ON staff             FOR SELECT USING (true);
 CREATE POLICY "public_read_novedades"        ON novedades         FOR SELECT USING (true);
 CREATE POLICY "public_read_editions"         ON carnaval_editions FOR SELECT USING (true);
 CREATE POLICY "public_read_puntajes"         ON puntajes          FOR SELECT USING (true);
@@ -232,7 +237,7 @@ CREATE POLICY "auth_write_categories"        ON categories        FOR ALL USING 
 CREATE POLICY "auth_write_agrupaciones"      ON agrupaciones      FOR ALL USING (auth.role() = 'authenticated');
 CREATE POLICY "auth_write_shows"             ON shows             FOR ALL USING (auth.role() = 'authenticated');
 CREATE POLICY "auth_write_show_sections"     ON show_sections     FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "auth_write_show_credits"      ON show_credits      FOR ALL USING (auth.role() = 'authenticated');
+CREATE POLICY "auth_write_staff"              ON staff             FOR ALL USING (auth.role() = 'authenticated');
 CREATE POLICY "auth_write_novedades"         ON novedades         FOR ALL USING (auth.role() = 'authenticated');
 CREATE POLICY "auth_write_editions"          ON carnaval_editions FOR ALL USING (auth.role() = 'authenticated');
 CREATE POLICY "auth_write_puntajes"          ON puntajes          FOR ALL USING (auth.role() = 'authenticated');

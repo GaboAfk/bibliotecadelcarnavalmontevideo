@@ -275,6 +275,14 @@ INSERT INTO agrupaciones (slug, category_slug, name, description, history, posit
     ARRAY['2018: 7°','2019: 11°','2020: 6°','2022: 5°','2023: 6°','2024: 6°','2025: 1°','2026: 1°'],
     ARRAY[]::TEXT[],
     ARRAY[]::TEXT[]
+),
+(
+    'dona-bastarda', 'murgas', 'Doña Bastarda',
+    'Murga con trayectoria consolidada en el carnaval uruguayo, caracterizada por su potente propuesta escénica y coral.',
+    'Doña Bastarda se ha consolidado como una de las murgas referentes del carnaval uruguayo, destacándose por su calidad vocal y propuestas innovadoras que han sabido mantener la esencia tradicional de la murga. Dirección responsable: Camilo Abellá López. Dirección artística: Camilo Abellá López, Imanol Sibes y Emiliano Tuala.',
+    ARRAY['2018: 7°','2019: 11°','2020: 6°','2022: 5°','2023: 6°','2024: 6°','2025: 1°','2026: 1°'],
+    ARRAY[]::TEXT[],
+    ARRAY['Primer puesto consecutivo en 2025 y 2026, consolidando su liderazgo en la categoría murgas','Dirección artística compartida entre Camilo Abellá López, Imanol Sibes y Emiliano Tuala','Más de 25 personas en el equipo técnico y producción']
 );
 
 
@@ -323,13 +331,13 @@ Mi nombre será tierra y nada más,
 mi sangre sol, tu llanto luz,
 semillas de la ingenua eternidad.', 5);
 
-    INSERT INTO show_credits (show_id, role, names) VALUES
-    (show_id, 'Director Responsable', ARRAY['Yamandú Cardozo']),
-    (show_id, 'Textos', ARRAY['Yamandú Cardozo', 'Tabaré Cardozo', 'Carlos Tanco']),
-    (show_id, 'Director escénico', ARRAY['Martín Duarte']),
-    (show_id, 'Arreglos corales', ARRAY['Martín Duarte']),
-    (show_id, 'Vestuario', ARRAY['Hugo Millán']),
-    (show_id, 'Maquillaje', ARRAY['Paula Gómez']);
+    INSERT INTO staff (agrupacion_id, show_id, role, names, category, order_index) VALUES
+    (ag_id, show_id, 'Director Responsable', ARRAY['Yamandú Cardozo'], 'tecnico', 1),
+    (ag_id, show_id, 'Textos', ARRAY['Yamandú Cardozo', 'Tabaré Cardozo', 'Carlos Tanco'], 'tecnico', 2),
+    (ag_id, show_id, 'Director escénico', ARRAY['Martín Duarte'], 'tecnico', 3),
+    (ag_id, show_id, 'Arreglos corales', ARRAY['Martín Duarte'], 'tecnico', 4),
+    (ag_id, show_id, 'Vestuario', ARRAY['Hugo Millán'], 'tecnico', 5),
+    (ag_id, show_id, 'Maquillaje', ARRAY['Paula Gómez'], 'tecnico', 6);
 
     -- Show: Tablado Amateur 2003
     INSERT INTO shows (agrupacion_id, slug, title, image, year)
@@ -340,3 +348,67 @@ semillas de la ingenua eternidad.', 5);
     VALUES (ag_id, 'los-suenos', 'Los Sueños', 'https://www.agarratecatalina.com.uy/media/widgetkit/los-suenos.jpg', 2005);
 
 END $$;
+
+-- Insertar staff de Doña Bastarda (general)
+DO $$
+DECLARE
+    db_id UUID;
+BEGIN
+    SELECT id INTO db_id FROM agrupaciones WHERE slug = 'dona-bastarda';
+
+    -- Equipo técnico general
+    INSERT INTO staff (agrupacion_id, role, names, category, order_index) VALUES
+    (db_id, 'Dirección responsable', ARRAY['Camilo Abellá López'], 'tecnico', 1),
+    (db_id, 'Dirección artística', ARRAY['Camilo Abellá López', 'Imanol Sibes', 'Emiliano Tuala'], 'tecnico', 2),
+    (db_id, 'Textos', ARRAY['Emiliano Tuala', 'Imanol Sibes', 'Camilo Abellá López'], 'tecnico', 3),
+    (db_id, 'Arreglos corales y Dirección escénica', ARRAY['Camilo Abellá López'], 'tecnico', 4),
+    (db_id, 'Dirección de economía y finanzas', ARRAY['Gastón Abellá López', 'Joaquín Dursi'], 'tecnico', 5),
+    (db_id, 'Coordinación', ARRAY['Gonzalo Rodríguez', 'Sandra Abellá'], 'tecnico', 6),
+    (db_id, 'Producción', ARRAY['Marcelo Sanguinetti'], 'tecnico', 7),
+    (db_id, 'Gestión comercial', ARRAY['Malena Reyes', 'Diego López', 'Sandra Abellá'], 'tecnico', 8),
+    (db_id, 'Puesta en escena', ARRAY['Lucía García Aldaya'], 'tecnico', 9),
+    (db_id, 'Diseño de vestuario', ARRAY['Fernando Olita'], 'tecnico', 10),
+    (db_id, 'Realización de vestuario', ARRAY['Graciela Salles'], 'tecnico', 11),
+    (db_id, 'Realización de sombreros presentación y medios', ARRAY['Ricardo Rosas', 'Sofía Beceiro', 'Paula Migliaro', 'Mariana Bardecio', 'Gastón Haro', 'Jhoanna Fonseca'], 'tecnico', 12),
+    (db_id, 'Realización de sombreros y hombreras retirada', ARRAY['Daniela Aparicio', 'Erica Gonzalez', 'Alina Kremarenko', 'Martina Mansilla'], 'tecnico', 13),
+    (db_id, 'Pintado textil', ARRAY['Elizabeth Galarraga'], 'tecnico', 14),
+    (db_id, 'Maquillaje', ARRAY['Pinceladas grupo arte', 'Analia Barboza', 'Evangelina Paolino', 'Leticia Pin'], 'tecnico', 15),
+    (db_id, 'Iluminación', ARRAY['Nicolás Amorín'], 'tecnico', 16),
+    (db_id, 'Pantalla', ARRAY['Victor González'], 'tecnico', 17),
+    (db_id, 'Sonido', ARRAY['Gustavo Ruvertoni'], 'tecnico', 18),
+    (db_id, 'Gestión de redes y comunicación', ARRAY['Diego López'], 'tecnico', 19),
+    (db_id, 'Diseño gráfico', ARRAY['Ramiro Garcia'], 'tecnico', 20),
+    (db_id, 'Utilería', ARRAY['Mauro Sánchez', 'Gonzalo Rodríguez', 'Gerardo Gollo', 'Martín Fabruccini'], 'tecnico', 21),
+
+    -- Componentes
+    (db_id, 'Primos', ARRAY['Joaquín Dursi', 'Sergio Camargo', 'Michael Cabrera', 'Sebastián Costa', 'Fernando Laforia'], 'componentes', 1),
+    (db_id, 'Sobreprimos', ARRAY['Esteban Takoria', 'Nicolás Ríos', 'Camila Sosa'], 'componentes', 2),
+    (db_id, 'Segundos', ARRAY['Gastón Abellá López', 'Pablo Fernández', 'Nahuel Mera', 'Agustín Ríos', 'Imanol Sibes'], 'componentes', 3),
+    (db_id, 'Batería', ARRAY['Marcelo Sanguinetti', 'Santiago de los Ángeles', 'Mauricio Pérez'], 'bateria', 1);
+
+END $$;
+
+-- ============================================================
+-- SHOWS para Doña Bastarda
+-- ============================================================
+-- Primero obtenemos el id de dona-bastarda
+DO $$
+DECLARE
+    db_id UUID;
+BEGIN
+    SELECT id INTO db_id FROM agrupaciones WHERE slug = 'dona-bastarda';
+
+    -- Shows de Doña Bastarda (2018-2026)
+    INSERT INTO shows (agrupacion_id, slug, title, image, year) VALUES
+    (db_id, 'un-cuento-de-terror', 'Un cuento de terror', '', 2018),
+    (db_id, 'un-mito-griego', 'Un mito griego', '', 2019),
+    (db_id, 'superheroes-uruguayos', 'Superhéroes uruguayos', '', 2020),
+    (db_id, 'carnaval-suspendido-por-covid-19', 'Carnaval suspendido por covid-19', '', 2021),
+    (db_id, 'la-fiesta-clandestina', 'La fiesta clandestina', '', 2022),
+    (db_id, 'tenemos-visitas', 'Tenemos visitas', '', 2023),
+    (db_id, 'enter', 'Enter', '', 2024),
+    (db_id, 'en-la-mala', 'En la mala', '', 2025),
+    (db_id, 'patria-o-tumba', 'Patria o Tumba', '', 2026);
+
+END $$;
+
