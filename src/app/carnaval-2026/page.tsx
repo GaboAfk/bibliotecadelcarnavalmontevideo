@@ -2,9 +2,59 @@
 
 import { useCarnaval2026Data } from '@/hooks/useData';
 import { ImageWithFallback } from '@/components/ImageWithFallback';
+import { fetchAgrupaciones } from '@/lib/data-queries';
+import { slugify } from '@/utils/slugify';
+import { useEffect, useState } from 'react';
+import { Agrupacion } from '@/lib/supabase-client';
+import Link from 'next/link';
 
 export default function Carnaval2026Page() {
     const { menciones, puntajes, edicion2026, loading, error } = useCarnaval2026Data();
+    const [agrupaciones, setAgrupaciones] = useState<Agrupacion[]>([]);
+
+    // Fetch agrupaciones for linking
+    useEffect(() => {
+        async function fetchAgrupacionesData() {
+            try {
+                const agrupacionesData = await fetchAgrupaciones();
+                setAgrupaciones(agrupacionesData);
+            } catch (error) {
+                console.error('Error fetching agrupaciones:', error);
+            }
+        }
+        fetchAgrupacionesData();
+    }, []);
+
+    // Helper function to find agrupacion by name and create link
+    const createAgrupacionLink = (nombre: string) => {
+        const slugifiedNombre = slugify(nombre);
+        const agrupacion = agrupaciones.find(a => slugify(a.name) === slugifiedNombre);
+
+        if (agrupacion) {
+            return (
+                <Link
+                    href={`/categorias/${agrupacion.category_slug}/${agrupacion.slug}`}
+                    className="font-bold hover:underline"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    {nombre}
+                </Link>
+            );
+        }
+
+        return <span>{nombre}</span>;
+    };
+
+    // Helper function to process ganadores array and create links
+    const processGanadores = (ganadores: string[]) => {
+        return ganadores.map((ganador, index) => (
+            <span key={index}>
+                {createAgrupacionLink(ganador)}
+                {index < ganadores.length - 1 && ', '}
+            </span>
+        ));
+    };
 
     // Show loading state if data is still loading or if no 2026 edition found yet
     if (loading || !edicion2026) {
@@ -103,7 +153,7 @@ export default function Carnaval2026Page() {
                                                         <li key={i} className="flex justify-between items-center text-base px-2 py-1 rounded hover:bg-gray-100 transition-colors group">
                                                             <div className="flex items-center gap-3">
                                                                 <span className="text-xs text-gray-400 w-5 text-right group-hover:text-gray-600">{item.puesto}°</span>
-                                                                <span>{item.nombre}</span>
+                                                                {createAgrupacionLink(item.nombre)}
                                                             </div>
                                                             <span className="text-gray-500 group-hover:text-gray-800">{item.puntos} pts</span>
                                                         </li>
@@ -122,7 +172,7 @@ export default function Carnaval2026Page() {
                                         {mencionesDirectas.map((m, i) => (
                                             <div key={i} className="flex flex-col sm:flex-row sm:justify-between border-b py-2">
                                                 <span className="font-medium">{m.titulo}</span>
-                                                <span className="text-gray-600">{m.ganadores.join(", ")}</span>
+                                                <span className="text-gray-600">{processGanadores(m.ganadores)}</span>
                                             </div>
                                         ))}
                                     </div>
@@ -141,7 +191,7 @@ export default function Carnaval2026Page() {
                                                     {items.map((m, j) => (
                                                         <div key={j} className="flex flex-col sm:flex-row sm:justify-between border-b border-gray-200 py-2 last:border-0">
                                                             <span className="font-medium text-sm text-gray-500">{m.categoria}</span>
-                                                            <span className="text-sm">{m.ganadores.join(", ")}</span>
+                                                            <span className="text-sm">{processGanadores(m.ganadores)}</span>
                                                         </div>
                                                     ))}
                                                 </div>
@@ -159,7 +209,7 @@ export default function Carnaval2026Page() {
                                         {mencionesTecnicasNominacion.map((m, i) => (
                                             <div key={i} className="border-b py-2">
                                                 <span className="font-medium">{m.titulo}: </span>
-                                                <span className="text-gray-600">{m.ganadores.join(", ")}</span>
+                                                <span className="text-gray-600">{processGanadores(m.ganadores)}</span>
                                             </div>
                                         ))}
                                     </div>
@@ -174,7 +224,7 @@ export default function Carnaval2026Page() {
                                         {mencionesColectivas.map((m, i) => (
                                             <div key={i} className="border-b py-2">
                                                 <span className="font-medium">{m.titulo}: </span>
-                                                <span className="text-gray-600">{m.ganadores.join(", ")}</span>
+                                                <span className="text-gray-600">{processGanadores(m.ganadores)}</span>
                                             </div>
                                         ))}
                                     </div>
@@ -189,7 +239,7 @@ export default function Carnaval2026Page() {
                                         {mencionesIndividuales.map((m, i) => (
                                             <div key={i} className="border-b py-2">
                                                 <span className="font-medium">{m.titulo}: </span>
-                                                <span className="text-gray-600">{m.ganadores.join(", ")}</span>
+                                                <span className="text-gray-600">{processGanadores(m.ganadores)}</span>
                                             </div>
                                         ))}
                                     </div>
