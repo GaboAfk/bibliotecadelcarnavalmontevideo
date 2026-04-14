@@ -221,30 +221,237 @@ ALTER TABLE hero_frases        ENABLE ROW LEVEL SECURITY;
 ALTER TABLE static_content      ENABLE ROW LEVEL SECURITY;
 
 -- Política: cualquiera puede leer
-CREATE POLICY "public_read_categories"       ON categories        FOR SELECT USING (true);
-CREATE POLICY "public_read_agrupaciones"     ON agrupaciones      FOR SELECT USING (true);
-CREATE POLICY "public_read_shows"            ON shows             FOR SELECT USING (true);
-CREATE POLICY "public_read_show_repertory"    ON show_repertory     FOR SELECT USING (true);
-CREATE POLICY "public_read_staff"            ON staff             FOR SELECT USING (true);
-CREATE POLICY "public_read_novedades"        ON novedades         FOR SELECT USING (true);
-CREATE POLICY "public_read_editions"         ON carnaval_editions FOR SELECT USING (true);
-CREATE POLICY "public_read_puntajes"         ON puntajes          FOR SELECT USING (true);
-CREATE POLICY "public_read_menciones"        ON menciones         FOR SELECT USING (true);
-CREATE POLICY "public_read_hero_frases"     ON hero_frases      FOR SELECT USING (true);
-CREATE POLICY "public_read_static_content"   ON static_content    FOR SELECT USING (true);
+CREATE POLICY "public_read_categories"
+ON categories
+FOR SELECT
+USING (true);
+
+CREATE POLICY "public_read_agrupaciones"
+ON agrupaciones
+FOR SELECT
+USING (true);
+
+CREATE POLICY "public_read_shows"
+ON shows
+FOR SELECT
+USING (true);
+
+CREATE POLICY "public_read_show_repertory"
+ON show_repertory
+FOR SELECT
+USING (true);
+
+CREATE POLICY "public_read_staff"
+ON staff
+FOR SELECT
+USING (true);
+
+CREATE POLICY "public_read_novedades"
+ON novedades
+FOR SELECT
+USING (true);
+
+CREATE POLICY "public_read_editions"
+ON carnaval_editions
+FOR SELECT
+USING (true);
+
+CREATE POLICY "public_read_puntajes"
+ON puntajes
+FOR SELECT
+USING (true);
+
+CREATE POLICY "public_read_menciones"
+ON menciones
+FOR SELECT
+USING (true);
+
+CREATE POLICY "public_read_hero_frases"
+ON hero_frases
+FOR SELECT
+USING (true);
+
+CREATE POLICY "public_read_static_content"
+ON static_content
+FOR SELECT
+USING (true);
 
 -- Política: solo usuarios autenticados pueden escribir
-CREATE POLICY "auth_write_categories"        ON categories        FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "auth_write_agrupaciones"      ON agrupaciones      FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "auth_write_shows"             ON shows             FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "auth_write_show_repertory"     ON show_repertory     FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "auth_write_staff"              ON staff             FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "auth_write_novedades"         ON novedades         FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "auth_write_editions"          ON carnaval_editions FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "auth_write_puntajes"          ON puntajes          FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "auth_write_menciones"         ON menciones         FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "auth_write_hero_frases"      ON hero_frases      FOR ALL USING (auth.role() = 'authenticated');
-CREATE POLICY "auth_write_static_content"    ON static_content    FOR ALL USING (auth.role() = 'authenticated');
+CREATE POLICY "auth_insert_categories"
+ON categories
+FOR INSERT
+WITH CHECK ((select auth.role()) = 'authenticated');
+
+CREATE POLICY "auth_update_categories"
+ON categories
+FOR UPDATE
+USING ((select auth.role()) = 'authenticated')
+WITH CHECK ((select auth.role()) = 'authenticated');
+
+CREATE POLICY "auth_delete_categories"
+ON categories
+FOR DELETE
+USING ((select auth.role()) = 'authenticated');
+
+CREATE POLICY "auth_insert_agrupaciones"
+ON agrupaciones
+FOR INSERT
+WITH CHECK ((select auth.role()) = 'authenticated');
+
+CREATE POLICY "auth_update_agrupaciones"
+ON agrupaciones
+FOR UPDATE
+USING ((select auth.role()) = 'authenticated')
+WITH CHECK ((select auth.role()) = 'authenticated');
+
+CREATE POLICY "auth_delete_agrupaciones"
+ON agrupaciones
+FOR DELETE
+USING ((select auth.role()) = 'authenticated');
+
+CREATE POLICY "auth_insert_shows"
+ON shows
+FOR INSERT
+WITH CHECK ((select auth.role()) = 'authenticated');
+
+CREATE POLICY "auth_update_shows"
+ON shows
+FOR UPDATE
+USING ((select auth.role()) = 'authenticated')
+WITH CHECK ((select auth.role()) = 'authenticated');
+
+CREATE POLICY "auth_delete_shows"
+ON shows
+FOR DELETE
+USING ((select auth.role()) = 'authenticated');
+
+CREATE POLICY "auth_insert_show_repertory"
+ON show_repertory
+FOR INSERT
+WITH CHECK ((select auth.role()) = 'authenticated');
+
+CREATE POLICY "auth_update_show_repertory"
+ON show_repertory
+FOR UPDATE
+USING ((select auth.role()) = 'authenticated')
+WITH CHECK ((select auth.role()) = 'authenticated');
+
+CREATE POLICY "auth_delete_show_repertory"
+ON show_repertory
+FOR DELETE
+USING ((select auth.role()) = 'authenticated');
+
+CREATE POLICY "auth_insert_staff"
+ON staff
+FOR INSERT
+WITH CHECK ((select auth.role()) = 'authenticated');
+
+CREATE POLICY "auth_update_staff"
+ON staff
+FOR UPDATE
+USING ((select auth.role()) = 'authenticated')
+WITH CHECK ((select auth.role()) = 'authenticated');
+
+CREATE POLICY "auth_delete_staff"
+ON staff
+FOR DELETE
+USING ((select auth.role()) = 'authenticated');
+
+CREATE POLICY "auth_insert_novedades"
+ON novedades
+FOR INSERT
+WITH CHECK ((select auth.role()) = 'authenticated');
+
+CREATE POLICY "auth_update_novedades"
+ON novedades
+FOR UPDATE
+USING ((select auth.role()) = 'authenticated')
+WITH CHECK ((select auth.role()) = 'authenticated');
+
+CREATE POLICY "auth_delete_novedades"
+ON novedades
+FOR DELETE
+USING ((select auth.role()) = 'authenticated');
+
+CREATE POLICY "auth_insert_editions"
+ON carnaval_editions
+FOR INSERT
+WITH CHECK ((select auth.role()) = 'authenticated');
+
+CREATE POLICY "auth_update_editions"
+ON carnaval_editions
+FOR UPDATE
+USING ((select auth.role()) = 'authenticated')
+WITH CHECK ((select auth.role()) = 'authenticated');
+
+CREATE POLICY "auth_delete_editions"
+ON carnaval_editions
+FOR DELETE
+USING ((select auth.role()) = 'authenticated');
+
+CREATE POLICY "auth_insert_puntajes"
+ON puntajes
+FOR INSERT
+WITH CHECK ((select auth.role()) = 'authenticated');
+
+CREATE POLICY "auth_update_puntajes"
+ON puntajes
+FOR UPDATE
+USING ((select auth.role()) = 'authenticated')
+WITH CHECK ((select auth.role()) = 'authenticated');
+
+CREATE POLICY "auth_delete_puntajes"
+ON puntajes
+FOR DELETE
+USING ((select auth.role()) = 'authenticated');
+
+CREATE POLICY "auth_insert_menciones"
+ON menciones
+FOR INSERT
+WITH CHECK ((select auth.role()) = 'authenticated');
+
+CREATE POLICY "auth_update_menciones"
+ON menciones
+FOR UPDATE
+USING ((select auth.role()) = 'authenticated')
+WITH CHECK ((select auth.role()) = 'authenticated');
+
+CREATE POLICY "auth_delete_menciones"
+ON menciones
+FOR DELETE
+USING ((select auth.role()) = 'authenticated');
+
+CREATE POLICY "auth_insert_hero_frases"
+ON hero_frases
+FOR INSERT
+WITH CHECK ((select auth.role()) = 'authenticated');
+
+CREATE POLICY "auth_update_hero_frases"
+ON hero_frases
+FOR UPDATE
+USING ((select auth.role()) = 'authenticated')
+WITH CHECK ((select auth.role()) = 'authenticated');
+
+CREATE POLICY "auth_delete_hero_frases"
+ON hero_frases
+FOR DELETE
+USING ((select auth.role()) = 'authenticated');
+
+CREATE POLICY "auth_insert_static_content"
+ON static_content
+FOR INSERT
+WITH CHECK ((select auth.role()) = 'authenticated');
+
+CREATE POLICY "auth_update_static_content"
+ON static_content
+FOR UPDATE
+USING ((select auth.role()) = 'authenticated')
+WITH CHECK ((select auth.role()) = 'authenticated');
+
+CREATE POLICY "auth_delete_static_content"
+ON static_content
+FOR DELETE
+USING ((select auth.role()) = 'authenticated');
 
 INSERT INTO storage.buckets (id, name, public)
 VALUES ('agrupaciones', 'agrupaciones', true);
@@ -265,8 +472,8 @@ CREATE POLICY "public read media"
 -- Política: solo autenticados pueden subir/borrar
 CREATE POLICY "auth upload agrupaciones"
   ON storage.objects FOR INSERT
-  WITH CHECK (bucket_id = 'agrupaciones' AND auth.role() = 'authenticated');
+  WITH CHECK (bucket_id = 'agrupaciones' AND (select auth.role()) = 'authenticated');
 
 CREATE POLICY "auth upload media"
   ON storage.objects FOR INSERT
-  WITH CHECK (bucket_id = 'media' AND auth.role() = 'authenticated');
+  WITH CHECK (bucket_id = 'media' AND (select auth.role()) = 'authenticated');

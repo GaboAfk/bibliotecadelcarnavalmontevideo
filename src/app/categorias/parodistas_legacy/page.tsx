@@ -51,13 +51,13 @@ export default function ParodistasPage() {
                     ))}
                 </div>
 
-                <AlphabetGrid
+                {/* <AlphabetGrid
                     data={parodistasAlphabet}
                     baseUrl="/categorias/parodistas"
                     title="Explorá nuestro archivo de parodistas:"
                     slugify={slugify}
                     availableItems={availableParodistas}
-                />
+                /> */}
             </div>
 
             <NovedadesSection />

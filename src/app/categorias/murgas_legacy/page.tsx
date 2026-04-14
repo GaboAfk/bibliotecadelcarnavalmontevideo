@@ -16,7 +16,6 @@ import { fetchCategories } from "@/lib/data-queries";
 export default async function MurgasPage() {
     const categories = await fetchCategories();
     const murgasCategory = categories.find((category) => category.slug === "murgas");
-    console.log(murgasCategory);
 
     return (
         <div className="bg-white pt-24 pb-16">
@@ -58,12 +57,12 @@ export default async function MurgasPage() {
                     <p className="text-lg leading-relaxed mb-4 whitespace-pre-wrap">{murgasCategory?.info_description}</p>
                 </div>
 
-                <AlphabetGrid
+                {/* <AlphabetGrid
                     data={murgasAlphabet}
                     baseUrl="/categorias/murgas"
                     title="Explorá nuestro archivo de murgas:"
                     availableItems={availableMurgas}
-                />
+                /> */}
             </div>
 
             <NovedadesSection />

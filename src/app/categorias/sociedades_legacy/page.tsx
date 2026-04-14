@@ -53,13 +53,13 @@ export default function SociedadesPage() {
                     ))}
                 </div>
 
-                <AlphabetGrid
+                {/* <AlphabetGrid
                     data={sociedadesAlphabet}
                     baseUrl="/categorias/sociedades"
                     title="Explorá nuestro archivo de sociedades:"
                     slugify={slugify}
                     availableItems={availableSociedades}
-                />
+                /> */}
             </div>
 
             <NovedadesSection />

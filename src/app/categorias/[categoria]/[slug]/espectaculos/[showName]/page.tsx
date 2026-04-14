@@ -27,8 +27,6 @@ type SectionType = "repertorio" | "galeria" | "datos";
 export default function ShowDetailPage({ params }: ShowDetailPageProps) {
     const router = useRouter();
     const { slug, showName } = React.use(params);
-    console.log("slug", slug);
-    console.log("showName", showName);
 
     const [agrupacion, setAgrupacion] = useState<Agrupacion | null>(null);
     const [show, setShow] = useState<Show | null>(null);
@@ -41,7 +39,6 @@ export default function ShowDetailPage({ params }: ShowDetailPageProps) {
             try {
                 // Obtener el show usando showName (que es el slug del show)
                 const showData = await fetchShowBySlug(showName);
-                console.log("showData", showData);
 
                 if (!showData) {
                     console.error("Show not found");
@@ -56,10 +53,6 @@ export default function ShowDetailPage({ params }: ShowDetailPageProps) {
                     fetchShowRepertory(showData.id)
                 ]);
 
-                console.log("agrupacionData", agrupacionData);
-                console.log("staffData", staffData);
-                console.log("repertoryData", repertoryData);
-
                 setAgrupacion(agrupacionData);
                 setShow(showData);
                 setStaff(staffData);
@@ -73,14 +66,6 @@ export default function ShowDetailPage({ params }: ShowDetailPageProps) {
 
         loadData();
     }, [showName]);
-
-    console.log("show.image", show?.image);
-    // console.log("staff", staff);
-    // console.log("repertory", repertory);
-
-    // console.log("agrupación", agrupacion?.name);
-
-    // console.log("repertory", repertory);
 
     const [expandedSections, setExpandedSections] = useState<Record<SectionType, boolean>>({
         repertorio: true,

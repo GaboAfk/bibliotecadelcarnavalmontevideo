@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "dev:full": "bash -c 'supabase start && npm run generate-types && npm run dev'",
+    "reset": "bash -c 'supabase db reset && npm run generate-types'",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",

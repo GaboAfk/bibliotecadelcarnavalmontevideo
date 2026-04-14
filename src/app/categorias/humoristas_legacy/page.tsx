@@ -51,12 +51,12 @@ export default async function HumoristasPage() {
                     ))}
                 </div>
 
-                <AlphabetGrid
+                {/* <AlphabetGrid
                     data={humoristasAlphabet}
                     baseUrl="/categorias/humoristas"
                     title="Explorá nuestro archivo de humoristas:"
                     availableItems={availableHumoristas}
-                />
+                /> */}
             </div>
 
             <NovedadesSection />

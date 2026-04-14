@@ -27,8 +27,8 @@ import {
   fetchShowRepertory,
   fetchCarnavalEdiciones,
   fetchHeroFrases,
-  fetchMencionesByEdition,
-  fetchPuntajesByEdition,
+  fetchMenciones2026ByEdition,
+  fetchPuntajes2026ByEdition,
   fetchStaticContent
 } from '@/lib/data-queries'
 
@@ -222,4 +222,74 @@ export function useCarnavalEdiciones() {
   }, [])
 
   return { ediciones, loading, error }
+}
+
+// Hook combinado para datos de Carnaval 2026
+export function useCarnaval2026Data() {
+  const [ediciones, setEdiciones] = useState<CarnavalEdition[]>([])
+  const [menciones, setMenciones] = useState<Mencion[]>([])
+  const [puntajes, setPuntajes] = useState<Puntaje[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        // Get all editions first
+        const edicionesData = await fetchCarnavalEdiciones()
+        setEdiciones(edicionesData)
+
+        // Find 2026 edition
+        const edicion2026 = edicionesData.find(e => e.year === 2026)
+
+        if (edicion2026) {
+          try {
+            // Fetch menciones and puntajes for 2026 edition in parallel
+            const [mencionesData, puntajesData] = await Promise.all([
+              fetchMenciones2026ByEdition(edicion2026.id),
+              fetchPuntajes2026ByEdition(edicion2026.id)
+            ])
+
+            setMenciones(mencionesData)
+            setPuntajes(puntajesData)
+            setLoading(false)
+          } catch (mencionesPuntajesError) {
+            console.error('useCarnaval2026Data: Error fetching menciones/puntajes:', mencionesPuntajesError)
+            // Don't throw error, just log it and continue with empty arrays
+            setLoading(false)
+          }
+        } else {
+          setLoading(false)
+        }
+      } catch (err) {
+        console.error('useCarnaval2026Data: Error fetching data:', err)
+        setError(err instanceof Error ? err.message : 'Unknown error')
+        setLoading(false)
+      }
+    }
+    fetchData()
+  }, [])
+
+  const edicion2026 = ediciones.find(e => e.year === 2026)
+
+  return {
+    ediciones,
+    menciones,
+    puntajes,
+    edicion2026,
+    loading,
+    error
+  }
+}
+
+// Hook para Menciones 2026 (deprecated - use useCarnaval2026Data)
+export function useMenciones2026() {
+  const { menciones, loading, error } = useCarnaval2026Data()
+  return { menciones, loading, error }
+}
+
+// Hook para Puntajes 2026 (deprecated - use useCarnaval2026Data)
+export function usePuntajes2026() {
+  const { puntajes, loading, error } = useCarnaval2026Data()
+  return { puntajes, loading, error }
 }

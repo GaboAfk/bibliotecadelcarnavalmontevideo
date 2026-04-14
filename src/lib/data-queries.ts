@@ -149,7 +149,12 @@ export async function fetchCarnavalEdiciones(): Promise<CarnavalEdition[]> {
         .select('*')
         .order('year', { ascending: false })
 
-    if (error) throw error
+
+    if (error) {
+        console.error('fetchCarnavalEdiciones: Error:', error)
+        throw error
+    }
+
     return data || []
 }
 
@@ -166,18 +171,23 @@ export async function fetchHeroFrases(): Promise<HeroFrase[]> {
 }
 
 // Menciones y Puntajes
-export async function fetchMencionesByEdition(editionId: string): Promise<Mencion[]> {
+export async function fetchMenciones2026ByEdition(editionId: string): Promise<Mencion[]> {
     const { data, error } = await supabase
         .from('menciones')
         .select('*')
         .eq('edition_id', editionId)
         .order('tipo', { ascending: true })
 
-    if (error) throw error
+
+    if (error) {
+        console.error('fetchMenciones2026ByEdition: Error:', error)
+        throw error
+    }
+
     return data || []
 }
 
-export async function fetchPuntajesByEdition(editionId: string): Promise<Puntaje[]> {
+export async function fetchPuntajes2026ByEdition(editionId: string): Promise<Puntaje[]> {
     const { data, error } = await supabase
         .from('puntajes')
         .select('*')
@@ -185,7 +195,12 @@ export async function fetchPuntajesByEdition(editionId: string): Promise<Puntaje
         .order('categoria', { ascending: true })
         .order('puesto', { ascending: true })
 
-    if (error) throw error
+
+    if (error) {
+        console.error('fetchPuntajes2026ByEdition: Error:', error)
+        throw error
+    }
+
     return data || []
 }
 
