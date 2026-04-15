@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ImageWithFallback } from "@/components/ImageWithFallback";
+import { ShowCard } from "@/components/ShowCard";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { ChevronRight } from "lucide-react";
@@ -36,6 +36,8 @@ export default function ShowsPage({ params }: ShowPageProps) {
                 setAgrupacion(agrupacionData);
                 const showsData = await fetchShowsByAgrupacion(agrupacionData.id);
                 setShows(showsData);
+
+
             } catch (err) {
                 console.error('Error fetching data:', err);
                 setError('Error al cargar los datos');
@@ -137,64 +139,31 @@ export default function ShowsPage({ params }: ShowPageProps) {
                                 const colorIndex = index % accentColors.length;
                                 const accent = accentColors[colorIndex];
 
+                                // Debug condition
+                                const hasContent = show.promotion_date || show.data || (show.gallery && show.gallery.length > 0);
+
                                 return (
                                     <div key={show.id} className={`show-card group relative ${isMiddleColumn ? 'lg:mt-12' : ''}`}>
-                                        <Link
-                                            href={`/categorias/${agrupacion.category_slug}/${slug}/espectaculos/${show.slug}`}
-                                            className="block"
-                                        >
-                                            {/* Show Image with Triangle Badge */}
-                                            <div className="relative overflow-hidden rounded-xl shadow-xl bg-gray-200 aspect-[4/3] mb-6">
-                                                <ImageWithFallback
-                                                    src={show.image || '/placeholder.jpg'}
-                                                    alt={show.title}
-                                                    fill
-                                                    className="show-image w-full h-full object-cover transition-transform duration-700 ease-out"
+
+                                        {hasContent ? (
+                                            <Link
+                                                href={`/categorias/${agrupacion.category_slug}/${slug}/espectaculos/${show.slug}`}
+                                                className="block"
+                                            >
+                                                <ShowCard
+                                                    show={show}
+                                                    accent={accent}
+                                                    isMiddleColumn={isMiddleColumn}
                                                 />
-
-                                                {/* Year Triangle Badge */}
-                                                {show.year && (
-                                                    <div className="absolute top-0 left-6 z-20">
-                                                        <div
-                                                            className="triangle-badge w-14 h-20 flex flex-col items-center pt-2 shadow-lg font-serif font-black text-sm tracking-tighter"
-                                                            style={{ backgroundColor: accent.bg, color: accent.text }}
-                                                        >
-                                                            {show.year}
-                                                        </div>
-                                                    </div>
-                                                )}
-
-                                                {/* Hover Overlay */}
-                                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-                                                    <button className="flex items-center gap-2 text-white font-semibold">
-                                                        Ver Detalles →
-                                                    </button>
-                                                </div>
-                                            </div>
-
-                                            {/* Show Info */}
-                                            <div>
-                                                <h3
-                                                    className="text-2xl font-serif font-bold transition-colors"
-                                                    style={{ color: accent.bg }}
-                                                >
-                                                    {show.title}
-                                                </h3>
-                                                <div
-                                                    className="w-12 h-1 mt-3 group-hover:w-24 transition-all duration-500"
-                                                    style={{ backgroundColor: accent.bg }}
-                                                ></div>
-
-                                                {show.promotion_date && (
-                                                    <div className="flex items-center gap-2 text-sm text-gray-600 mt-3">
-                                                        <span className="inline-block w-2 h-2 bg-black rounded-full"></span>
-                                                        <time dateTime={show.promotion_date}>
-                                                            {formatDate(show.promotion_date)}
-                                                        </time>
-                                                    </div>
-                                                )}
-                                            </div>
-                                        </Link>
+                                            </Link>
+                                        ) : (
+                                            <ShowCard
+                                                show={show}
+                                                accent={accent}
+                                                isMiddleColumn={isMiddleColumn}
+                                                showDetalles={false}
+                                            />
+                                        )}
                                     </div>
                                 );
                             })}

@@ -1,6 +1,5 @@
 "use client";
 
-import { murgasData } from "@/data/murgas";
 import Link from "next/link";
 import { ImageWithFallback } from "@/components/ImageWithFallback";
 import { useRouter } from "next/navigation";
@@ -8,9 +7,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { ChevronRight, ChevronDown, ChevronLeft } from "lucide-react";
 import { Swiper as SwiperType } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Thumbs } from "swiper/modules";
+import { Thumbs } from "swiper/modules";
 import "swiper/css";
-import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import { fetchAgrupacionBySlug, fetchShowBySlug, fetchStaffByShow, fetchShowRepertory } from "@/lib/data-queries";
 import { Agrupacion, Show, Staff, ShowRepertory } from "@/lib/supabase-client";
@@ -236,7 +234,7 @@ export default function ShowDetailPage({ params }: ShowDetailPageProps) {
                     {/* Right Content */}
                     <div className="md:col-span-3">
                         {/* Repertorio */}
-                        {expandedSections.repertorio && repertory && (
+                        {expandedSections.repertorio && repertory && repertory.length > 0 && (
                             <section className="mb-12">
                                 <h2 className="text-3xl font-serif mb-6">Repertorio</h2>
                                 <div className="bg-gray-50 rounded-lg p-8">
