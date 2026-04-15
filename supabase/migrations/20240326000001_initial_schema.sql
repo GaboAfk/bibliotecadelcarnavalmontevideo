@@ -454,11 +454,13 @@ FOR DELETE
 USING ((select auth.role()) = 'authenticated');
 
 INSERT INTO storage.buckets (id, name, public)
-VALUES ('agrupaciones', 'agrupaciones', true);
+VALUES ('agrupaciones', 'agrupaciones', true)
+ON CONFLICT (id) DO NOTHING;
 
 -- Bucket público para media general
 INSERT INTO storage.buckets (id, name, public)
-VALUES ('media', 'media', true);
+VALUES ('media', 'media', true)
+ON CONFLICT (id) DO NOTHING;
 
 -- Política: cualquiera puede leer
 CREATE POLICY "public read agrupaciones"
