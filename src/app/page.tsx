@@ -1,21 +1,21 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { ImageWithFallback } from "@/components/ImageWithFallback";
 import { NovedadesSection } from "@/components/NovedadesSection";
-import Image from "next/image";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
-import { categoriesData } from '@/data/categoriesData';
-import { frasesPromo } from '@/data/frasesPromo';
-import { nuestraBiblioteca } from '@/data/nuestraBiblioteca';
+import { useCategories, useFrasesPromo } from '@/hooks/useData';
 
 export default function Homepage() {
     const [currentSlide, setCurrentSlide] = useState(0);
+    const { frases, loading: frasesLoading } = useFrasesPromo();
+    const { categories, loading: categoriesLoading } = useCategories();
 
-    const slides = frasesPromo;
+    const slides = frases;
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -23,6 +23,15 @@ export default function Homepage() {
         }, 5000);
         return () => clearInterval(timer);
     }, [slides.length]);
+
+    // Loading states
+    if (frasesLoading || categoriesLoading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <div className="text-xl">Cargando...</div>
+            </div>
+        );
+    }
 
     return (
         <div className="bg-white">
@@ -32,7 +41,7 @@ export default function Homepage() {
                     modules={[Autoplay, Pagination]}
                     spaceBetween={0}
                     slidesPerView={1}
-                    loop={true}
+                    loop={slides.length > 1}
                     autoplay={{
                         delay: 5000,
                         disableOnInteraction: false,
@@ -114,15 +123,15 @@ export default function Homepage() {
                 <div className="max-w-7xl mx-auto">
                     <h2 className="text-3xl mb-12 font-serif">Categorías</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-                        {categoriesData.map((category) => (
-                            <a
+                        {categories.map((category) => (
+                            <Link
                                 key={category.slug}
                                 href={`/categorias/${category.slug}`}
                                 className="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300"
                             >
                                 <div className="relative h-64 ">
                                     <ImageWithFallback
-                                        src={category.image}
+                                        src={category.info_image || '/placeholder.jpg'}
                                         alt={category.name}
                                         fill
                                         className="object-cover group-hover:scale-110 transition-transform duration-300"
@@ -134,7 +143,7 @@ export default function Homepage() {
                                         {category.name}
                                     </h3>
                                 </div>
-                            </a>
+                            </Link>
                         ))}
                     </div>
                 </div>

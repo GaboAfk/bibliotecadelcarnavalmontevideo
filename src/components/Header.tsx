@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BookOpen, ChevronDown, Menu, X, ChevronUp } from "lucide-react";
+import { ChevronDown, Menu, X, ChevronUp } from "lucide-react";
 import { SearchBar } from "./SearchBar";
 
 export function Header() {
@@ -52,14 +52,14 @@ export function Header() {
     };
     return (
         <header ref={headerRef} className="fixed top-0 left-0 right-0 bg-white z-50 shadow-md shadow-md border-b border-gray-100">
-            <div className="max-w mx-auto px-6 py-4">
-                <div className="flex items-center justify-between">
+            <div className="w-full max-w-full mx-auto px-6 py-4">
+                <div className="flex items-center justify-between ">
                     {/* Logo */}
                     <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
                         <span className="text-md md:text-md tracking-wider uppercase leading-tight">
                             BIBLIOTECA OFICIAL <br />DEL CARNAVAL<br /> MONTEVIDEANO
                         </span>
-                        <img src="/logo_biblioteca_optimizado.svg" alt="Biblioteca Carnaval" className=" object-contain flex-shrink-0" />
+                        <img src="/logo_biblioteca_optimizado.svg" alt="Biblioteca Carnaval" className="object-contain flex-shrink-0 hidden sm:block" />
                     </Link>
 
                     {/* Desktop Navigation */}

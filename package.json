@@ -4,13 +4,21 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:full": "bash -c 'supabase start && npm run generate-types && npm run dev'",
+    "reset": "bash -c 'supabase db reset && npm run generate-types'",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "generate-types": "supabase gen types typescript --local --schema public > src/lib/database.types.ts",
+    "db:push": "dotenv -e .env.local -- supabase db push --linked",
+    "db:reset": "dotenv -e .env.local -- supabase db reset --linked",
+    "db:status": "dotenv -e .env.local -- supabase db query --linked \"SELECT COUNT(*) FROM categories; SELECT COUNT(*) FROM agrupaciones;\""
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.100.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "dotenv-cli": "^11.0.0",
     "lucide-react": "^0.564.0",
     "next": "16.1.6",
     "react": "19.2.3",

@@ -9,7 +9,7 @@ const config: Config = {
     theme: {
         extend: {
             screens: {
-                nav: "1140px",
+                nav: "1300px",
             },
             fontFamily: {
                 serif: ["Playfair Display", "Georgia", "serif"],

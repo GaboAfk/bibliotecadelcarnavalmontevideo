@@ -1,17 +1,29 @@
-"use client";
-
 import Link from "next/link";
+import { slugify } from "@/lib/utils";
+import { fetchAgrupacionesByCategory } from "@/lib/data-queries";
 
 interface AlphabetGridProps {
-    data: Record<string, string[]>;
+    category: string;
     baseUrl: string;
     title: string;
-    slugify: (name: string) => string;
-    availableItems?: string[]; // Items that have detailed data and should be clickable
 }
 
-export function AlphabetGrid({ data, baseUrl, title, slugify, availableItems }: AlphabetGridProps) {
-    const letters = Object.keys(data).sort();
+
+
+export async function AlphabetGrid({ category, baseUrl, title }: AlphabetGridProps) {
+
+    const data = await fetchAgrupacionesByCategory(category);
+
+    // Agrupar por letra inicial
+    const groupedByLetter = data.reduce((acc, item) => {
+        const firstLetter = item.name.charAt(0).toUpperCase();
+        if (!acc[firstLetter]) {
+            acc[firstLetter] = [];
+        }
+        acc[firstLetter].push(item);
+        return acc;
+    }, {} as Record<string, any[]>);
+    const letters = Object.keys(groupedByLetter).sort();
 
     return (
         <div className="max-w-7xl mx-auto px-6">
@@ -24,28 +36,17 @@ export function AlphabetGrid({ data, baseUrl, title, slugify, availableItems }: 
                     >
                         <div className="text-2xl font-bold mb-3 text-black transition-all duration-200 cursor-default">{letter}</div>
                         <ul className="space-y-1">
-                            {data[letter].map((name) => {
-                                const isAvailable = availableItems?.includes(name);
-                                if (isAvailable) {
-                                    return (
-                                        <li key={name}>
-                                            <Link
-                                                href={`${baseUrl}/${slugify(name)}`}
-                                                className="block py-1 text-black hover:scale-90 hover:font-black cursor-pointer transition-all "
-                                            >
-                                                {name}
-                                            </Link>
-                                        </li>
-                                    );
-                                } else {
-                                    return (
-                                        <li key={name}>
-                                            <span className="block py-1 text-gray-400 cursor-not-allowed">
-                                                {name}
-                                            </span>
-                                        </li>
-                                    );
-                                }
+                            {groupedByLetter[letter].map((item) => {
+                                return (
+                                    <li key={item.name}>
+                                        <Link
+                                            href={`${baseUrl}/${slugify(item.name)}`}
+                                            className="block py-1 text-black hover:scale-90 hover:font-black cursor-pointer transition-all "
+                                        >
+                                            {item.name}
+                                        </Link>
+                                    </li>
+                                );
                             })}
                         </ul>
                     </div>

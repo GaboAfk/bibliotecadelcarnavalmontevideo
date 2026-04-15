@@ -1,6 +1,6 @@
 export default function HistoriaPage() {
     return (
-        <div className="bg-white pt-24 pb-16">
+        <div className="bg-white pt-30 pb-16">
             <div className="max-w-4xl mx-auto px-6">
                 <h1 className="text-4xl mb-8 font-serif">Historia del Carnaval</h1>
                 <div className="space-y-6 text-lg leading-relaxed">

@@ -51,13 +51,13 @@ export default function RevistasPage() {
                     ))}
                 </div>
 
-                <AlphabetGrid
+                {/* <AlphabetGrid
                     data={revistasAlphabet}
                     baseUrl="/categorias/revistas"
                     title="Explorá nuestro archivo de revistas:"
                     slugify={slugify}
                     availableItems={availableRevistas}
-                />
+                /> */}
             </div>
 
             <NovedadesSection />
