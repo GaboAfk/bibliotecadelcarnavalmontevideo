@@ -5,7 +5,7 @@ import { ImageWithFallback } from '@/components/ImageWithFallback';
 import { fetchAgrupaciones } from '@/lib/data-queries';
 import { slugify } from '@/utils/slugify';
 import { useEffect, useState } from 'react';
-import { Agrupacion } from '@/lib/supabase-client';
+import { Agrupacion } from '@/lib/supabase';
 import Link from 'next/link';
 
 export default function Carnaval2026Page() {

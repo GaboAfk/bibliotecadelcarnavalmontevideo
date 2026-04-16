@@ -19,11 +19,10 @@ export default async function CategoriaPage({ params }: { params: Promise<{ cate
             <div className="w-full bg-black text-white py-4">
                 <div className="max-w-7xl mx-auto px-6">
                     <h1 className="text-4xl md:text-5xl font-serif text-center tracking-wide">{currentCategory?.name || 'Categoría'}</h1>
-                    <h1 className="text-4xl md:text-5xl font-serif text-center tracking-wide">{"dinamic"}</h1>
                 </div>
             </div>
 
-            <div className="max-w mx-auto px-6">
+            <div className="max-w-7xl mx-auto px-6">
                 <nav className="flex items-center gap-2 mt-4 text-sm text-gray-600">
                     <Link href="/" className="hover:underline">Inicio</Link>
                     <ChevronRight size={16} />

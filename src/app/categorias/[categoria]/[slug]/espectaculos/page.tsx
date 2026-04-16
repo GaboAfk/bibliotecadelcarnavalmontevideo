@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { ChevronRight } from "lucide-react";
 import { fetchShowsByAgrupacion, fetchAgrupacionBySlug } from "@/lib/data-queries";
-import { Show, Agrupacion } from "@/lib/supabase-client";
+import { Show, Agrupacion } from "@/lib/supabase";
 
 type ShowPageProps = {
     params: Promise<{

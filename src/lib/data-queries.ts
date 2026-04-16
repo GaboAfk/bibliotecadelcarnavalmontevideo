@@ -1,4 +1,4 @@
-import { supabase, Novedad, Agrupacion, Category, Show, CarnavalEdition, HeroFrase, Mencion, Puntaje, Staff, ShowRepertory, StaticContent } from '@/lib/supabase-client'
+import { supabase, Novedad, Agrupacion, Category, Show, CarnavalEdition, HeroFrase, Mencion, Puntaje, Staff, ShowRepertory, StaticContent } from '@/lib/supabase'
 
 // Novedades
 export async function fetchNovedades(): Promise<Novedad[]> {

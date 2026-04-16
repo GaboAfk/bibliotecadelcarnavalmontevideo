@@ -11,7 +11,7 @@ import { Thumbs } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/thumbs";
 import { fetchAgrupacionBySlug, fetchShowBySlug, fetchStaffByShow, fetchShowRepertory } from "@/lib/data-queries";
-import { Agrupacion, Show, Staff, ShowRepertory } from "@/lib/supabase-client";
+import { Agrupacion, Show, Staff, ShowRepertory } from "@/lib/supabase";
 
 type ShowDetailPageProps = {
     params: Promise<{

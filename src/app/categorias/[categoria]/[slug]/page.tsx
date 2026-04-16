@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
 import { ChevronRight, ChevronDown } from "lucide-react";
 import { fetchAgrupacionBySlug } from "@/lib/data-queries";
-import { Agrupacion } from "@/lib/supabase-client";
+import { Agrupacion } from "@/lib/supabase";
 
 type AgrupacionPageProps = {
     params: Promise<{

@@ -8,7 +8,7 @@ import { Navigation, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { useNovedades } from '@/hooks/useData';
-import { Novedad } from '@/lib/supabase-client';
+import { Novedad } from '@/lib/supabase';
 
 export function NovedadesSection() {
     const { novedades, loading, error } = useNovedades();
