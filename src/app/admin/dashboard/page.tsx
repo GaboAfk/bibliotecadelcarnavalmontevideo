@@ -73,10 +73,10 @@ export default function AdminDashboard() {
                             </div>
                             <div className="mt-6">
                                 <a
-                                    href="/admin/entities"
+                                    href="/admin/categories"
                                     className="flex items-center text-sm font-medium text-indigo-600 hover:text-indigo-500"
                                 >
-                                    Administrar entidades
+                                    Categorías
                                     <span aria-hidden="true"> &rarr;</span>
                                 </a>
                             </div>
@@ -108,7 +108,7 @@ export default function AdminDashboard() {
                         </div>
                     </div>
 
-                    <div className="bg-white overflow-hidden shadow rounded-lg">
+                    {/* <div className="bg-white overflow-hidden shadow rounded-lg">
                         <div className="p-6">
                             <div className="flex items-center">
                                 <div className="flex-shrink-0 bg-yellow-500 rounded-md p-3">
@@ -131,7 +131,7 @@ export default function AdminDashboard() {
                                 </button>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>

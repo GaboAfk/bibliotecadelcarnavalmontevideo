@@ -44,8 +44,8 @@ export function ImageWithFallback({
                     src={fallbackSrc}
                     alt={alt}
                     {...(fill
-                        ? { fill, className: `object-contain ${className}` }
-                        : { width: width || 800, height: height || 600, className })}
+                        ? { fill, className: `object-contain ${className}`, sizes }
+                        : { width: width || 800, height: height || 600, className, sizes })}
                     loading={priority ? "eager" : (lazy ? "lazy" : "eager")}
                     priority={priority}
                 />
@@ -60,8 +60,11 @@ export function ImageWithFallback({
     }
 
     const imageProps = fill
-        ? { fill, className: `object-contain ${className}` }
-        : { width: width || 800, height: height || 600, className };
+        ? { fill, className: `object-contain ${className}`, sizes }
+        : { width: width || 800, height: height || 600, className, sizes };
+
+    // Detectar si es una URL local de Supabase
+    const isLocalSupabase = src.includes('127.0.0.1:54321')
 
     return (
         <Image
@@ -71,6 +74,7 @@ export function ImageWithFallback({
             {...imageProps}
             loading={priority ? "eager" : (lazy ? "lazy" : "eager")}
             priority={priority}
+            unoptimized={isLocalSupabase}
         />
     );
 }

@@ -82,6 +82,39 @@ export async function fetchCategoryBySlug(slug: string): Promise<Category | null
     return data
 }
 
+// CRUD Operations for Categories
+export async function createCategory(category: Omit<Category, 'id' | 'created_at'>): Promise<Category> {
+    const { data, error } = await supabase
+        .from('categories')
+        .insert(category)
+        .select()
+        .single()
+
+    if (error) throw error
+    return data
+}
+
+export async function updateCategory(id: string, updates: Partial<Omit<Category, 'id' | 'created_at'>>): Promise<Category> {
+    const { data, error } = await supabase
+        .from('categories')
+        .update(updates)
+        .eq('id', id)
+        .select()
+        .single()
+
+    if (error) throw error
+    return data
+}
+
+export async function deleteCategory(id: string): Promise<void> {
+    const { error } = await supabase
+        .from('categories')
+        .delete()
+        .eq('id', id)
+
+    if (error) throw error
+}
+
 // Espectáculos (Shows)
 export async function fetchShowsByAgrupacion(agrupacionId: string): Promise<Show[]> {
     const { data, error } = await supabase

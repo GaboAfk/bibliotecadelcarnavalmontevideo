@@ -6,12 +6,14 @@ import 'swiper/css/navigation';
 import { NovedadesSection } from "@/components/NovedadesSection";
 import { AlphabetGrid } from "@/components/AlphabetGrid";
 
-import { fetchCategories } from "@/lib/data-queries";
+import { fetchCategories, fetchAgrupacionesByCategory } from "@/lib/data-queries";
 
 export default async function CategoriaPage({ params }: { params: Promise<{ categoria: string }> }) {
     const { categoria } = await params;
     const categories = await fetchCategories();
     const currentCategory = categories.find((category) => category.slug === categoria);
+    const agrupaciones = await fetchAgrupacionesByCategory(categoria);
+    const hasAgrupaciones = agrupaciones.length > 0;
 
     return (
         <div className="bg-white pt-24 pb-16">
@@ -52,11 +54,13 @@ export default async function CategoriaPage({ params }: { params: Promise<{ cate
                     <p className="text-lg leading-relaxed mb-4 whitespace-pre-wrap">{currentCategory?.info_description}</p>
                 </div>
 
-                <AlphabetGrid
-                    category={categoria}
-                    baseUrl={`/categorias/${categoria}`}
-                    title={`Explorá nuestro archivo de ${currentCategory?.name?.toLowerCase() || 'categoría'}:`}
-                />
+                {hasAgrupaciones && (
+                    <AlphabetGrid
+                        category={categoria}
+                        baseUrl={`/categorias/${categoria}`}
+                        title={`Explorá nuestro archivo de ${currentCategory?.name?.toLowerCase() || 'categoría'}:`}
+                    />
+                )}
             </div>
 
             <NovedadesSection />
