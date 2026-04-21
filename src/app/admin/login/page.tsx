@@ -58,9 +58,9 @@ export default function AdminLoginPage() {
             setError(result.error);
             setLoading(false);
         } else if (result?.success) {
-            // Login exitoso, redirigir a debug primero para ver cookies
+            // Login exitoso, redirigir al dashboard
             setTimeout(() => {
-                window.location.href = '/api/debug-after-login';
+                window.location.href = '/admin/dashboard';
             }, 200);
         } else {
             setLoading(false);

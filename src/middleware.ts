@@ -1,46 +1,66 @@
+import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
 export async function middleware(request: NextRequest) {
-  const res = NextResponse.next()
+  let supabaseResponse = NextResponse.next({
+    request,
+  })
 
-  // Solo proteger rutas de admin
-  if (!request.nextUrl.pathname.startsWith('/admin') ||
-    request.nextUrl.pathname === '/admin/login') {
-    return res
-  }
-
-  // Verificar si hay cookies de autenticación de Supabase
-  // Supabase usa diferentes nombres local vs producción
-  const accessToken = request.cookies.get('sb-127-auth-token')?.value ||
-    request.cookies.get('sb-auth-token')?.value
-
-  // Debug en desarrollo
-  // if (process.env.NODE_ENV === 'development') {
-  const allCookies = request.cookies.getAll()
-  const authCookies = allCookies.filter(cookie =>
-    cookie.name.toLowerCase().includes('auth')
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return request.cookies.getAll()
+        },
+        setAll(cookiesToSet) {
+          // Primero setea en el request (para que la sesión esté disponible)
+          cookiesToSet.forEach(({ name, value }) =>
+            request.cookies.set(name, value)
+          )
+          // Luego setea en la response (para que el browser las guarde)
+          supabaseResponse = NextResponse.next({ request })
+          cookiesToSet.forEach(({ name, value, options }) =>
+            supabaseResponse.cookies.set(name, value, options)
+          )
+        },
+      },
+    }
   )
 
-  console.log('=== Middleware Debug ===')
-  console.log('Path:', request.nextUrl.pathname)
-  console.log('Total cookies:', allCookies.length)
-  console.log('Auth cookies:', authCookies.length)
-  authCookies.forEach(cookie => {
-    console.log(`- ${cookie.name}: ${cookie.value ? 'present' : 'empty'}`)
-  })
-  console.log('Access token:', accessToken ? 'present' : 'missing')
-  console.log('========================')
-  // }
+  // IMPORTANTE: llamar getUser() para refrescar la sesión si es necesario
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
 
-  // Si no hay access token, redirigir a login
-  if (!accessToken) {
-    console.log('No access token found, redirecting to login')
+  const isAdminRoute = request.nextUrl.pathname.startsWith('/admin')
+  const isLoginPage = request.nextUrl.pathname === '/admin/login'
+
+  // Debug en desarrollo
+  if (process.env.NODE_ENV === 'development') {
+    console.log('=== Supabase SSR Middleware ===')
+    console.log('Path:', request.nextUrl.pathname)
+    console.log('User:', user?.email || 'No user')
+    console.log('Is admin route:', isAdminRoute)
+    console.log('Is login page:', isLoginPage)
+    console.log('================================')
+  }
+
+  // Si está en ruta protegida y no hay usuario → redirigir a login
+  if (isAdminRoute && !isLoginPage && !user) {
     const loginUrl = new URL('/admin/login', request.url)
     return NextResponse.redirect(loginUrl)
   }
 
-  console.log('Access token found, allowing access')
-  return res
+  // Si ya está autenticado y va a /admin/login → redirigir a /admin
+  if (isLoginPage && user) {
+    return NextResponse.redirect(new URL('/admin/dashboard', request.url))
+  }
+
+  // MUY IMPORTANTE: devolver siempre supabaseResponse, no NextResponse.next()
+  // para que las cookies actualizadas se propaguen correctamente
+  return supabaseResponse
 }
 
 export const config = {
