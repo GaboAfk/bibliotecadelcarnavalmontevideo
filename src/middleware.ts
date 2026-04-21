@@ -15,22 +15,22 @@ export async function middleware(request: NextRequest) {
     request.cookies.get('sb-auth-token')?.value
 
   // Debug en desarrollo
-  if (process.env.NODE_ENV === 'development') {
-    const allCookies = request.cookies.getAll()
-    const authCookies = allCookies.filter(cookie =>
-      cookie.name.toLowerCase().includes('auth')
-    )
+  // if (process.env.NODE_ENV === 'development') {
+  const allCookies = request.cookies.getAll()
+  const authCookies = allCookies.filter(cookie =>
+    cookie.name.toLowerCase().includes('auth')
+  )
 
-    console.log('=== Middleware Debug ===')
-    console.log('Path:', request.nextUrl.pathname)
-    console.log('Total cookies:', allCookies.length)
-    console.log('Auth cookies:', authCookies.length)
-    authCookies.forEach(cookie => {
-      console.log(`- ${cookie.name}: ${cookie.value ? 'present' : 'empty'}`)
-    })
-    console.log('Access token:', accessToken ? 'present' : 'missing')
-    console.log('========================')
-  }
+  console.log('=== Middleware Debug ===')
+  console.log('Path:', request.nextUrl.pathname)
+  console.log('Total cookies:', allCookies.length)
+  console.log('Auth cookies:', authCookies.length)
+  authCookies.forEach(cookie => {
+    console.log(`- ${cookie.name}: ${cookie.value ? 'present' : 'empty'}`)
+  })
+  console.log('Access token:', accessToken ? 'present' : 'missing')
+  console.log('========================')
+  // }
 
   // Si no hay access token, redirigir a login
   if (!accessToken) {

@@ -58,9 +58,9 @@ export default function AdminLoginPage() {
             setError(result.error);
             setLoading(false);
         } else if (result?.success) {
-            // Login exitoso, esperar un poco y redirigir
+            // Login exitoso, redirigir a debug primero para ver cookies
             setTimeout(() => {
-                window.location.href = '/admin/dashboard';
+                window.location.href = '/api/debug-after-login';
             }, 200);
         } else {
             setLoading(false);
@@ -112,7 +112,7 @@ export default function AdminLoginPage() {
                         {loading ? "Ingresando..." : "Ingresar"}
                     </button>
 
-                    <div className="flex justify-center pt-2">
+                    <div className="flex justify-center gap-4 pt-2">
                         <button
                             type="button"
                             onClick={handleDebugLogin}
@@ -121,6 +121,14 @@ export default function AdminLoginPage() {
                         >
                             <Bug size={12} />
                             Debug Login
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => window.location.href = '/admin/dashboard'}
+                            disabled={loading}
+                            className="flex items-center gap-2 text-xs text-green-500 hover:text-green-600 transition-colors disabled:opacity-50"
+                        >
+                            Ir al Dashboard
                         </button>
                     </div>
                 </form>
