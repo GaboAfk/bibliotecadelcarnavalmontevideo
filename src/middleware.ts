@@ -37,15 +37,6 @@ export async function middleware(request: NextRequest) {
   const isAdminRoute = request.nextUrl.pathname.startsWith('/admin')
   const isLoginPage = request.nextUrl.pathname === '/admin/login'
 
-  // Debug en desarrollo
-  if (process.env.NODE_ENV === 'development') {
-    console.log('=== Supabase SSR Middleware ===')
-    console.log('Path:', request.nextUrl.pathname)
-    console.log('User:', user?.email || 'No user')
-    console.log('Is admin route:', isAdminRoute)
-    console.log('Is login page:', isLoginPage)
-    console.log('================================')
-  }
 
   // Si está en ruta protegida y no hay usuario → redirigir a login
   if (isAdminRoute && !isLoginPage && !user) {

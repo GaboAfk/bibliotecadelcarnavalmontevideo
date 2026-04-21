@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { signIn } from '../actions'
 import { useAuth } from '../layout'
-import { Bug } from "lucide-react";
 
 export default function AdminLoginPage() {
     const [email, setEmail] = useState("admin@carnaval.uy");
@@ -28,24 +27,6 @@ export default function AdminLoginPage() {
             </div>
         );
     }
-
-    const handleDebugLogin = async () => {
-        try {
-            const response = await fetch('/api/debug-login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, password }),
-            });
-            const debugInfo = await response.json();
-            console.log('Login Debug Info:', debugInfo);
-            alert(JSON.stringify(debugInfo, null, 2));
-        } catch (error) {
-            console.error('Error debugging login:', error);
-            alert('Error al obtener debug de login');
-        }
-    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -112,25 +93,6 @@ export default function AdminLoginPage() {
                         {loading ? "Ingresando..." : "Ingresar"}
                     </button>
 
-                    <div className="flex justify-center gap-4 pt-2">
-                        <button
-                            type="button"
-                            onClick={handleDebugLogin}
-                            disabled={loading}
-                            className="flex items-center gap-2 text-xs text-blue-500 hover:text-blue-600 transition-colors disabled:opacity-50"
-                        >
-                            <Bug size={12} />
-                            Debug Login
-                        </button>
-                        <button
-                            type="button"
-                            onClick={() => window.location.href = '/admin/dashboard'}
-                            disabled={loading}
-                            className="flex items-center gap-2 text-xs text-green-500 hover:text-green-600 transition-colors disabled:opacity-50"
-                        >
-                            Ir al Dashboard
-                        </button>
-                    </div>
                 </form>
 
                 <div className="mt-6 text-center">

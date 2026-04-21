@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { signOut } from '../actions'
 import { useAuth } from '../layout'
-import { LogOut, Settings, Bug, Shield } from "lucide-react";
+import { LogOut, Settings } from "lucide-react";
 
 export default function AdminDashboard() {
     const router = useRouter();
@@ -17,29 +17,6 @@ export default function AdminDashboard() {
         }
     };
 
-    const handleDebugCookies = async () => {
-        try {
-            const response = await fetch('/api/debug-cookies');
-            const debugInfo = await response.json();
-            console.log('Cookie Debug Info:', debugInfo);
-            alert(JSON.stringify(debugInfo, null, 2));
-        } catch (error) {
-            console.error('Error debugging cookies:', error);
-            alert('Error al obtener debug de cookies');
-        }
-    };
-
-    const handleDebugMiddleware = async () => {
-        try {
-            const response = await fetch('/api/debug-middleware?path=/admin/dashboard');
-            const debugInfo = await response.json();
-            console.log('Middleware Debug Info:', debugInfo);
-            alert(JSON.stringify(debugInfo, null, 2));
-        } catch (error) {
-            console.error('Error debugging middleware:', error);
-            alert('Error al obtener debug de middleware');
-        }
-    };
 
     if (loading) {
         return (
@@ -65,22 +42,6 @@ export default function AdminDashboard() {
                             <p className="text-sm text-gray-500">Bienvenido, {user?.email}</p>
                         </div>
                         <div className="flex items-center space-x-4">
-                            <button
-                                onClick={handleDebugCookies}
-                                className="flex items-center gap-2 text-sm text-blue-500 hover:text-blue-600 transition-colors"
-                                title="Debug cookies"
-                            >
-                                <Bug size={16} />
-                                Cookies
-                            </button>
-                            <button
-                                onClick={handleDebugMiddleware}
-                                className="flex items-center gap-2 text-sm text-orange-500 hover:text-orange-600 transition-colors"
-                                title="Debug middleware"
-                            >
-                                <Shield size={16} />
-                                Middleware
-                            </button>
                             <button
                                 onClick={handleLogout}
                                 className="flex items-center gap-2 text-sm text-gray-500 hover:text-black transition-colors"
