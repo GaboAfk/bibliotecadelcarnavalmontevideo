@@ -22,6 +22,11 @@ export default function AgrupacionDetailPage({ params }: AgrupacionPageProps) {
     const [agrupacion, setAgrupacion] = useState<Agrupacion | null>(null);
     const [loading, setLoading] = useState(true);
 
+    // Obtener la categoría desde la URL
+    const categoria = typeof window !== 'undefined'
+        ? window.location.pathname.split('/')[2]
+        : '';
+
     useEffect(() => {
         const loadData = async () => {
             try {
@@ -49,7 +54,7 @@ export default function AgrupacionDetailPage({ params }: AgrupacionPageProps) {
 
     if (loading) {
         return (
-            <div className="bg-white pt-24 pb-16 min-h-screen">
+            <div className="bg-white pt-28 pb-16 min-h-screen">
                 <div className="max-w-7xl mx-auto px-6">
                     <h1 className="text-4xl mb-6 font-serif">Cargando...</h1>
                 </div>
@@ -59,16 +64,54 @@ export default function AgrupacionDetailPage({ params }: AgrupacionPageProps) {
 
     if (!agrupacion) {
         return (
-            <div className="bg-white pt-24 pb-16 min-h-screen">
-                <div className="max-w-7xl mx-auto px-6">
-                    <h1 className="text-4xl mb-6 font-serif">Agrupación no encontrada</h1>
-                    <p className="text-lg mb-8">La agrupación que buscas no existe en nuestro archivo.</p>
-                    <button
-                        onClick={() => router.back()}
-                        className="text-black hover:underline"
-                    >
-                        ← Volver
-                    </button>
+            <div className="min-h-screen bg-white flex items-center justify-center pt-28">
+                <div className="text-center px-6">
+                    <div className="mb-8">
+                        <h1 className="text-6xl font-bold text-gray-900 mb-4">404</h1>
+                        <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+                            Agrupación no encontrada
+                        </h2>
+                        <p className="text-gray-600 mb-8 max-w-md mx-auto">
+                            La agrupación que buscas no existe en nuestro archivo. Por favor, selecciona una agrupación válida desde la categoría.
+                        </p>
+                    </div>
+
+                    <div className="space-y-4">
+                        <div className="border-t pt-8">
+                            <h3 className="text-lg font-medium text-gray-800 mb-4">
+                                ¿Qué puedes hacer?
+                            </h3>
+                            <div className="space-y-3">
+                                <Link
+                                    href={`/categorias/${categoria}`}
+                                    className="inline-flex items-center px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors"
+                                >
+                                    <ChevronRight className="rotate-180 mr-2" size={16} />
+                                    Volver a {categoria}
+                                </Link>
+
+                                <div className="pt-2">
+                                    <Link
+                                        href="/"
+                                        className="inline-flex items-center text-black hover:underline"
+                                    >
+                                        <ChevronRight className="rotate-180 mr-1" size={16} />
+                                        Volver al inicio
+                                    </Link>
+                                </div>
+
+                                <div className="pt-2">
+                                    <button
+                                        onClick={() => router.back()}
+                                        className="inline-flex items-center text-gray-600 hover:text-black hover:underline"
+                                    >
+                                        <ChevronRight className="rotate-180 mr-1" size={16} />
+                                        Ir a la página anterior
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         );
@@ -97,7 +140,7 @@ export default function AgrupacionDetailPage({ params }: AgrupacionPageProps) {
     ];
 
     return (
-        <div className="bg-white pt-24 pb-16">
+        <div className="bg-white pt-28 pb-16">
             {/* Page Title Banner */}
             <div className="w-full bg-black text-white py-4">
                 <div className="max-w-7xl mx-auto px-6">

@@ -79,7 +79,7 @@ export default function ShowDetailPage({ params }: ShowDetailPageProps) {
 
     if (loading) {
         return (
-            <div className="bg-white pt-24 pb-16 min-h-screen">
+            <div className="bg-white pt-28 pb-16 min-h-screen">
                 <div className="max-w-7xl mx-auto px-6">
                     <h1 className="text-4xl mb-6 font-serif">Cargando...</h1>
                 </div>
@@ -88,17 +88,82 @@ export default function ShowDetailPage({ params }: ShowDetailPageProps) {
     }
 
     if (!show) {
+        // Obtener parámetros desde la URL
+        const categoria = typeof window !== 'undefined'
+            ? window.location.pathname.split('/')[2]
+            : '';
+        const slug = typeof window !== 'undefined'
+            ? window.location.pathname.split('/')[3]
+            : '';
+        const showName = typeof window !== 'undefined'
+            ? window.location.pathname.split('/')[5]
+            : '';
+
         return (
-            <div className="bg-white pt-24 pb-16 min-h-screen">
-                <div className="max-w-7xl mx-auto px-6">
-                    <h1 className="text-4xl mb-6 font-serif">Espectáculo no encontrado</h1>
-                    <p className="text-lg mb-8">El espectáculo que buscas no existe en nuestro archivo.</p>
-                    <button
-                        onClick={() => router.back()}
-                        className="text-black hover:underline"
-                    >
-                        ← Volver
-                    </button>
+            <div className="min-h-screen bg-white flex items-center justify-center pt-28">
+                <div className="text-center px-6">
+                    <div className="mb-8">
+                        <h1 className="text-6xl font-bold text-gray-900 mb-4">404</h1>
+                        <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+                            Espectáculo no encontrado
+                        </h2>
+                        <p className="text-gray-600 mb-8 max-w-md mx-auto">
+                            El espectáculo que buscas no existe en nuestro archivo. Por favor, verifica que tanto la agrupación como el espectáculo sean correctos.
+                        </p>
+                    </div>
+
+                    <div className="space-y-4">
+                        <div className="border-t pt-8">
+                            <h3 className="text-lg font-medium text-gray-800 mb-4">
+                                ¿Qué puedes hacer?
+                            </h3>
+                            <div className="space-y-3">
+                                <Link
+                                    href={`/categorias/${categoria}/${slug}/espectaculos`}
+                                    className="inline-flex items-center px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors"
+                                >
+                                    <ChevronRight className="rotate-180 mr-2" size={16} />
+                                    Ver todos los espectáculos
+                                </Link>
+
+                                <Link
+                                    href={`/categorias/${categoria}/${slug}`}
+                                    className="inline-flex items-center px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                                >
+                                    <ChevronRight className="rotate-180 mr-2" size={16} />
+                                    Ver detalles de la agrupación
+                                </Link>
+
+                                <Link
+                                    href={`/categorias/${categoria}`}
+                                    className="inline-flex items-center px-6 py-3 border border-gray-200 text-gray-600 rounded-lg hover:bg-gray-50 transition-colors"
+                                >
+                                    <ChevronRight className="rotate-180 mr-2" size={16} />
+                                    Volver a {categoria}
+                                </Link>
+
+                                <div className="pt-2">
+                                    <Link
+                                        href="/"
+                                        className="inline-flex items-center text-black hover:underline"
+                                    >
+                                        <ChevronRight className="rotate-180 mr-1" size={16} />
+                                        Volver al inicio
+                                    </Link>
+                                </div>
+
+                                <div className="pt-2">
+                                    <button
+                                        onClick={() => router.back()}
+                                        className="inline-flex items-center text-gray-600 hover:text-black hover:underline"
+                                    >
+                                        <ChevronRight className="rotate-180 mr-1" size={16} />
+                                        Ir a la página anterior
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         );
@@ -127,7 +192,7 @@ export default function ShowDetailPage({ params }: ShowDetailPageProps) {
     };
 
     return (
-        <div className="bg-white pt-24 pb-16">
+        <div className="bg-white pt-28 pb-16">
             {/* Page Title Banner */}
             <div className="w-full bg-black text-white py-4">
                 <div className="max-w-7xl mx-auto px-6">
