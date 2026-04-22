@@ -36,16 +36,24 @@ export async function middleware(request: NextRequest) {
 
   const isAdminRoute = request.nextUrl.pathname.startsWith('/admin')
   const isLoginPage = request.nextUrl.pathname === '/admin/login'
-
+  const isAdminRoot = request.nextUrl.pathname === '/admin'
 
   // Si está en ruta protegida y no hay usuario → redirigir a login
-  if (isAdminRoute && !isLoginPage && !user) {
+  const shouldRedirectToLogin = isAdminRoute && !isLoginPage && !user
+
+
+  if (shouldRedirectToLogin) {
     const loginUrl = new URL('/admin/login', request.url)
     return NextResponse.redirect(loginUrl)
   }
 
   // Si ya está autenticado y va a /admin/login → redirigir a /admin
   if (isLoginPage && user) {
+    return NextResponse.redirect(new URL('/admin/dashboard', request.url))
+  }
+
+  // Si está autenticado en /admin (raíz) → redirigir a dashboard
+  if (isAdminRoot && user) {
     return NextResponse.redirect(new URL('/admin/dashboard', request.url))
   }
 
