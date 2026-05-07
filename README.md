@@ -141,6 +141,18 @@ npm run db:reset
 ### Los seeds no se ejecutan en remote
 - Solución: Habilitar `[db.seed]` en `config.toml` y usar `db reset --linked`
 
+### Conflictos de Puertos en Docker (Windows)
+Si tenías contenedores de Docker corriendo y nunca se detuvieron, al retomar e iniciar el proyecto puede aparecer un error de uso de puertos de Supabase en Docker.
+
+**Solución 1:**
+```bash
+supabase stop
+npm run dev:full
+```
+
+**Solución 2 (si persiste el conflicto de puertos):**
+Reiniciar la PC con los contenedores detenidos previamente. Esto resuelve la mayoría de los casos sin necesidad de buscar procesos manualmente.
+
 ## Variables de Entorno Requeridas
 
 Para producción, asegúrate de tener estas variables en `.env.local`:
