@@ -148,6 +148,39 @@ export async function deleteNovedad(id: string): Promise<void> {
     if (error) throw error
 }
 
+// CRUD Operations for Agrupaciones
+export async function createAgrupacion(agrupacion: Omit<Agrupacion, 'id' | 'created_at'>): Promise<Agrupacion> {
+    const { data, error } = await supabase
+        .from('agrupaciones')
+        .insert(agrupacion)
+        .select()
+        .single()
+
+    if (error) throw error
+    return data
+}
+
+export async function updateAgrupacion(id: string, updates: Partial<Omit<Agrupacion, 'id' | 'created_at'>>): Promise<Agrupacion> {
+    const { data, error } = await supabase
+        .from('agrupaciones')
+        .update(updates)
+        .eq('id', id)
+        .select()
+        .single()
+
+    if (error) throw error
+    return data
+}
+
+export async function deleteAgrupacion(id: string): Promise<void> {
+    const { error } = await supabase
+        .from('agrupaciones')
+        .delete()
+        .eq('id', id)
+
+    if (error) throw error
+}
+
 // Espectáculos (Shows)
 export async function fetchShowsByAgrupacion(agrupacionId: string): Promise<Show[]> {
     const { data, error } = await supabase

@@ -94,6 +94,31 @@ export default function AdminDashboard() {
                     <div className="bg-white overflow-hidden shadow rounded-lg">
                         <div className="p-6">
                             <div className="flex items-center">
+                                <div className="flex-shrink-0 bg-purple-500 rounded-md p-3">
+                                    <Settings className="h-6 w-6 text-white" />
+                                </div>
+                                <div className="ml-4 w-0 flex-1">
+                                    <h3 className="text-lg font-medium text-gray-900">Agrupaciones</h3>
+                                    <p className="mt-1 text-sm text-gray-500">
+                                        Gestionar agrupaciones del carnaval
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="mt-6">
+                                <a
+                                    href="/admin/agrupaciones"
+                                    className="flex items-center text-sm font-medium text-purple-600 hover:text-purple-500"
+                                >
+                                    Administrar agrupaciones
+                                    <span aria-hidden="true"> &rarr;</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="bg-white overflow-hidden shadow rounded-lg">
+                        <div className="p-6">
+                            <div className="flex items-center">
                                 <div className="flex-shrink-0 bg-green-500 rounded-md p-3">
                                     <Settings className="h-6 w-6 text-white" />
                                 </div>
