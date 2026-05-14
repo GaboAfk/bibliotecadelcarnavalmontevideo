@@ -13,6 +13,7 @@ import {
 import { Close, Save } from '@mui/icons-material'
 import { Novedad } from '@/lib/supabase'
 import { ImageUploadField } from './ImageUploadField'
+import { slugify } from '@/utils/slugify'
 
 interface NovedadPreviewModalProps {
   open: boolean
@@ -51,7 +52,11 @@ export function NovedadPreviewModal({
 
   const handleChange = (field: keyof Novedad, value: string) => {
     if (editedNovedad) {
-      setEditedNovedad({ ...editedNovedad, [field]: value })
+      if (field === 'title' && isCreating) {
+        setEditedNovedad({ ...editedNovedad, title: value, id: slugify(value) })
+      } else {
+        setEditedNovedad({ ...editedNovedad, [field]: value })
+      }
     }
   }
 

@@ -116,7 +116,7 @@ export async function deleteCategory(id: string): Promise<void> {
 }
 
 // CRUD Operations for Novedades
-export async function createNovedad(novedad: Omit<Novedad, 'id' | 'created_at'>): Promise<Novedad> {
+export async function createNovedad(novedad: Omit<Novedad, 'created_at'>): Promise<Novedad> {
     const { data, error } = await supabase
         .from('novedades')
         .insert(novedad)
@@ -219,6 +219,82 @@ export async function updateShow(id: string, updates: Partial<Omit<Show, 'id' | 
 export async function deleteShow(id: string): Promise<void> {
     const { error } = await supabase
         .from('shows')
+        .delete()
+        .eq('id', id)
+
+    if (error) throw error
+}
+
+export async function fetchAllStaffByAgrupacion(agrupacionId: string): Promise<Staff[]> {
+    const { data, error } = await supabase
+        .from('staff')
+        .select('*')
+        .eq('agrupacion_id', agrupacionId)
+
+    if (error) throw error
+    return data || []
+}
+
+// CRUD Operations for Staff (by show)
+export async function createStaff(staff: Omit<Staff, 'id'>): Promise<Staff> {
+    const { data, error } = await supabase
+        .from('staff')
+        .insert(staff)
+        .select()
+        .single()
+
+    if (error) throw error
+    return data
+}
+
+export async function updateStaff(id: string, updates: Partial<Omit<Staff, 'id'>>): Promise<Staff> {
+    const { data, error } = await supabase
+        .from('staff')
+        .update(updates)
+        .eq('id', id)
+        .select()
+        .single()
+
+    if (error) throw error
+    return data
+}
+
+export async function deleteStaff(id: string): Promise<void> {
+    const { error } = await supabase
+        .from('staff')
+        .delete()
+        .eq('id', id)
+
+    if (error) throw error
+}
+
+// CRUD Operations for Show Repertory
+export async function createShowRepertoryItem(item: Omit<ShowRepertory, 'id'>): Promise<ShowRepertory> {
+    const { data, error } = await supabase
+        .from('show_repertory')
+        .insert(item)
+        .select()
+        .single()
+
+    if (error) throw error
+    return data
+}
+
+export async function updateShowRepertoryItem(id: string, updates: Partial<Omit<ShowRepertory, 'id'>>): Promise<ShowRepertory> {
+    const { data, error } = await supabase
+        .from('show_repertory')
+        .update(updates)
+        .eq('id', id)
+        .select()
+        .single()
+
+    if (error) throw error
+    return data
+}
+
+export async function deleteShowRepertoryItem(id: string): Promise<void> {
+    const { error } = await supabase
+        .from('show_repertory')
         .delete()
         .eq('id', id)
 

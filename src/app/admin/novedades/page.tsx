@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react'
 import { MaterialReactTable, type MRT_ColumnDef } from 'material-react-table'
-import { Box, IconButton, Tooltip, Button } from '@mui/material'
+import { Box, IconButton, Tooltip, Button, TextField, MenuItem } from '@mui/material'
 import { Edit, Delete, Add, ArrowBack } from '@mui/icons-material'
 import { fetchNovedades, createNovedad, updateNovedad, deleteNovedad } from '@/lib/data-queries'
 import { Novedad } from '@/lib/supabase'
@@ -15,6 +15,8 @@ export default function NovedadesAdminPage() {
   const [modalOpen, setModalOpen] = useState(false)
   const [selectedNovedad, setSelectedNovedad] = useState<Novedad | null>(null)
   const [isCreating, setIsCreating] = useState(false)
+  const [filterText, setFilterText] = useState('')
+  const [filterColor, setFilterColor] = useState('')
 
   useEffect(() => {
     loadNovedades()
@@ -32,6 +34,34 @@ export default function NovedadesAdminPage() {
       setLoading(false)
     }
   }
+
+  const COLOR_PRESETS = [
+    { label: 'Naranja', value: '#F5A623' },
+    { label: 'Amarillo', value: '#F8E71C' },
+    { label: 'Verde', value: '#417505' },
+    { label: 'Rosa', value: '#FF69B4' },
+    { label: 'Violeta', value: '#8B5CF6' },
+    { label: 'Rose', value: '#EC4899' },
+    { label: 'Rojo', value: '#EF4444' },
+    { label: 'Azul', value: '#3B82F6' },
+    { label: 'Negro', value: '#000000' },
+  ]
+
+  const filteredNovedades = useMemo(() => {
+    let result = novedades
+    if (filterText.trim()) {
+      const lower = filterText.toLowerCase()
+      result = result.filter(
+        (n) =>
+          n.title.toLowerCase().includes(lower) ||
+          (n.description ?? '').toLowerCase().includes(lower)
+      )
+    }
+    if (filterColor) {
+      result = result.filter((n) => (n.color ?? '').toLowerCase() === filterColor.toLowerCase())
+    }
+    return result
+  }, [novedades, filterText, filterColor])
 
   const columns = useMemo<MRT_ColumnDef<Novedad>[]>(
     () => [
@@ -198,7 +228,8 @@ export default function NovedadesAdminPage() {
 
       <MaterialReactTable
         columns={columns}
-        data={novedades}
+        data={filteredNovedades}
+        enableGlobalFilter={false}
         enableRowActions
         positionActionsColumn="last"
         renderRowActions={({ row }: { row: { original: Novedad } }) => (
@@ -219,11 +250,39 @@ export default function NovedadesAdminPage() {
           </Box>
         )}
         renderTopToolbarCustomActions={() => (
-          <Tooltip title="Crear nueva novedad">
-            <IconButton onClick={handleCreate} color="primary">
-              <Add />
-            </IconButton>
-          </Tooltip>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap' }}>
+            <Tooltip title="Crear nueva novedad">
+              <IconButton onClick={handleCreate} color="primary">
+                <Add />
+              </IconButton>
+            </Tooltip>
+            <TextField
+              size="small"
+              label="Buscar"
+              value={filterText}
+              onChange={(e) => setFilterText(e.target.value)}
+              sx={{ minWidth: 180 }}
+              placeholder="Título, descripción..."
+            />
+            <TextField
+              select
+              size="small"
+              label="Color"
+              value={filterColor}
+              onChange={(e) => setFilterColor(e.target.value)}
+              sx={{ minWidth: 150 }}
+            >
+              <MenuItem value="">Todos</MenuItem>
+              {COLOR_PRESETS.map((c) => (
+                <MenuItem key={c.value} value={c.value}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <Box sx={{ width: 16, height: 16, borderRadius: '50%', bgcolor: c.value, border: '1px solid #ccc' }} />
+                    {c.label}
+                  </Box>
+                </MenuItem>
+              ))}
+            </TextField>
+          </Box>
         )}
         muiTableProps={{
           sx: {
