@@ -115,6 +115,39 @@ export async function deleteCategory(id: string): Promise<void> {
     if (error) throw error
 }
 
+// CRUD Operations for Novedades
+export async function createNovedad(novedad: Omit<Novedad, 'id' | 'created_at'>): Promise<Novedad> {
+    const { data, error } = await supabase
+        .from('novedades')
+        .insert(novedad)
+        .select()
+        .single()
+
+    if (error) throw error
+    return data
+}
+
+export async function updateNovedad(id: string, updates: Partial<Omit<Novedad, 'id' | 'created_at'>>): Promise<Novedad> {
+    const { data, error } = await supabase
+        .from('novedades')
+        .update(updates)
+        .eq('id', id)
+        .select()
+        .single()
+
+    if (error) throw error
+    return data
+}
+
+export async function deleteNovedad(id: string): Promise<void> {
+    const { error } = await supabase
+        .from('novedades')
+        .delete()
+        .eq('id', id)
+
+    if (error) throw error
+}
+
 // Espectáculos (Shows)
 export async function fetchShowsByAgrupacion(agrupacionId: string): Promise<Show[]> {
     const { data, error } = await supabase
