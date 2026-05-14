@@ -4,7 +4,7 @@ import { useState, useEffect, useMemo } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { MaterialReactTable, type MRT_ColumnDef } from 'material-react-table'
 import { Box, IconButton, Tooltip, Button, TextField, MenuItem, InputAdornment } from '@mui/material'
-import { Edit, Delete, Add, ArrowBack, Clear } from '@mui/icons-material'
+import { Edit, Delete, Add, ArrowBack, Clear, OpenInNew } from '@mui/icons-material'
 import {
   fetchShows,
   fetchAgrupaciones,
@@ -194,20 +194,33 @@ export default function ShowsAdminPage() {
         enableGlobalFilter={false}
         enableRowActions
         positionActionsColumn="last"
-        renderRowActions={({ row }: { row: { original: Show } }) => (
-          <Box sx={{ display: 'flex', gap: '8px' }}>
-            <Tooltip title="Editar">
-              <IconButton onClick={() => handleEdit(row.original)}>
-                <Edit />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="Eliminar">
-              <IconButton onClick={() => handleDelete(row.original)} color="error">
-                <Delete />
-              </IconButton>
-            </Tooltip>
-          </Box>
-        )}
+        renderRowActions={({ row }: { row: { original: Show } }) => {
+          const ag = agrupaciones.find((a) => a.id === row.original.agrupacion_id)
+          const publicUrl = ag
+            ? `/categorias/${ag.category_slug}/${ag.slug}/espectaculos/${row.original.slug}`
+            : null
+          return (
+            <Box sx={{ display: 'flex', gap: '8px' }}>
+              <Tooltip title="Editar">
+                <IconButton onClick={() => handleEdit(row.original)}>
+                  <Edit />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Eliminar">
+                <IconButton onClick={() => handleDelete(row.original)} color="error">
+                  <Delete />
+                </IconButton>
+              </Tooltip>
+              {publicUrl && (
+                <Tooltip title="Ver página">
+                  <IconButton component="a" href={publicUrl}>
+                    <OpenInNew />
+                  </IconButton>
+                </Tooltip>
+              )}
+            </Box>
+          )
+        }}
         renderTopToolbarCustomActions={() => (
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap' }}>
             <Tooltip title="Crear nuevo espectáculo">

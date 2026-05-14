@@ -4,7 +4,7 @@ import { useState, useEffect, useMemo } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { MaterialReactTable, type MRT_ColumnDef } from 'material-react-table'
 import { Box, IconButton, Tooltip, Button, Chip, TextField, MenuItem, InputAdornment } from '@mui/material'
-import { Edit, Delete, Add, ArrowBack, Clear } from '@mui/icons-material'
+import { Edit, Delete, Add, ArrowBack, Clear, OpenInNew } from '@mui/icons-material'
 import {
   fetchAgrupaciones,
   fetchCategories,
@@ -191,6 +191,14 @@ export default function AgrupacionesAdminPage() {
             <Tooltip title="Eliminar">
               <IconButton onClick={() => handleDelete(row.original)} color="error">
                 <Delete />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Ver página">
+              <IconButton
+                component="a"
+                href={`/categorias/${row.original.category_slug}/${row.original.slug}`}
+              >
+                <OpenInNew />
               </IconButton>
             </Tooltip>
           </Box>

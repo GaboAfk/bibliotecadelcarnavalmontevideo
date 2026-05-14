@@ -21,7 +21,7 @@ function getAdminHref(pathname: string): string {
     }
     // /categorias/[categoria]
     if (parts[0] === "categorias" && parts[1]) {
-        return `/admin/agrupaciones?category=${parts[1]}`;
+        return `/admin/categories`;
     }
     // /novedades/[slug]
     if (parts[0] === "novedades") {

@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo } from 'react'
 import { MaterialReactTable, type MRT_ColumnDef } from 'material-react-table'
 import { Box, IconButton, Tooltip, Button } from '@mui/material'
-import { Edit, Delete, Add, ArrowBack } from '@mui/icons-material'
+import { Edit, Delete, Add, ArrowBack, OpenInNew } from '@mui/icons-material'
 import { fetchCategories, createCategory, updateCategory, deleteCategory } from '@/lib/data-queries'
 import { Category } from '@/lib/supabase'
 import { CategoryPreviewModal } from '@/components/admin/CategoryPreviewModal'
@@ -169,6 +169,14 @@ export default function CategoriesAdminPage() {
                 color="error"
               >
                 <Delete />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Ver página">
+              <IconButton
+                component="a"
+                href={`/categorias/${row.original.slug}`}
+              >
+                <OpenInNew />
               </IconButton>
             </Tooltip>
           </Box>

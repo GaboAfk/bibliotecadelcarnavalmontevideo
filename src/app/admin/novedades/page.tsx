@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo } from 'react'
 import { MaterialReactTable, type MRT_ColumnDef } from 'material-react-table'
 import { Box, IconButton, Tooltip, Button, TextField, MenuItem } from '@mui/material'
-import { Edit, Delete, Add, ArrowBack } from '@mui/icons-material'
+import { Edit, Delete, Add, ArrowBack, OpenInNew } from '@mui/icons-material'
 import { fetchNovedades, createNovedad, updateNovedad, deleteNovedad } from '@/lib/data-queries'
 import { Novedad } from '@/lib/supabase'
 import { NovedadPreviewModal } from '@/components/admin/NovedadPreviewModal'
@@ -245,6 +245,14 @@ export default function NovedadesAdminPage() {
                 color="error"
               >
                 <Delete />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Ver página">
+              <IconButton
+                component="a"
+                href={`/novedades/${row.original.id}`}
+              >
+                <OpenInNew />
               </IconButton>
             </Tooltip>
           </Box>
