@@ -130,6 +130,21 @@ npm run dev:full  # Inicia Supabase local + Next.js
 npm run db:reset
 ```
 
+### Aplicar una nueva migración a producción:
+```bash
+# 1. Iniciar sesión en Supabase CLI (solo la primera vez)
+supabase login
+
+# 2. Conectar el proyecto local al remoto (solo la primera vez)
+supabase link --project-ref <tu-project-ref>
+
+# 3. Verificar el estado actual de la base de datos remota
+npm run db:status
+
+# 4. Aplicar la migración
+npm run db:push
+```
+
 ## Troubleshooting
 
 ### Error: "duplicate key value violates unique constraint"
