@@ -1,9 +1,10 @@
 'use client'
 
 import { useState, useEffect, useMemo } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { MaterialReactTable, type MRT_ColumnDef } from 'material-react-table'
-import { Box, IconButton, Tooltip, Button, TextField, MenuItem } from '@mui/material'
-import { Edit, Delete, Add, ArrowBack } from '@mui/icons-material'
+import { Box, IconButton, Tooltip, Button, TextField, MenuItem, InputAdornment } from '@mui/material'
+import { Edit, Delete, Add, ArrowBack, Clear } from '@mui/icons-material'
 import {
   fetchShows,
   fetchAgrupaciones,
@@ -15,6 +16,7 @@ import { Show, Agrupacion } from '@/lib/supabase'
 import { ShowModal } from '@/components/admin/ShowModal'
 
 export default function ShowsAdminPage() {
+  const searchParams = useSearchParams()
   const [shows, setShows] = useState<Show[]>([])
   const [agrupaciones, setAgrupaciones] = useState<Agrupacion[]>([])
   const [loading, setLoading] = useState(true)
@@ -23,11 +25,20 @@ export default function ShowsAdminPage() {
   const [selected, setSelected] = useState<Show | null>(null)
   const [isCreating, setIsCreating] = useState(false)
   const [filterAgrupacion, setFilterAgrupacion] = useState('')
-  const [filterText, setFilterText] = useState('')
+  const [filterText, setFilterText] = useState(() => searchParams.get('show') ?? '')
 
   useEffect(() => {
     loadData()
   }, [])
+
+  // Pre-filter by agrupacion slug from URL param once agrupaciones are loaded
+  const agrupacionSlugParam = searchParams.get('agrupacion')
+  useEffect(() => {
+    if (agrupacionSlugParam && agrupaciones.length > 0) {
+      const match = agrupaciones.find((a) => a.slug === agrupacionSlugParam)
+      if (match) setFilterAgrupacion(match.id)
+    }
+  }, [agrupaciones, agrupacionSlugParam])
 
   const loadData = async () => {
     try {
@@ -211,6 +222,13 @@ export default function ShowsAdminPage() {
               onChange={(e) => setFilterText(e.target.value)}
               sx={{ minWidth: 180 }}
               placeholder="Título, slug, año..."
+              slotProps={{ input: { endAdornment: filterText ? (
+                <InputAdornment position="end">
+                  <IconButton size="small" onClick={() => setFilterText('')}>
+                    <Clear fontSize="small" />
+                  </IconButton>
+                </InputAdornment>
+              ) : null }}}
             />
             <TextField
               select
@@ -219,6 +237,13 @@ export default function ShowsAdminPage() {
               value={filterAgrupacion}
               onChange={(e) => setFilterAgrupacion(e.target.value)}
               sx={{ minWidth: 220 }}
+              slotProps={{ input: { endAdornment: filterAgrupacion ? (
+                <InputAdornment position="end" sx={{ mr: 2 }}>
+                  <IconButton size="small" onClick={() => setFilterAgrupacion('')}>
+                    <Clear fontSize="small" />
+                  </IconButton>
+                </InputAdornment>
+              ) : null }}}
             >
               <MenuItem value="">Todas</MenuItem>
               {agrupaciones.map((ag) => (

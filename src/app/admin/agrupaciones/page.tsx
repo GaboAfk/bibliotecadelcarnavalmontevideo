@@ -1,9 +1,10 @@
 'use client'
 
 import { useState, useEffect, useMemo } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { MaterialReactTable, type MRT_ColumnDef } from 'material-react-table'
-import { Box, IconButton, Tooltip, Button, Chip, TextField, MenuItem } from '@mui/material'
-import { Edit, Delete, Add, ArrowBack } from '@mui/icons-material'
+import { Box, IconButton, Tooltip, Button, Chip, TextField, MenuItem, InputAdornment } from '@mui/material'
+import { Edit, Delete, Add, ArrowBack, Clear } from '@mui/icons-material'
 import {
   fetchAgrupaciones,
   fetchCategories,
@@ -15,6 +16,7 @@ import { Agrupacion, Category } from '@/lib/supabase'
 import { AgrupacionModal } from '@/components/admin/AgrupacionModal'
 
 export default function AgrupacionesAdminPage() {
+  const searchParams = useSearchParams()
   const [agrupaciones, setAgrupaciones] = useState<Agrupacion[]>([])
   const [categories, setCategories] = useState<Category[]>([])
   const [loading, setLoading] = useState(true)
@@ -22,8 +24,8 @@ export default function AgrupacionesAdminPage() {
   const [modalOpen, setModalOpen] = useState(false)
   const [selected, setSelected] = useState<Agrupacion | null>(null)
   const [isCreating, setIsCreating] = useState(false)
-  const [filterCategory, setFilterCategory] = useState('')
-  const [filterText, setFilterText] = useState('')
+  const [filterCategory, setFilterCategory] = useState(() => searchParams.get('category') ?? '')
+  const [filterText, setFilterText] = useState(() => searchParams.get('slug') ?? '')
 
   useEffect(() => {
     loadData()
@@ -207,6 +209,13 @@ export default function AgrupacionesAdminPage() {
               onChange={(e) => setFilterText(e.target.value)}
               sx={{ minWidth: 180 }}
               placeholder="Nombre, slug..."
+              slotProps={{ input: { endAdornment: filterText ? (
+                <InputAdornment position="end">
+                  <IconButton size="small" onClick={() => setFilterText('')}>
+                    <Clear fontSize="small" />
+                  </IconButton>
+                </InputAdornment>
+              ) : null }}}
             />
             <TextField
               select
@@ -215,6 +224,13 @@ export default function AgrupacionesAdminPage() {
               value={filterCategory}
               onChange={(e) => setFilterCategory(e.target.value)}
               sx={{ minWidth: 200 }}
+              slotProps={{ input: { endAdornment: filterCategory ? (
+                <InputAdornment position="end" sx={{ mr: 2 }}>
+                  <IconButton size="small" onClick={() => setFilterCategory('')}>
+                    <Clear fontSize="small" />
+                  </IconButton>
+                </InputAdornment>
+              ) : null }}}
             >
               <MenuItem value="">Todas</MenuItem>
               {categories.map((cat) => (

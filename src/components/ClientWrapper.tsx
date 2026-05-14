@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
+import { FloatingAdminButton } from "./FloatingAdminButton";
 
 export function ClientWrapper({ children }: { children: React.ReactNode }) {
     const pathname = usePathname();
@@ -12,6 +13,7 @@ export function ClientWrapper({ children }: { children: React.ReactNode }) {
             {!isAdmin && <Header />}
             <main className="flex-1">{children}</main>
             {!isAdmin && <Footer />}
+            <FloatingAdminButton />
         </>
     );
 }
