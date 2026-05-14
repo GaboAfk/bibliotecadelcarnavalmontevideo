@@ -182,6 +182,49 @@ export async function deleteAgrupacion(id: string): Promise<void> {
 }
 
 // Espectáculos (Shows)
+export async function fetchShows(): Promise<Show[]> {
+    const { data, error } = await supabase
+        .from('shows')
+        .select('*')
+        .order('year', { ascending: false })
+        .order('title', { ascending: true })
+
+    if (error) throw error
+    return data || []
+}
+
+export async function createShow(show: Omit<Show, 'id' | 'created_at'>): Promise<Show> {
+    const { data, error } = await supabase
+        .from('shows')
+        .insert(show)
+        .select()
+        .single()
+
+    if (error) throw error
+    return data
+}
+
+export async function updateShow(id: string, updates: Partial<Omit<Show, 'id' | 'created_at'>>): Promise<Show> {
+    const { data, error } = await supabase
+        .from('shows')
+        .update(updates)
+        .eq('id', id)
+        .select()
+        .single()
+
+    if (error) throw error
+    return data
+}
+
+export async function deleteShow(id: string): Promise<void> {
+    const { error } = await supabase
+        .from('shows')
+        .delete()
+        .eq('id', id)
+
+    if (error) throw error
+}
+
 export async function fetchShowsByAgrupacion(agrupacionId: string): Promise<Show[]> {
     const { data, error } = await supabase
         .from('shows')

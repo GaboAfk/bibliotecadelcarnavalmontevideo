@@ -2,27 +2,27 @@
 
 import { useState, useEffect, useMemo } from 'react'
 import { MaterialReactTable, type MRT_ColumnDef } from 'material-react-table'
-import { Box, IconButton, Tooltip, Button, Chip, TextField, MenuItem } from '@mui/material'
+import { Box, IconButton, Tooltip, Button, TextField, MenuItem } from '@mui/material'
 import { Edit, Delete, Add, ArrowBack } from '@mui/icons-material'
 import {
+  fetchShows,
   fetchAgrupaciones,
-  fetchCategories,
-  createAgrupacion,
-  updateAgrupacion,
-  deleteAgrupacion,
+  createShow,
+  updateShow,
+  deleteShow,
 } from '@/lib/data-queries'
-import { Agrupacion, Category } from '@/lib/supabase'
-import { AgrupacionModal } from '@/components/admin/AgrupacionModal'
+import { Show, Agrupacion } from '@/lib/supabase'
+import { ShowModal } from '@/components/admin/ShowModal'
 
-export default function AgrupacionesAdminPage() {
+export default function ShowsAdminPage() {
+  const [shows, setShows] = useState<Show[]>([])
   const [agrupaciones, setAgrupaciones] = useState<Agrupacion[]>([])
-  const [categories, setCategories] = useState<Category[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [modalOpen, setModalOpen] = useState(false)
-  const [selected, setSelected] = useState<Agrupacion | null>(null)
+  const [selected, setSelected] = useState<Show | null>(null)
   const [isCreating, setIsCreating] = useState(false)
-  const [filterCategory, setFilterCategory] = useState('')
+  const [filterAgrupacion, setFilterAgrupacion] = useState('')
   const [filterText, setFilterText] = useState('')
 
   useEffect(() => {
@@ -32,42 +32,43 @@ export default function AgrupacionesAdminPage() {
   const loadData = async () => {
     try {
       setLoading(true)
-      const [agrupData, catData] = await Promise.all([fetchAgrupaciones(), fetchCategories()])
+      const [showsData, agrupData] = await Promise.all([fetchShows(), fetchAgrupaciones()])
+      setShows(showsData)
       setAgrupaciones(agrupData)
-      setCategories(catData)
     } catch (err) {
-      setError('Error al cargar agrupaciones')
-      console.error('Error loading agrupaciones:', err)
+      setError('Error al cargar espectáculos')
+      console.error('Error loading shows:', err)
     } finally {
       setLoading(false)
     }
   }
 
-  const categoryName = (slug: string) =>
-    categories.find((c) => c.slug === slug)?.name ?? slug
+  const agrupacionName = (id: string) =>
+    agrupaciones.find((a) => a.id === id)?.name ?? id
 
-  const filteredAgrupaciones = useMemo(() => {
-    let result = agrupaciones
-    if (filterCategory) {
-      result = result.filter((a) => a.category_slug === filterCategory)
+  const filteredShows = useMemo(() => {
+    let result = shows
+    if (filterAgrupacion) {
+      result = result.filter((s) => s.agrupacion_id === filterAgrupacion)
     }
     if (filterText.trim()) {
       const lower = filterText.toLowerCase()
       result = result.filter(
-        (a) =>
-          a.name.toLowerCase().includes(lower) ||
-          a.slug.toLowerCase().includes(lower)
+        (s) =>
+          s.title.toLowerCase().includes(lower) ||
+          s.slug.toLowerCase().includes(lower) ||
+          String(s.year ?? '').includes(lower)
       )
     }
     return result
-  }, [agrupaciones, filterCategory, filterText])
+  }, [shows, filterAgrupacion, filterText])
 
-  const columns = useMemo<MRT_ColumnDef<Agrupacion>[]>(
+  const columns = useMemo<MRT_ColumnDef<Show>[]>(
     () => [
       {
         accessorKey: 'image',
         header: 'Imagen',
-        size: 120,
+        size: 110,
         enableColumnFilter: false,
         Cell: ({ cell }) => (
           <Box
@@ -82,51 +83,54 @@ export default function AgrupacionesAdminPage() {
         ),
       },
       {
-        accessorKey: 'name',
-        header: 'Nombre',
+        accessorKey: 'title',
+        header: 'Título',
         size: 200,
       },
       {
-        accessorKey: 'category_slug',
-        header: 'Categoría',
-        size: 160,
-        Cell: ({ cell }) => categoryName(cell.getValue<string>()),
+        accessorKey: 'agrupacion_id',
+        header: 'Agrupación',
+        size: 180,
+        Cell: ({ cell }) => agrupacionName(cell.getValue<string>()),
+      },
+      {
+        accessorKey: 'year',
+        header: 'Año',
+        size: 90,
+      },
+      {
+        accessorKey: 'promotion_date',
+        header: 'Fecha Promoción',
+        size: 150,
+        Cell: ({ cell }) => {
+          const val = cell.getValue<string | null>()
+          return val ? new Date(val).toLocaleDateString('es-UY') : '—'
+        },
       },
       {
         accessorKey: 'slug',
         header: 'Slug',
         size: 180,
       },
-      {
-        accessorKey: 'disponible',
-        header: 'Disponible',
-        size: 120,
-        Cell: ({ cell }) =>
-          cell.getValue<boolean>() ? (
-            <Chip label="Sí" color="success" size="small" />
-          ) : (
-            <Chip label="No" color="default" size="small" />
-          ),
-      },
     ],
-    [categories]
+    [agrupaciones]
   )
 
-  const handleEdit = (agrupacion: Agrupacion) => {
-    setSelected(agrupacion)
+  const handleEdit = (show: Show) => {
+    setSelected(show)
     setIsCreating(false)
     setModalOpen(true)
   }
 
-  const handleDelete = async (agrupacion: Agrupacion) => {
-    if (window.confirm(`¿Eliminar la agrupación "${agrupacion.name}"?`)) {
+  const handleDelete = async (show: Show) => {
+    if (window.confirm(`¿Eliminar el espectáculo "${show.title}"?`)) {
       try {
-        await deleteAgrupacion(agrupacion.id)
+        await deleteShow(show.id)
         await loadData()
-        alert('Agrupación eliminada exitosamente')
+        alert('Espectáculo eliminado exitosamente')
       } catch (error) {
-        console.error('Error deleting agrupacion:', error)
-        alert('Error al eliminar la agrupación')
+        console.error('Error deleting show:', error)
+        alert('Error al eliminar el espectáculo')
       }
     }
   }
@@ -137,18 +141,18 @@ export default function AgrupacionesAdminPage() {
     setModalOpen(true)
   }
 
-  const handleModalSave = async (agrupacion: Agrupacion) => {
+  const handleModalSave = async (show: Show) => {
     try {
       if (isCreating) {
-        await createAgrupacion(agrupacion)
-        alert('Agrupación creada exitosamente')
+        await createShow(show)
+        alert('Espectáculo creado exitosamente')
       } else {
-        await updateAgrupacion(agrupacion.id, agrupacion)
-        alert('Agrupación actualizada exitosamente')
+        await updateShow(show.id, show)
+        alert('Espectáculo actualizado exitosamente')
       }
       await loadData()
     } catch (error) {
-      console.error('Error saving agrupacion:', error)
+      console.error('Error saving show:', error)
       throw error
     }
   }
@@ -169,17 +173,17 @@ export default function AgrupacionesAdminPage() {
           <Button variant="outlined" startIcon={<ArrowBack />} href="/admin/dashboard">
             Volver
           </Button>
-          <h1 className="text-3xl font-bold text-gray-900">Administración de Agrupaciones</h1>
+          <h1 className="text-3xl font-bold text-gray-900">Administración de Espectáculos</h1>
         </div>
       </div>
 
       <MaterialReactTable
         columns={columns}
-        data={filteredAgrupaciones}
+        data={filteredShows}
         enableGlobalFilter={false}
         enableRowActions
         positionActionsColumn="last"
-        renderRowActions={({ row }: { row: { original: Agrupacion } }) => (
+        renderRowActions={({ row }: { row: { original: Show } }) => (
           <Box sx={{ display: 'flex', gap: '8px' }}>
             <Tooltip title="Editar">
               <IconButton onClick={() => handleEdit(row.original)}>
@@ -195,7 +199,7 @@ export default function AgrupacionesAdminPage() {
         )}
         renderTopToolbarCustomActions={() => (
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap' }}>
-            <Tooltip title="Crear nueva agrupación">
+            <Tooltip title="Crear nuevo espectáculo">
               <IconButton onClick={handleCreate} color="primary">
                 <Add />
               </IconButton>
@@ -206,20 +210,20 @@ export default function AgrupacionesAdminPage() {
               value={filterText}
               onChange={(e) => setFilterText(e.target.value)}
               sx={{ minWidth: 180 }}
-              placeholder="Nombre, slug..."
+              placeholder="Título, slug, año..."
             />
             <TextField
               select
               size="small"
-              label="Categoría"
-              value={filterCategory}
-              onChange={(e) => setFilterCategory(e.target.value)}
-              sx={{ minWidth: 200 }}
+              label="Agrupación"
+              value={filterAgrupacion}
+              onChange={(e) => setFilterAgrupacion(e.target.value)}
+              sx={{ minWidth: 220 }}
             >
               <MenuItem value="">Todas</MenuItem>
-              {categories.map((cat) => (
-                <MenuItem key={cat.slug} value={cat.slug}>
-                  {cat.name}
+              {agrupaciones.map((ag) => (
+                <MenuItem key={ag.id} value={ag.id}>
+                  {ag.name}
                 </MenuItem>
               ))}
             </TextField>
@@ -236,10 +240,10 @@ export default function AgrupacionesAdminPage() {
         }}
       />
 
-      <AgrupacionModal
+      <ShowModal
         open={modalOpen}
-        agrupacion={selected}
-        categories={categories}
+        show={selected}
+        agrupaciones={agrupaciones}
         onClose={handleModalClose}
         onSave={handleModalSave}
         isCreating={isCreating}

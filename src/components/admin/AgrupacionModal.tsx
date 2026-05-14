@@ -10,7 +10,6 @@ import {
   IconButton,
   FormControlLabel,
   Switch,
-  MenuItem,
   Chip,
   Divider,
   List,
@@ -285,11 +284,12 @@ export function AgrupacionModal({
             onChange={(e) => handleChange('category_slug', e.target.value)}
             fullWidth
             required
+            slotProps={{ select: { native: true } }}
           >
             {categories.map((cat) => (
-              <MenuItem key={cat.slug} value={cat.slug}>
+              <option key={cat.slug} value={cat.slug}>
                 {cat.name}
-              </MenuItem>
+              </option>
             ))}
           </TextField>
 
