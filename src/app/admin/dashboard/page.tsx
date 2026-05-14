@@ -1,9 +1,10 @@
 'use client'
 
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { signOut } from '../actions'
 import { useAuth } from '../layout'
-import { LogOut, Settings } from "lucide-react";
+import { LogOut, Settings, Home } from "lucide-react";
 
 export default function AdminDashboard() {
     const router = useRouter();
@@ -42,6 +43,13 @@ export default function AdminDashboard() {
                             <p className="text-sm text-gray-500">Bienvenido, {user?.email}</p>
                         </div>
                         <div className="flex items-center space-x-4">
+                            <Link
+                                href="/"
+                                className="flex items-center gap-2 text-sm text-gray-500 hover:text-black transition-colors"
+                            >
+                                <Home size={16} />
+                                Inicio
+                            </Link>
                             <button
                                 onClick={handleLogout}
                                 className="flex items-center gap-2 text-sm text-gray-500 hover:text-black transition-colors"

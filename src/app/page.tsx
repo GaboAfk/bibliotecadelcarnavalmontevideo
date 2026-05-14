@@ -9,11 +9,19 @@ import { Autoplay, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { useCategories, useFrasesPromo } from '@/hooks/useData';
+import { supabase } from '@/lib/supabase';
 
 export default function Homepage() {
     const [currentSlide, setCurrentSlide] = useState(0);
+    const [isAdmin, setIsAdmin] = useState(false);
     const { frases, loading: frasesLoading } = useFrasesPromo();
     const { categories, loading: categoriesLoading } = useCategories();
+
+    useEffect(() => {
+        supabase.auth.getSession().then(({ data: { session } }) => {
+            setIsAdmin(!!session);
+        });
+    }, []);
 
     const slides = frases;
 
@@ -35,6 +43,14 @@ export default function Homepage() {
 
     return (
         <div className="bg-white">
+            {isAdmin && (
+                <Link
+                    href="/admin/dashboard"
+                    className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-black text-white text-sm px-4 py-2 rounded-full shadow-lg hover:bg-gray-800 transition-colors"
+                >
+                    Panel admin
+                </Link>
+            )}
             {/* Simple Hero Carousel */}
             <section className="relative h-[90vh] mt-16 overflow-hidden">
                 <Swiper
