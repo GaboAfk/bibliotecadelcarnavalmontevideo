@@ -166,6 +166,63 @@ export default function AdminDashboard() {
                         </div>
                     </div>
 
+                    <div className="bg-white overflow-hidden shadow rounded-lg">
+                        <div className="p-6">
+                            <div className="flex items-center">
+                                <div className="flex-shrink-0 bg-teal-500 rounded-md p-3">
+                                    <Settings className="h-6 w-6 text-white" />
+                                </div>
+                                <div className="ml-4 w-0 flex-1">
+                                    <h3 className="text-lg font-medium text-gray-900">Páginas Institucionales</h3>
+                                    <p className="mt-1 text-sm text-gray-500">
+                                        Nuestra Biblioteca e Historia del Carnaval
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="mt-6 flex flex-col gap-2">
+                                <a
+                                    href="/admin/static-content/nuestra-biblioteca"
+                                    className="flex items-center text-sm font-medium text-teal-600 hover:text-teal-500"
+                                >
+                                    Nuestra Biblioteca
+                                    <span aria-hidden="true"> &rarr;</span>
+                                </a>
+                                <a
+                                    href="/admin/static-content/historia"
+                                    className="flex items-center text-sm font-medium text-teal-600 hover:text-teal-500"
+                                >
+                                    Historia
+                                    <span aria-hidden="true"> &rarr;</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="bg-white overflow-hidden shadow rounded-lg">
+                        <div className="p-6">
+                            <div className="flex items-center">
+                                <div className="flex-shrink-0 bg-yellow-500 rounded-md p-3">
+                                    <Settings className="h-6 w-6 text-white" />
+                                </div>
+                                <div className="ml-4 w-0 flex-1">
+                                    <h3 className="text-lg font-medium text-gray-900">Carnaval 2026</h3>
+                                    <p className="mt-1 text-sm text-gray-500">
+                                        Puntajes, menciones y datos de la edición 2026
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="mt-6">
+                                <a
+                                    href="/admin/carnaval-2026"
+                                    className="flex items-center text-sm font-medium text-yellow-600 hover:text-yellow-500"
+                                >
+                                    Administrar Carnaval 2026
+                                    <span aria-hidden="true"> &rarr;</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
                     {/* <div className="bg-white overflow-hidden shadow rounded-lg">
                         <div className="p-6">
                             <div className="flex items-center">

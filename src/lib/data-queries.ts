@@ -422,7 +422,90 @@ export async function fetchPuntajes2026ByEdition(editionId: string): Promise<Pun
     return data || []
 }
 
+// Carnaval Editions
+export async function updateCarnavalEdicion(id: string, updates: Partial<Omit<CarnavalEdition, 'id' | 'created_at'>>): Promise<CarnavalEdition> {
+    const { data, error } = await supabase
+        .from('carnaval_editions')
+        .update(updates)
+        .eq('id', id)
+        .select()
+        .single()
+
+    if (error) throw error
+    return data
+}
+
+// Menciones CRUD
+export async function createMencion(mencion: Omit<Mencion, 'id'>): Promise<Mencion> {
+    const { data, error } = await supabase
+        .from('menciones')
+        .insert(mencion)
+        .select()
+        .single()
+
+    if (error) throw error
+    return data
+}
+
+export async function updateMencion(id: string, updates: Partial<Omit<Mencion, 'id'>>): Promise<Mencion> {
+    const { data, error } = await supabase
+        .from('menciones')
+        .update(updates)
+        .eq('id', id)
+        .select()
+        .single()
+
+    if (error) throw error
+    return data
+}
+
+export async function deleteMencion(id: string): Promise<void> {
+    const { error } = await supabase.from('menciones').delete().eq('id', id)
+    if (error) throw error
+}
+
+// Puntajes CRUD
+export async function createPuntaje(puntaje: Omit<Puntaje, 'id'>): Promise<Puntaje> {
+    const { data, error } = await supabase
+        .from('puntajes')
+        .insert(puntaje)
+        .select()
+        .single()
+
+    if (error) throw error
+    return data
+}
+
+export async function updatePuntaje(id: string, updates: Partial<Omit<Puntaje, 'id'>>): Promise<Puntaje> {
+    const { data, error } = await supabase
+        .from('puntajes')
+        .update(updates)
+        .eq('id', id)
+        .select()
+        .single()
+
+    if (error) throw error
+    return data
+}
+
+export async function deletePuntaje(id: string): Promise<void> {
+    const { error } = await supabase.from('puntajes').delete().eq('id', id)
+    if (error) throw error
+}
+
 // Static Content
+export async function updateStaticContent(id: string, updates: Partial<Omit<StaticContent, 'id' | 'updated_at'>>): Promise<StaticContent> {
+    const { data, error } = await supabase
+        .from('static_content')
+        .update(updates)
+        .eq('id', id)
+        .select()
+        .single()
+
+    if (error) throw error
+    return data
+}
+
 export async function fetchStaticContent(id: string): Promise<StaticContent | null> {
     const { data, error } = await supabase
         .from('static_content')

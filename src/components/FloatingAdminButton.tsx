@@ -27,6 +27,18 @@ function getAdminHref(pathname: string): string {
     if (parts[0] === "novedades") {
         return "/admin/novedades";
     }
+    // /nuestra-biblioteca
+    if (parts[0] === "nuestra-biblioteca") {
+        return "/admin/static-content/nuestra-biblioteca";
+    }
+    // /historia
+    if (parts[0] === "historia") {
+        return "/admin/static-content/historia";
+    }
+    // /carnaval-2026
+    if (parts[0] === "carnaval-2026") {
+        return "/admin/carnaval-2026";
+    }
     return "/admin/dashboard";
 }
 

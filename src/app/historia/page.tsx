@@ -1,23 +1,31 @@
-export default function HistoriaPage() {
+import { ImageWithFallback } from "@/components/ImageWithFallback";
+import { fetchStaticContent } from "@/lib/data-queries";
+
+export default async function HistoriaPage() {
+    const historia = await fetchStaticContent("historia");
+
     return (
-        <div className="bg-white pt-30 pb-16">
-            <div className="max-w-4xl mx-auto px-6">
-                <h1 className="text-4xl mb-8 font-serif">Historia del Carnaval</h1>
-                <div className="space-y-6 text-lg leading-relaxed">
-                    <p>
-                        El carnaval uruguayo tiene sus raíces en las tradiciones europeas traídas por los
-                        inmigrantes, fusionadas con las expresiones culturales africanas y criollas.
-                    </p>
-                    <p>
-                        A principios del siglo XX, comenzaron a surgir los primeros conjuntos organizados,
-                        dando forma a los géneros que hoy conocemos: murgas, parodistas, humoristas, revistas
-                        y sociedades de negros y lubolos.
-                    </p>
-                    <p>
-                        El carnaval montevideano se consolidó como el más largo del mundo, extendiéndose por
-                        más de 40 días y convirtiéndose en un fenómeno cultural único que expresa la identidad
-                        y el sentir del pueblo uruguayo.
-                    </p>
+        <div>
+            {/* Hero Image Section */}
+            <div className="relative w-full h-[60vh] bg-black overflow-hidden">
+                <ImageWithFallback
+                    src={historia?.image || "/plaza-cagancha.jpg"}
+                    alt="Historia del Carnaval Montevideano"
+                    fill
+                    className="object-cover"
+                    fallbackSrc="https://mediospublicos.uy/wp-content/uploads/20230119_ZINA_8030-1005x670.jpg"
+                />
+                <div className="absolute inset-0 bg-black/50"></div>
+            </div>
+
+            <div className="bg-white pt-10 pb-10">
+                <div className="max-w mx-auto px-20">
+                    <h1 className="text-4xl mb-8 font-serif">{historia?.title || "Historia del Carnaval"}</h1>
+                    <div className="space-y-4 text-lg leading-relaxed">
+                        {historia?.body?.split("\n\n").map((p, i) => (
+                            <p key={i}>{p}</p>
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>
