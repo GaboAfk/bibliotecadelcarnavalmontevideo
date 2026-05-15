@@ -8,7 +8,7 @@ import { Navigation, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { useNovedades } from '@/hooks/useData';
-import { Novedad } from '@/lib/supabase-client';
+import { Novedad } from '@/lib/supabase';
 
 export function NovedadesSection() {
     const { novedades, loading, error } = useNovedades();
@@ -48,7 +48,8 @@ export function NovedadesSection() {
                 <Swiper
                     modules={[Navigation, Autoplay]}
                     spaceBetween={16}
-                    loop={novedades.length > 3}
+                    loop={novedades.length >= 9}
+                    rewind={novedades.length < 9}
                     autoplay={{
                         delay: 3000,
                         disableOnInteraction: false,

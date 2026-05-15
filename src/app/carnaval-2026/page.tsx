@@ -5,7 +5,7 @@ import { ImageWithFallback } from '@/components/ImageWithFallback';
 import { fetchAgrupaciones } from '@/lib/data-queries';
 import { slugify } from '@/utils/slugify';
 import { useEffect, useState } from 'react';
-import { Agrupacion } from '@/lib/supabase-client';
+import { Agrupacion } from '@/lib/supabase';
 import Link from 'next/link';
 
 export default function Carnaval2026Page() {
@@ -140,6 +140,28 @@ export default function Carnaval2026Page() {
                     {/* Only show content when we have data */}
                     {menciones.length > 0 || puntajes.length > 0 ? (
                         <>
+                            {/* Resumen de ganadores */}
+                            {edicion2026?.badge && puntajes.filter(p => p.puesto === 1).length > 0 && (
+                                <div className="mb-12 border-l-4 border-black pl-5">
+                                    <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3">Destacado</p>
+                                    <div className="text-lg leading-relaxed text-gray-800 space-y-1">
+                                        {edicion2026.badge.split('\n').map((line, i) => (
+                                            <p key={i}>{line}</p>
+                                        ))}
+                                    </div>
+                                    <div className="mt-4 flex flex-wrap gap-3">
+                                        {puntajes
+                                            .filter(p => p.puesto === 1)
+                                            .map((p, i) => (
+                                                <span key={i} className="inline-flex items-center gap-1.5 text-sm border border-black px-3 py-1 rounded-full">
+                                                    <span className="text-gray-400 text-xs">{p.categoria}</span>
+                                                    {createAgrupacionLink(p.nombre)}
+                                                </span>
+                                            ))}
+                                    </div>
+                                </div>
+                            )}
+
                             {/* Puntajes */}
                             {puntajes.length > 0 && (
                                 <section className="mb-12">

@@ -131,7 +131,7 @@ export default function Homepage() {
                             >
                                 <div className="relative h-64 ">
                                     <ImageWithFallback
-                                        src={category.info_image || '/placeholder.jpg'}
+                                        src={category.image || '/placeholder.jpg'}
                                         alt={category.name}
                                         fill
                                         className="object-cover group-hover:scale-110 transition-transform duration-300"

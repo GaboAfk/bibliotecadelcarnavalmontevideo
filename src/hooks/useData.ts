@@ -11,7 +11,7 @@ import {
   Staff,
   ShowRepertory,
   StaticContent
-} from '@/lib/supabase-client'
+} from '@/lib/supabase'
 import {
   fetchNovedades,
   fetchNovedadById,
