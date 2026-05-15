@@ -2,8 +2,9 @@
 
 import { useState, useEffect, useMemo } from 'react'
 import { MaterialReactTable, type MRT_ColumnDef } from 'material-react-table'
-import { Box, IconButton, Tooltip, Button, TextField, MenuItem } from '@mui/material'
-import { Edit, Delete, Add, ArrowBack, OpenInNew } from '@mui/icons-material'
+import { Box, IconButton, Tooltip, TextField, MenuItem } from '@mui/material'
+import { Edit, Delete, Add, OpenInNew } from '@mui/icons-material'
+import { AdminPageHeader } from '@/components/admin/AdminPageHeader'
 import { fetchNovedades, createNovedad, updateNovedad, deleteNovedad } from '@/lib/data-queries'
 import { Novedad } from '@/lib/supabase'
 import { NovedadPreviewModal } from '@/components/admin/NovedadPreviewModal'
@@ -213,18 +214,7 @@ export default function NovedadesAdminPage() {
 
   return (
     <div className="p-6">
-      <div className="mb-6">
-        <div className="flex items-center gap-4 mb-4">
-          <Button
-            variant="outlined"
-            startIcon={<ArrowBack />}
-            href="/admin/dashboard"
-          >
-            Volver
-          </Button>
-          <h1 className="text-3xl font-bold text-gray-900">Administración de Novedades</h1>
-        </div>
-      </div>
+      <AdminPageHeader title="Administración de Novedades" />
 
       <MaterialReactTable
         columns={columns}

@@ -73,20 +73,20 @@ export default function AdminDashboard() {
                                     <Settings className="h-6 w-6 text-white" />
                                 </div>
                                 <div className="ml-4 w-0 flex-1">
-                                    <h3 className="text-lg font-medium text-gray-900">Gestión de Contenido</h3>
+                                    <h3 className="text-lg font-medium text-gray-900">Categorías</h3>
                                     <p className="mt-1 text-sm text-gray-500">
-                                        Administrar categorías, agrupaciones y espectáculos
+                                        Administrar categorías del carnaval
                                     </p>
                                 </div>
                             </div>
                             <div className="mt-6">
-                                <a
+                                <Link
                                     href="/admin/categories"
                                     className="flex items-center text-sm font-medium text-indigo-600 hover:text-indigo-500"
                                 >
-                                    Categorías
+                                    Administrar categorías
                                     <span aria-hidden="true"> &rarr;</span>
-                                </a>
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -105,13 +105,13 @@ export default function AdminDashboard() {
                                 </div>
                             </div>
                             <div className="mt-6">
-                                <a
+                                <Link
                                     href="/admin/agrupaciones"
                                     className="flex items-center text-sm font-medium text-purple-600 hover:text-purple-500"
                                 >
                                     Administrar agrupaciones
                                     <span aria-hidden="true"> &rarr;</span>
-                                </a>
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -130,13 +130,13 @@ export default function AdminDashboard() {
                                 </div>
                             </div>
                             <div className="mt-6">
-                                <a
+                                <Link
                                     href="/admin/shows"
                                     className="flex items-center text-sm font-medium text-orange-600 hover:text-orange-500"
                                 >
                                     Administrar espectáculos
                                     <span aria-hidden="true"> &rarr;</span>
-                                </a>
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -155,13 +155,13 @@ export default function AdminDashboard() {
                                 </div>
                             </div>
                             <div className="mt-6">
-                                <a
+                                <Link
                                     href="/admin/novedades"
                                     className="flex items-center text-sm font-medium text-green-600 hover:text-green-500"
                                 >
                                     Administrar novedades
                                     <span aria-hidden="true"> &rarr;</span>
-                                </a>
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -173,27 +173,34 @@ export default function AdminDashboard() {
                                     <Settings className="h-6 w-6 text-white" />
                                 </div>
                                 <div className="ml-4 w-0 flex-1">
-                                    <h3 className="text-lg font-medium text-gray-900">Páginas Institucionales</h3>
+                                    <h3 className="text-lg font-medium text-gray-900">Páginas Estáticas</h3>
                                     <p className="mt-1 text-sm text-gray-500">
-                                        Nuestra Biblioteca e Historia del Carnaval
+                                        Administrar contenido de páginas estáticas del sitio
                                     </p>
                                 </div>
                             </div>
                             <div className="mt-6 flex flex-col gap-2">
-                                <a
+                                <Link
                                     href="/admin/static-content/nuestra-biblioteca"
                                     className="flex items-center text-sm font-medium text-teal-600 hover:text-teal-500"
                                 >
                                     Nuestra Biblioteca
                                     <span aria-hidden="true"> &rarr;</span>
-                                </a>
-                                <a
+                                </Link>
+                                <Link
                                     href="/admin/static-content/historia"
                                     className="flex items-center text-sm font-medium text-teal-600 hover:text-teal-500"
                                 >
                                     Historia
                                     <span aria-hidden="true"> &rarr;</span>
-                                </a>
+                                </Link>
+                                <Link
+                                    href="/admin/hero-frases"
+                                    className="flex items-center text-sm font-medium text-teal-600 hover:text-teal-500"
+                                >
+                                    Frases Hero
+                                    <span aria-hidden="true"> &rarr;</span>
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -212,13 +219,13 @@ export default function AdminDashboard() {
                                 </div>
                             </div>
                             <div className="mt-6">
-                                <a
+                                <Link
                                     href="/admin/carnaval-2026"
                                     className="flex items-center text-sm font-medium text-yellow-600 hover:text-yellow-500"
                                 >
                                     Administrar Carnaval 2026
                                     <span aria-hidden="true"> &rarr;</span>
-                                </a>
+                                </Link>
                             </div>
                         </div>
                     </div>

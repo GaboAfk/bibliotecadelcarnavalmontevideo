@@ -2,8 +2,9 @@
 
 import { useState, useEffect, useMemo } from 'react'
 import { MaterialReactTable, type MRT_ColumnDef } from 'material-react-table'
-import { Box, IconButton, Tooltip, Button } from '@mui/material'
-import { Edit, Delete, Add, ArrowBack, OpenInNew } from '@mui/icons-material'
+import { Box, IconButton, Tooltip } from '@mui/material'
+import { Edit, Delete, Add, OpenInNew } from '@mui/icons-material'
+import { AdminPageHeader } from '@/components/admin/AdminPageHeader'
 import { fetchCategories, createCategory, updateCategory, deleteCategory } from '@/lib/data-queries'
 import { Category } from '@/lib/supabase'
 import { CategoryPreviewModal } from '@/components/admin/CategoryPreviewModal'
@@ -138,18 +139,7 @@ export default function CategoriesAdminPage() {
 
   return (
     <div className="p-6">
-      <div className="mb-6">
-        <div className="flex items-center gap-4 mb-4">
-          <Button
-            variant="outlined"
-            startIcon={<ArrowBack />}
-            href="/admin/dashboard"
-          >
-            Volver
-          </Button>
-          <h1 className="text-3xl font-bold text-gray-900">Administración de Categorías</h1>
-        </div>
-      </div>
+      <AdminPageHeader title="Administración de Categorías" />
 
       <MaterialReactTable
         columns={columns}

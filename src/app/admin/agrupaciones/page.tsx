@@ -4,7 +4,8 @@ import { useState, useEffect, useMemo } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { MaterialReactTable, type MRT_ColumnDef } from 'material-react-table'
 import { Box, IconButton, Tooltip, Button, Chip, TextField, MenuItem, InputAdornment } from '@mui/material'
-import { Edit, Delete, Add, ArrowBack, Clear, OpenInNew } from '@mui/icons-material'
+import { Edit, Delete, Add, Clear, OpenInNew } from '@mui/icons-material'
+import { AdminPageHeader } from '@/components/admin/AdminPageHeader'
 import {
   fetchAgrupaciones,
   fetchCategories,
@@ -166,14 +167,7 @@ export default function AgrupacionesAdminPage() {
 
   return (
     <div className="p-6">
-      <div className="mb-6">
-        <div className="flex items-center gap-4 mb-4">
-          <Button variant="outlined" startIcon={<ArrowBack />} href="/admin/dashboard">
-            Volver
-          </Button>
-          <h1 className="text-3xl font-bold text-gray-900">Administración de Agrupaciones</h1>
-        </div>
-      </div>
+      <AdminPageHeader title="Administración de Agrupaciones" />
 
       <MaterialReactTable
         columns={columns}

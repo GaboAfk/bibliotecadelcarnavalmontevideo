@@ -6,7 +6,8 @@ import {
     Box, IconButton, Tooltip, Button, TextField, Tabs, Tab,
     CircularProgress, MenuItem,
 } from '@mui/material'
-import { Edit, Delete, Add, ArrowBack, Save, OpenInNew } from '@mui/icons-material'
+import { Edit, Delete, Add, Save, OpenInNew } from '@mui/icons-material'
+import { AdminPageHeader } from '@/components/admin/AdminPageHeader'
 import { ImageUploadField } from '@/components/admin/ImageUploadField'
 import {
     fetchCarnavalEdiciones,
@@ -246,18 +247,14 @@ export default function Carnaval2026AdminPage() {
     if (!edicion) return <div className="p-6">No se encontró la edición 2026.</div>
 
     return (
-        <div className="p-6">
-            <div className="flex items-center gap-4 mb-6">
-                <Button variant="outlined" startIcon={<ArrowBack />} href="/admin/dashboard">
-                    Volver
-                </Button>
-                <h1 className="text-3xl font-bold text-gray-900">Carnaval 2026</h1>
+        <div className="p-6 max-w-3xl mx-auto">
+            <AdminPageHeader title="Carnaval 2026">
                 <Tooltip title="Ver página">
                     <IconButton component="a" href="/carnaval-2026">
                         <OpenInNew />
                     </IconButton>
                 </Tooltip>
-            </div>
+            </AdminPageHeader>
 
             <Tabs value={tab} onChange={(_, v) => setTab(v)} centered sx={{ mb: 3 }}>
                 <Tab label="Edición" />
@@ -267,7 +264,7 @@ export default function Carnaval2026AdminPage() {
 
             {/* Tab Edición */}
             {tab === 0 && (
-                <div className="max-w-lg mx-auto flex flex-col gap-4">
+                <div className="flex flex-col gap-4">
                     <TextField label="Título" value={edForm.title} onChange={e => setEdForm(f => ({ ...f, title: e.target.value }))} fullWidth />
                     <TextField label="Intro" value={edForm.intro} onChange={e => setEdForm(f => ({ ...f, intro: e.target.value }))} multiline rows={3} fullWidth />
                     <ImageUploadField

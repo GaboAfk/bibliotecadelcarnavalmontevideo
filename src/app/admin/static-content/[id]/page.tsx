@@ -2,10 +2,12 @@
 
 import { useState, useEffect } from 'react'
 import { Button, TextField, CircularProgress } from '@mui/material'
-import { ArrowBack, Save } from '@mui/icons-material'
+import { Save } from '@mui/icons-material'
 import { fetchStaticContent, updateStaticContent } from '@/lib/data-queries'
 import { StaticContent } from '@/lib/supabase'
 import { use } from 'react'
+import { ImageUploadField } from '@/components/admin/ImageUploadField'
+import { AdminPageHeader } from '@/components/admin/AdminPageHeader'
 
 const LABELS: Record<string, string> = {
     'nuestra-biblioteca': 'Nuestra Biblioteca',
@@ -50,15 +52,8 @@ export default function StaticContentAdminPage({ params }: { params: Promise<{ i
     if (error) return <div className="p-6 text-red-600">{error}</div>
 
     return (
-        <div className="p-6 max-w-3xl">
-            <div className="flex items-center gap-4 mb-8">
-                <Button variant="outlined" startIcon={<ArrowBack />} href="/admin/dashboard">
-                    Volver
-                </Button>
-                <h1 className="text-3xl font-bold text-gray-900">
-                    {LABELS[id] ?? id}
-                </h1>
-            </div>
+        <div className="p-6 max-w-3xl mx-auto">
+            <AdminPageHeader title={LABELS[id] ?? id} />
 
             <div className="flex flex-col gap-6">
                 <TextField
@@ -67,12 +62,13 @@ export default function StaticContentAdminPage({ params }: { params: Promise<{ i
                     onChange={(e) => setTitle(e.target.value)}
                     fullWidth
                 />
-                <TextField
-                    label="Imagen (URL)"
+                <ImageUploadField
+                    label="Imagen"
                     value={image}
-                    onChange={(e) => setImage(e.target.value)}
-                    fullWidth
-                    placeholder="/imagen.jpg"
+                    onChange={setImage}
+                    bucket="media"
+                    folder="static-content"
+                    slug={id}
                 />
                 <TextField
                     label="Contenido"
