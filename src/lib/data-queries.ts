@@ -388,6 +388,48 @@ export async function fetchHeroFrases(): Promise<HeroFrase[]> {
     return data || []
 }
 
+export async function fetchAllHeroFrases(): Promise<HeroFrase[]> {
+    const { data, error } = await supabase
+        .from('hero_frases')
+        .select('*')
+        .order('sort_order', { ascending: true })
+
+    if (error) throw error
+    return data || []
+}
+
+export async function createHeroFrase(frase: Omit<HeroFrase, 'id' | 'created_at'>): Promise<HeroFrase> {
+    const { data, error } = await supabase
+        .from('hero_frases')
+        .insert(frase)
+        .select()
+        .single()
+
+    if (error) throw error
+    return data
+}
+
+export async function updateHeroFrase(id: string, frase: Partial<Omit<HeroFrase, 'id' | 'created_at'>>): Promise<HeroFrase> {
+    const { data, error } = await supabase
+        .from('hero_frases')
+        .update(frase)
+        .eq('id', id)
+        .select()
+        .single()
+
+    if (error) throw error
+    return data
+}
+
+export async function deleteHeroFrase(id: string): Promise<void> {
+    const { error } = await supabase
+        .from('hero_frases')
+        .delete()
+        .eq('id', id)
+
+    if (error) throw error
+}
+
 // Menciones y Puntajes
 export async function fetchMenciones2026ByEdition(editionId: string): Promise<Mencion[]> {
     const { data, error } = await supabase
